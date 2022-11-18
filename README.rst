@@ -1,5 +1,5 @@
 =========================================
-SAE_302 music_search
+SAE 302 music search
 =========================================
 
 ####
@@ -8,7 +8,9 @@ Description
 ===========
 
    - Application graphique d’interrogation d’une Base de données de musique.
-   - Base de données [MusicBrainz] (https://musicbrainz.org/doc/MusicBrainz_API)
+   - Base de données MusicBrainz__ 
+   
+   __ https://musicbrainz.org/doc/MusicBrainz_API
     
 ####
 
@@ -48,13 +50,17 @@ Arborescence du projet
 Auteurs
 ======================
 
-- Baptiste Tarte__
-- Eliot Monneau__
-- Matthieu Brissonnet__
-- Eliot Monneau__
+- Baptiste__ Tarte__
+- Eliot__ Monneau__
+- Matthieu__ Brissonnet__
+- Tim__ Mazzolini__
 
 
 __ https://github.com/baptistert
+__ https://github.com/baptistert
+__ https://github.com/Eliot8767
 __ https://github.com/Eliot8767
 __ https://github.com/mattbriss
+__ https://github.com/mattbriss
+__ https://github.com/Azertim17
 __ https://github.com/Azertim17
