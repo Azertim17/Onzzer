@@ -48,10 +48,10 @@ Arborescence du projet
 Auteurs
 ======================
 
-- Baptiste Tarte__.
-- Eliot Monneau__.
-- Matthieu Brissonnet__.
-- Eliot Monneau__.
+- Baptiste Tarte__
+- Eliot Monneau__
+- Matthieu Brissonnet__
+- Eliot Monneau__
 
 
 __ https://github.com/baptistert
