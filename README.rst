@@ -7,7 +7,7 @@ SAE_302 music_search
 Description
 ===========
 
-    Application graphique d’interrogation d’une Base de données de musique.
+    Application graphique d’interrogation d’une Base de données de musique.\n
     Base de données [MusicBrainz] (https://musicbrainz.org/doc/MusicBrainz_API)
     
 ####
