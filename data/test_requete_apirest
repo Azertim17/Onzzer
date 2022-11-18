@@ -1,0 +1,11 @@
+Requete 1:
+https://musicbrainz.org/ws/2/release/search?query=(variable)&type=album
+https://musicbrainz.org/search?query=Ce+que+je+sais&type=release&limit=25&method=advanced
+a la fin du lien mettre dans une variable le nom de l'album que l'utilisateur souhaite rechercher 
+
+faire des curl pour tester
+curl https://musicbrainz.org/search?query=Ce+que+je+sais&type=release&limit=25&method=advanced > curl_requete1.txt
+
+
+Requete 2:
+GET /ws/2/release?collection=(variable2)
