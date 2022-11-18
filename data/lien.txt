@@ -1,1 +1,2 @@
 # https://musicbrainz.org/doc/MusicBrainz_Database/Schema
+et bien sur la suite 
