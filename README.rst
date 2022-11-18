@@ -47,6 +47,13 @@ Arborescence du projet
       
 ####
 
+Database
+======================      
+      
+      .. image:: https://raw.githubusercontent.com/Azertim17/music_search/data/schema_database.png
+      
+####
+
 Auteurs
 ======================
 
