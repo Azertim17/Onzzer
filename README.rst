@@ -48,7 +48,13 @@ Arborescence du projet
 Auteurs
 ======================
 
-- [Baptiste Tarte](https://github.com/baptistert)
-- [Eliot Monneau](https://github.com/Eliot8767)
-- [Matthieu Brissonnet](https://github.com/mattbriss)
-- [Eliot Monneau](https://github.com/Azertim17)
+- [Baptiste Tarte]__.
+- [Eliot Monneau]__.
+- [Matthieu Brissonnet]__.
+- [Eliot Monneau]__.
+
+
+__ https://github.com/baptistert
+__ https://github.com/Eliot8767
+__ https://github.com/mattbriss
+__ https://github.com/Azertim17
