@@ -1,4 +1,5 @@
-run = "music_search/music_search.py"
+language="python3"
+run = "python3 music_search/music_search.py"
 # compile = "make"
 
 # [nix]
