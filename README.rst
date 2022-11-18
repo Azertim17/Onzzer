@@ -50,7 +50,7 @@ Arborescence du projet
 Database
 ======================      
       
-.. image:: https://github.com/Azertim17/music_search/data/schema_database.png?sanitize=true
+.. image:: https://github.com/Azertim17/music_search/data/schema_database.png
       :target: <https://musicbrainz.org/doc/MusicBrainz_Database/Schema>_
       
 ####
