@@ -50,13 +50,17 @@ Arborescence du projet
 Auteurs
 ======================
 
-- Baptiste_Tarte__
-- Eliot_Monneau__
-- Matthieu_Brissonnet__
-- Eliot_Monneau__
+- Baptiste__ Tarte__
+- Eliot__ Monneau__
+- Matthieu__ Brissonnet__
+- Tim__ Mazzolini__
 
 
 __ https://github.com/baptistert
+__ https://github.com/baptistert
+__ https://github.com/Eliot8767
 __ https://github.com/Eliot8767
 __ https://github.com/mattbriss
+__ https://github.com/mattbriss
+__ https://github.com/Azertim17
 __ https://github.com/Azertim17
