@@ -8,7 +8,9 @@ Description
 ===========
 
    - Application graphique d’interrogation d’une Base de données de musique.
-   - Base de données [MusicBrainz] (https://musicbrainz.org/doc/MusicBrainz_API)
+   - Base de données MusicBrainz__ 
+   
+   __ https://musicbrainz.org/doc/MusicBrainz_API
     
 ####
 
@@ -48,10 +50,10 @@ Arborescence du projet
 Auteurs
 ======================
 
-- Baptiste Tarte__
-- Eliot Monneau__
-- Matthieu Brissonnet__
-- Eliot Monneau__
+- Baptiste_Tarte__
+- Eliot_Monneau__
+- Matthieu_Brissonnet__
+- Eliot_Monneau__
 
 
 __ https://github.com/baptistert
