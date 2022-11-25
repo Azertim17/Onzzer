@@ -1,4 +1,4 @@
-.. image:: https://github.com/Azertim17/Onzzer/Onzzer/Icones/logo_long.png
+.. image:: https://github.com/Azertim17/Onzzer/blob/main/Onzzer/Icones/logo_long.png?raw=true
       :align: center
 
 =========================================
