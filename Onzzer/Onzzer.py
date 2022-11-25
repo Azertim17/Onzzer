@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov 14 08:46:58 2022
-
-@author: etudiant
-"""
-
 import sys 
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
@@ -21,7 +13,7 @@ class MaPremiereAppli(QMainWindow):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Mon éditeur")
+        self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/icone-appli.png'))
         self.resize(1000,800)
         self.menu()
@@ -33,18 +25,14 @@ class MaPremiereAppli(QMainWindow):
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
         eraseButton.setStatusTip('Ouvrir un fichier')
-        # newButton.triggered.connect()
 
         sendButton = QAction(QIcon('Icones/mail-send.png'), 'Envoyer', self)
         sendButton.setShortcut('Ctrl+O')
         sendButton.setStatusTip('Ouvrir un fichier')
-        # openButton.triggered.connect()
-
         
         exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
         exitButton.setStatusTip('Exit application')
-        exitButton.triggered.connect(self.close)
 
 
 
@@ -60,11 +48,11 @@ class MaPremiereAppli(QMainWindow):
         
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
-        manButton.triggered.connect(self.man)
+        manButton.triggered.connect(self.action_a_propos)
         
 
+        exitButton.triggered.connect(self.close)
 
-        
         menu = self.menuBar()
         menufichier = menu.addMenu("&Fichier")
         menufichier.addAction(eraseButton)
@@ -83,43 +71,15 @@ class MaPremiereAppli(QMainWindow):
         self.addToolBar(toolbar)
         toolbar.addAction(eraseButton)
         toolbar.addAction(sendButton)
-        
+       
 
 
+    #def action_clear():
 
-        texte = QTextEdit()
-        
-        
-        mail = QWidget()
-        self.setCentralWidget(mail)
-        
-        mailVbox = QVBoxLayout()
-        mail.setLayout(mailVbox)
-        
-        entete = QGroupBox("Entête du mail")
-        layform = QGridLayout()
-        
-        entete.setLayout(layform)
-        
-        de = QLabel("De :")
-        de2 = QLineEdit()
-        
-        layform.addWidget(de, 1, 1)
-        layform.addWidget(de2, 2, 1)
-        
-        
-        
-        mailVbox.addWidget(entete)
-        mailVbox.addWidget(texte)
-        
+
+    def action_a_propos(self):
             
-        
-        
-        
-    def man(self):
-            
-        QMessageBox.information(self,"A propos", "Tout un programme !")
-
+        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Tout un programme !")
 
 
 def main():
