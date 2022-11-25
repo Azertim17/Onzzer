@@ -3,7 +3,7 @@
 """
 Created on Mon Nov 14 08:46:58 2022
 
-@author: etudiant
+@author: Tim
 """
 
 import sys 
