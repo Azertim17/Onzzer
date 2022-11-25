@@ -1,6 +1,10 @@
+.. image:: onzzer/Icones/logo_long.png
+      :align: center
+
 =========================================
-SAE 302 music search
+SAE 302 Onzzer
 =========================================
+
 
 ####
 
@@ -35,9 +39,10 @@ Arborescence du projet
       ├── html/
       │   └── ...
       ├── __init__.py
-      ├── music_search/
-      |    ├── music_search.py
-      │    └── music_search_module.py
+      ├── onzzer/
+      |    ├── onzzer.py
+      │    └── onzzer_module.py
+      │    └── Icones/
       ├── tests/
       │   ├── __init__.py
       │   └── test_music_search_module.py
