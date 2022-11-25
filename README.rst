@@ -1,5 +1,5 @@
 .. image:: https://github.com/Azertim17/Onzzer/blob/main/Onzzer/Icones/logo_long.png?raw=true
-      :align: right
+      :align: center
 
 =========================================
 SAE 302 Onzzer
