@@ -1,6 +1,6 @@
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget , QTableWidget , QTableWidgetItem, QHeaderView
+from PyQt5.QtWidgets import QApplication, QWidget , QTableWidget , QTableWidgetItem
  
 app = QApplication(sys.argv)
 root = QWidget()
@@ -17,9 +17,6 @@ table.setGeometry(50 , 50 , 500 ,500)
 headerH = ["Musique de l'album"]
 table.setHorizontalHeaderLabels(headerH)
 
-header = table.horizontalHeader()
-header.setSectionResizeMode(QHeaderView.ResizeToContents)       
-header.setSectionResizeMode(0, QHeaderView.Stretch)
 
 # adding a first row
 table.setItem(0,0, QTableWidgetItem(' Albert Einstein'))

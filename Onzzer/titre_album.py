@@ -1,16 +1,16 @@
 import sys 
+import os
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
 from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
-
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence 
 from PyQt5.QtCore import Qt, QDir
 
 
+
 class MaPremiereAppli(QMainWindow):
 
-    
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Onzzer")
@@ -19,37 +19,19 @@ class MaPremiereAppli(QMainWindow):
         self.menu()
         self.bloc()
 
-        
-    
     def menu(self):
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
-        eraseButton.setStatusTip('Ouvrir un fichier')
-
         openButton = QAction(QIcon('Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
         openButton.setShortcut('Ctrl+O')
-        openButton.setStatusTip("")
-        
         exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
-        exitButton.setStatusTip('Exit application')
-
-
-        serverButton = QAction('Serveur SMTP', self)
-        serverButton.setShortcut('Ctrl+X')
-        
-        expButton = QAction('Expéditeur', self)
-        expButton.setShortcut('Ctrl+C')
-        
-        signButton = QAction('Signature', self)
-        signButton.setShortcut('Ctrl+V')
-        
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
-        manButton.triggered.connect(self.action_a_propos)
         
-
         exitButton.triggered.connect(self.close)
+        openButton.triggered.connect(self.action_openfolder)
+        manButton.triggered.connect(self.action_a_propos)
 
         menu = self.menuBar()
         menufichier = menu.addMenu("&Fichier")
@@ -57,18 +39,21 @@ class MaPremiereAppli(QMainWindow):
         menufichier.addAction(openButton)
         menufichier.addAction(exitButton)
         
-        menuedition = menu.addMenu("&Parametres")
-        menuedition.addAction(serverButton)
-        menuedition.addAction(expButton)
-        menuedition.addAction(signButton)
-        
         menuAide = menu.addMenu("&Aide")
         menuAide.addAction(manButton)
                
         toolbar = QToolBar("Ma barre d'outils")
         self.addToolBar(toolbar)
         toolbar.addAction(eraseButton)
-        toolbar.addAction(openButton)
+        toolbar.addAction(exitButton)   
+
+    def action_openfolder(self) :
+        os.system("%SystemRoot%\explorer.exe /n,/e, monurl")
+       
+
+    def action_a_propos(self):
+        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
+
 
     def bloc (self):
         bloc1 = QWidget()

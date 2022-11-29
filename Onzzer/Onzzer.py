@@ -4,13 +4,11 @@ from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout, 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
 from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
-
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap
 from PyQt5.QtCore import Qt, QDir
 
 
 class MaPremiereAppli(QMainWindow):
-
     
     def __init__(self):
         super().__init__()
@@ -19,9 +17,8 @@ class MaPremiereAppli(QMainWindow):
         #self.setStyleSheet("background-color: Blue;")
         self.resize(500,500)
         self.menu()
-        self.central()
-        
-    
+        self.central()    
+
     def menu(self):
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
@@ -32,6 +29,7 @@ class MaPremiereAppli(QMainWindow):
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
         
+        eraseButton.triggered.connect(self.action_clear)
         exitButton.triggered.connect(self.close)
         openButton.triggered.connect(self.action_openfolder)
         manButton.triggered.connect(self.action_a_propos)
@@ -59,7 +57,7 @@ class MaPremiereAppli(QMainWindow):
         box_image = QLabel()
         image = QPixmap('Icones/logo_long.png')
         wid_search = QWidget()
-        line = QLineEdit()
+        self.line = QLineEdit()
         searchButton = QPushButton("Recherche")
         self.setCentralWidget(wid_onzzer)
 
@@ -67,28 +65,20 @@ class MaPremiereAppli(QMainWindow):
         box_image.setPixmap(image)
         
         grid_box.addWidget(box_image, 0, 2)
-        grid_box.addWidget(line, 1, 1, 1, 3)
+        grid_box.addWidget(self.line, 1, 1, 1, 3)
         grid_box.addWidget(searchButton, 1, 4)
         grid_box.setVerticalSpacing(2)
-        grid_box.setContentsMargins(200, 200, 200, 400)
 
-        #wid_onzzer.setStyleSheet("background-color: Blue;")
-        line.setStyleSheet("background-color: white;")
+        wid_onzzer.setFixedWidth(800)
+        self.line.setStyleSheet("background-color: white;")
         searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
 
-
-
-
-
-
-
+    
     def action_openfolder(self) :
         os.system("%SystemRoot%\explorer.exe /n,/e, monurl")
        
-
-
-    #def action_clear():
-
+    def action_clear(self):
+        self.line.clear()
 
     def action_a_propos(self):
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
