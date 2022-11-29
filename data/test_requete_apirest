@@ -9,3 +9,7 @@ curl https://musicbrainz.org/search?query=Ce+que+je+sais&type=release&limit=25&m
 
 Requete 2:
 GET /ws/2/release?collection=(variable2)
+
+
+en xml:
+curl https://musicbrainz.org/ws/2/release-group/3bd76d40-7f0e-36b7-9348-91a33afee20e
