@@ -14,7 +14,7 @@ class MaPremiereAppli(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Onzzer")
-        self.setWindowIcon(QIcon('Icones/icone-appli.png'))
+        self.setWindowIcon(QIcon('Icones/logo.png'))
         self.resize(1000,800)
         self.menu()
 
@@ -26,15 +26,13 @@ class MaPremiereAppli(QMainWindow):
         eraseButton.setShortcut('Ctrl+N')
         eraseButton.setStatusTip('Ouvrir un fichier')
 
-        sendButton = QAction(QIcon('Icones/mail-send.png'), 'Envoyer', self)
-        sendButton.setShortcut('Ctrl+O')
-        sendButton.setStatusTip('Ouvrir un fichier')
+        openButton = QAction(QIcon('Icones/mail-send.png'), 'Envoyer', self)
+        openButton.setShortcut('Ctrl+O')
+        openButton.setStatusTip("Ouvrir l'emplacement d'enregistrement")
         
         exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
         exitButton.setStatusTip('Exit application')
-
-
 
 
         serverButton = QAction('Serveur SMTP', self)
@@ -56,7 +54,7 @@ class MaPremiereAppli(QMainWindow):
         menu = self.menuBar()
         menufichier = menu.addMenu("&Fichier")
         menufichier.addAction(eraseButton)
-        menufichier.addAction(sendButton)
+        menufichier.addAction(openButton)
         menufichier.addAction(exitButton)
         
         menuedition = menu.addMenu("&Parametres")
@@ -70,7 +68,7 @@ class MaPremiereAppli(QMainWindow):
         toolbar = QToolBar("Ma barre d'outils")
         self.addToolBar(toolbar)
         toolbar.addAction(eraseButton)
-        toolbar.addAction(sendButton)
+        toolbar.addAction(openButton)
        
 
 
