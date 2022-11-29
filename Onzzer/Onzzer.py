@@ -79,7 +79,7 @@ class MaPremiereAppli(QMainWindow):
 
     def action_a_propos(self):
             
-        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Tout un programme !")
+        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
 
 
 def main():
