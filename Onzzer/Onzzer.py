@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, 
 from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
 
-from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence
+from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QFileDialog 
 from PyQt5.QtCore import Qt, QDir
 
 
@@ -18,7 +18,6 @@ class MaPremiereAppli(QMainWindow):
         self.resize(1000,800)
         self.menu()
 
-
         
     
     def menu(self):
@@ -26,9 +25,9 @@ class MaPremiereAppli(QMainWindow):
         eraseButton.setShortcut('Ctrl+N')
         eraseButton.setStatusTip('Ouvrir un fichier')
 
-        openButton = QAction(QIcon('Icones/mail-send.png'), 'Envoyer', self)
+        openButton = QAction(QIcon('Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
         openButton.setShortcut('Ctrl+O')
-        openButton.setStatusTip("Ouvrir l'emplacement d'enregistrement")
+        openButton.setStatusTip("")
         
         exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
@@ -69,6 +68,14 @@ class MaPremiereAppli(QMainWindow):
         self.addToolBar(toolbar)
         toolbar.addAction(eraseButton)
         toolbar.addAction(openButton)
+
+
+
+    def action_openfolder(self) :
+        fichier = QFileDialog.getOpenFileName(self, 
+                     "Ouvrir un fichier", 
+                     "/cheminverslefichier", 
+                     "JPEG (*.jpg *.jpeg);; TIFF (*.tif);; All files (*.*)")
        
 
 
@@ -77,7 +84,7 @@ class MaPremiereAppli(QMainWindow):
 
     def action_a_propos(self):
             
-        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Tout un programme !")
+        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
 
 
 def main():
