@@ -1,0 +1,670 @@
+{
+    "artist-credit": [
+        {
+            "artist": {
+                "disambiguation": "",
+                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                "name": "Stromae",
+                "sort-name": "Stromae",
+                "type": "Person",
+                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+            },
+            "joinphrase": "",
+            "name": "Stromae"
+        }
+    ],
+    "asin": "B09KNX3GTT",
+    "barcode": "602445114047",
+    "country": "BE",
+    "cover-art-archive": {
+        "artwork": true,
+        "back": true,
+        "count": 19,
+        "darkened": false,
+        "front": true
+    },
+    "date": "2022-03-04",
+    "disambiguation": "",
+    "id": "78ff42d3-cb7b-416b-b3d1-a3f0535468af",
+    "label-info": [
+        {
+            "catalog-number": "451140-4",
+            "label": {
+                "disambiguation": "Stromae's label",
+                "id": "0550200c-22c1-4c62-b761-ef0b3665262b",
+                "label-code": null,
+                "name": "Mosaert",
+                "sort-name": "Mosaert",
+                "type": null,
+                "type-id": null
+            }
+        },
+        {
+            "catalog-number": "451140-4",
+            "label": {
+                "disambiguation": "worldwide imprint, see annotation",
+                "id": "ce24ab18-1bd6-4293-a486-546d13d6a5e2",
+                "label-code": 309,
+                "name": "Polydor",
+                "sort-name": "Polydor",
+                "type": "Imprint",
+                "type-id": "b6285b2a-3514-3d43-80df-fcf528824ded"
+            }
+        },
+        {
+            "catalog-number": "451140-4",
+            "label": {
+                "disambiguation": "",
+                "id": "c9b33d46-1b0f-4721-bf64-1a6b3a093345",
+                "label-code": 699,
+                "name": "Universal Music France",
+                "sort-name": "Universal Music France",
+                "type": "Original Production",
+                "type-id": "7aaa37fe-2def-3476-b359-80245850062d"
+            }
+        }
+    ],
+    "media": [
+        {
+            "discs": [
+                {
+                    "id": "wu2wOdxuPdF_qhtiV2kB1L8Z6fk-",
+                    "offset-count": 12,
+                    "offsets": [
+                        150,
+                        9578,
+                        23903,
+                        37565,
+                        52223,
+                        66452,
+                        78619,
+                        90816,
+                        105903,
+                        118811,
+                        132665,
+                        146741
+                    ],
+                    "sectors": 161144
+                }
+            ],
+            "format": "CD",
+            "format-id": "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+            "position": 1,
+            "title": "",
+            "track-count": 12,
+            "track-offset": 0,
+            "tracks": [
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "c4a7a4af-100c-42eb-9b64-0c4aaa071bc7",
+                    "length": 125706,
+                    "number": "1",
+                    "position": 1,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "d08c7ec5-8737-455c-8c27-38eb2ba43cdb",
+                        "length": 125706,
+                        "title": "Invaincu",
+                        "video": false
+                    },
+                    "title": "Invaincu"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "3f5524bd-c0b6-4632-993f-dd931e7d49c8",
+                    "length": 191000,
+                    "number": "2",
+                    "position": 2,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2021-10-15",
+                        "id": "d54669e6-1acd-4848-acf0-59a20c0972dd",
+                        "length": 191000,
+                        "title": "Sant\u00e9",
+                        "video": false
+                    },
+                    "title": "Sant\u00e9"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "6bda18fc-c710-4339-8b28-c5fa14c9ab76",
+                    "length": 182160,
+                    "number": "3",
+                    "position": 3,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "dd656401-5c73-4070-bae4-ea09064dd266",
+                        "length": 182160,
+                        "title": "La solassitude",
+                        "video": false
+                    },
+                    "title": "La solassitude"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "20af7ad4-c9e2-4385-b574-ed71b7ce6247",
+                    "length": 195440,
+                    "number": "4",
+                    "position": 4,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "d530b345-3529-4658-b67d-930de77acd81",
+                        "length": 195440,
+                        "title": "Fils de joie",
+                        "video": false
+                    },
+                    "title": "Fils de joie"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "083332aa-35d6-488c-bfbe-eb1fff34d035",
+                    "length": 189720,
+                    "number": "5",
+                    "position": 5,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-01-09",
+                        "id": "c893c755-a8a8-43a9-85b6-a44f11634448",
+                        "length": 189720,
+                        "title": "L\u2019enfer",
+                        "video": false
+                    },
+                    "title": "L'enfer"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "08c1d7fd-0b9b-415b-a300-a2eea2da368d",
+                    "length": 162226,
+                    "number": "6",
+                    "position": 6,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "61e97988-d81a-4291-9d8d-f31f6c5b33bc",
+                        "length": 162226,
+                        "title": "C\u2019est que du bonheur",
+                        "video": false
+                    },
+                    "title": "C'est que du bonheur"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "ddee720e-20b7-4586-90ff-13415f249022",
+                    "length": 162626,
+                    "number": "7",
+                    "position": 7,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "4261a42a-34d4-464c-b907-8a5336d7bee3",
+                        "length": 162626,
+                        "title": "Pas vraiment",
+                        "video": false
+                    },
+                    "title": "Pas vraiment"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "fd183225-f926-4679-8790-beee0db8f1a6",
+                    "length": 201160,
+                    "number": "8",
+                    "position": 8,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "2055f3e5-3e3e-4f41-8d4e-94789da5eda7",
+                        "length": 201160,
+                        "title": "Riez",
+                        "video": false
+                    },
+                    "title": "Riez"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "4a78841a-6853-4f91-997d-9aa36ba86566",
+                    "length": 172106,
+                    "number": "9",
+                    "position": 9,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "b38e9782-9807-4e0b-ba83-cb1021b3a807",
+                        "length": 172106,
+                        "title": "Mon amour",
+                        "video": false
+                    },
+                    "title": "Mon amour"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "eee6d29f-27c8-44e4-b9fe-bd0bc86555e0",
+                    "length": 184720,
+                    "number": "10",
+                    "position": 10,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "288b36ef-999d-43e7-8e2f-aed5ef269ead",
+                        "length": 184720,
+                        "title": "D\u00e9claration",
+                        "video": false
+                    },
+                    "title": "D\u00e9claration"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "c6a082f0-6166-49e4-8142-7cdfcc5cf555",
+                    "length": 187680,
+                    "number": "11",
+                    "position": 11,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "d7bf428b-b98f-4acd-a76a-771faefb8fc8",
+                        "length": 187680,
+                        "title": "Mauvaise journ\u00e9e",
+                        "video": false
+                    },
+                    "title": "Mauvaise journ\u00e9e"
+                },
+                {
+                    "artist-credit": [
+                        {
+                            "artist": {
+                                "disambiguation": "",
+                                "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                "name": "Stromae",
+                                "sort-name": "Stromae",
+                                "type": "Person",
+                                "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                            },
+                            "joinphrase": "",
+                            "name": "Stromae"
+                        }
+                    ],
+                    "id": "8cf62a0f-8e24-493a-9b34-fa0a3715ef43",
+                    "length": 192040,
+                    "number": "12",
+                    "position": 12,
+                    "recording": {
+                        "artist-credit": [
+                            {
+                                "artist": {
+                                    "disambiguation": "",
+                                    "id": "ab2528d9-719f-4261-8098-21849222a0f2",
+                                    "name": "Stromae",
+                                    "sort-name": "Stromae",
+                                    "type": "Person",
+                                    "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df"
+                                },
+                                "joinphrase": "",
+                                "name": "Stromae"
+                            }
+                        ],
+                        "disambiguation": "",
+                        "first-release-date": "2022-03-03",
+                        "id": "ff031d1c-7bdb-4875-b421-cedb8316f47f",
+                        "length": 192040,
+                        "title": "Bonne journ\u00e9e",
+                        "video": false
+                    },
+                    "title": "Bonne journ\u00e9e"
+                }
+            ]
+        }
+    ],
+    "packaging": "Gatefold Cover",
+    "packaging-id": "e724a489-a7e8-30a1-a17c-30dfd6831202",
+    "quality": "normal",
+    "release-events": [
+        {
+            "area": {
+                "disambiguation": "",
+                "id": "5b8a5ee5-0bb3-34cf-9a75-c27c44e341fc",
+                "iso-3166-1-codes": [
+                    "BE"
+                ],
+                "name": "Belgium",
+                "sort-name": "Belgium",
+                "type": null,
+                "type-id": null
+            },
+            "date": "2022-03-04"
+        },
+        {
+            "area": {
+                "disambiguation": "",
+                "id": "08310658-51eb-3801-80de-5a0739207115",
+                "iso-3166-1-codes": [
+                    "FR"
+                ],
+                "name": "France",
+                "sort-name": "France",
+                "type": null,
+                "type-id": null
+            },
+            "date": "2022-03-04"
+        },
+        {
+            "area": {
+                "disambiguation": "",
+                "id": "ef1b7cc0-cd26-36f4-8ea0-04d9623786c7",
+                "iso-3166-1-codes": [
+                    "NL"
+                ],
+                "name": "Netherlands",
+                "sort-name": "Netherlands",
+                "type": null,
+                "type-id": null
+            },
+            "date": "2022-03-04"
+        }
+    ],
+    "status": "Official",
+    "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+    "text-representation": {
+        "language": "fra",
+        "script": "Latn"
+    },
+    "title": "Multitude"
+}
