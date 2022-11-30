@@ -17,6 +17,7 @@ table.setGeometry(50 , 50 , 500 ,500)
 headerH = ["Musique de l'album"]
 table.setHorizontalHeaderLabels(headerH)
 
+table.setColumnWidth(0,350)
 
 # adding a first row
 table.setItem(0,0, QTableWidgetItem(' Albert Einstein'))

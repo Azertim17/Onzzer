@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog, QPushButton
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence 
 from PyQt5.QtCore import Qt, QDir
-
+import fonctions
 
 
 def menu(self):
@@ -20,8 +20,12 @@ def menu(self):
     manButton.setShortcut('F1')
     
     exitButton.triggered.connect(self.close)
-    openButton.triggered.connect(action_openfolder)
-    manButton.triggered.connect(action_a_propos)
+    openButton.triggered.connect(fonctions.action_openfolder)
+    manButton.triggered.connect(fonctions.action_a_propos)
+    eraseButton.triggered.connect(fonctions.action_clear)
+
+
+
     menu = self.menuBar()
     menufichier = menu.addMenu("&Fichier")
     menufichier.addAction(eraseButton)
@@ -52,7 +56,7 @@ def bloc (self):
 
     self.show()
     
-    
+
 def central(self):
     
     wid_onzzer = QWidget()
@@ -80,7 +84,7 @@ def action_openfolder(self) :
     os.system("%SystemRoot%\explorer.exe /n,/e, monurl")
    
 def action_clear(self):
-    self.line.clear()
+    central.self.line.clear()
 
 def action_a_propos(self):
     QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
