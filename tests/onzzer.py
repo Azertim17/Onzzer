@@ -1,13 +1,11 @@
 import sys 
 import os
-import subprocess
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout, QPushButton, QDesktopWidget
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
-from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
-from PyQt5.QtWidgets import QMessageBox, QInputDialog, QTableWidget, QTableWidgetItem, QHeaderView
-from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap, QLinearGradient
-from PyQt5.QtCore import Qt, QDir
-import onzzer
+from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QToolBar
+from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbstractItemView
+from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeaderView
+from PyQt5.QtGui import QIcon, QPixmap, QPixmap
+from PyQt5.QtCore import Qt
 
 
 class Fenetre_principale(QMainWindow):
@@ -96,6 +94,8 @@ class Fenetre_principale(QMainWindow):
         self.line.setStyleSheet("background-color: white;")
  
         
+ 
+    
     def tableau(self):
 
         image1 = QPixmap('../onzzer/Icones/logo_long_blanc.png' ) 
@@ -111,6 +111,7 @@ class Fenetre_principale(QMainWindow):
         table.setRowCount(10)
         table.setColumnCount(2)
         table.setContentsMargins(100, 200, 100, 0)
+        
         table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_table)
         
@@ -128,10 +129,59 @@ class Fenetre_principale(QMainWindow):
         header = table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        
+        albumButton = QPushButton("Multitudes")
+        albumButton.clicked.connect(self.action_resulat)
+        
+        table.setItem(0,0, QTableWidgetItem("Stromae"))
+        table.setCellWidget(0,1,albumButton )
+        
+        
+        
+        
+        
+    def reponse(self):
+        
+        image1 = QPixmap('../onzzer/Icones/logo_long_blanc.png' ) 
+        image = image1.scaled(255, 68)
+        searchButton = QPushButton("Nouvelle recherche")
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        searchButton.clicked.connect(self.action_nouv_rech)
+        returnButton = QPushButton("Retour liste")
+        returnButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        returnButton.clicked.connect(self.action_return)
+        
+        self.wid_table = QWidget()
+        vbox = QVBoxLayout()
+        box_image = QLabel()
+        table = QTableWidget()
+        table.setRowCount(10)
+        table.setColumnCount(1)
+        table.setContentsMargins(100, 200, 100, 0)
+        table.setStyleSheet("background-color: #D0D1D2")
+        self.setCentralWidget(self.wid_table)
+        
+        box_image.setPixmap(image)
+        vbox.addWidget(box_image, alignment= Qt.AlignRight)
+  
+        self.wid_table.setLayout(vbox)
+        vbox.addWidget(table)
+        
+        vbox.addWidget(searchButton, alignment= Qt.AlignLeft)
+        vbox.addWidget(returnButton, alignment= Qt.AlignLeft)
+
+        headerH = ["Titres de l'Album"]
+        table.setHorizontalHeaderLabels(headerH)
+        
+        header = table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+
 
         table.setItem(0,0, QTableWidgetItem('test'))
         
         
+      
 
     def action_openfolder(self) :
         os.startfile('..\Onzzer\Icones')
@@ -141,7 +191,11 @@ class Fenetre_principale(QMainWindow):
         self.line.clear()
 
     def action_a_propos(self):
-        apropos = QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
+        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
+        
+    def action_return(self):
+        self.wid_table.close() 
+        self.tableau()
 
     def action_fen2(self):
         self.wid_onzzer.close() 
@@ -151,6 +205,10 @@ class Fenetre_principale(QMainWindow):
         self.wid_table.close()
         self.accueil()
 
+    def action_resulat(self):
+        self.wid_table.close()
+        self.reponse()
+    
     def center(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
