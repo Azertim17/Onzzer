@@ -1,4 +1,3 @@
-from replit import db
 import urllib.request, requests
 import json
 import csv
