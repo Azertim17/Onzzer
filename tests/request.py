@@ -1,4 +1,4 @@
-#import json
+import json
 import requests
 
 recherche = input('Nom de l Album: ')
@@ -11,11 +11,11 @@ url_fin = "%20AND%20type:album&fmt=json"
 url_complet = url_base + replace + url_fin
 print(url_complet)
 
-"""
-reponse = requests.get(url)
+
+reponse = requests.get(url_complet)
 contenu = reponse.json()
 
-
+'''
 for i in contenu:
 
       title = i['release-groups'][6]['releases'][3]['title']
@@ -30,9 +30,21 @@ for i in contenu:
       print("Id de l'artiste :", id_artiste)
       print()
 
+'''
+json = json.loads(contenu)
+
+for i in json ["release-groups"][0]["releases"]:
+    if i["title"] == traitement1:
+        value = i["value"]
+        break
+else:
+    # Some default action
+    print("Pas d'albums trouver")
+    value = "Pas d'albums trouver"
+
+print("Titre: ", value)
 
 
-fichier = open("data.txt", "a")
-fichier.write(json.dumps(contenu, sort_keys=True, indent=4))
-fichier.close()
-"""
+#fichier = open("data.txt", "a")
+#fichier.write(json.dumps(contenu, sort_keys=True, indent=4))
+#fichier.close()
