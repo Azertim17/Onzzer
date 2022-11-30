@@ -3,8 +3,8 @@ import os
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout, QPushButton
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
 from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
-from PyQt5.QtWidgets import QMessageBox, QInputDialog, QTableWidget, QTableWidgetItem
-from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QTableWidget, QTableWidgetItem, QHeaderView
+from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap, QLinearGradient
 from PyQt5.QtCore import Qt, QDir
 import onzzer
 
@@ -17,8 +17,9 @@ class Fenetre_principale(QMainWindow):
         self.setWindowIcon(QIcon('Icones/logo.png'))
         #self.setStyleSheet("background-color: Blue;")
         self.setGeometry(600,100,800,800)
+        self.setStyleSheet("background-color: #202124")
         self.menu()
-        self.accueil()    
+        self.accueil()
 
     def menu(self):
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
@@ -49,57 +50,70 @@ class Fenetre_principale(QMainWindow):
         toolbar.addAction(eraseButton)
         toolbar.addAction(exitButton)
         
+        menu.setStyleSheet("background-color: #3655B2")
+        toolbar.setStyleSheet("background-color: #3655B2")
+        
 
 
     def accueil(self):
         
+        image = QPixmap('Icones/logo_long_blanc.png')
+        searchButton = QPushButton("Recherche") 
+        line = QLineEdit()          
+
         self.wid_onzzer = QWidget()
-        grid_box = QGridLayout()
+        vbox = QVBoxLayout()
+        wid_grid = QWidget()
+        grid = QGridLayout()
         box_image = QLabel()
-        image = QPixmap('Icones/logo_long.png')
-        wid_search = QWidget()
-        self.line = QLineEdit()
-        searchButton = QPushButton("Recherche")
         self.setCentralWidget(self.wid_onzzer)
-
-
-        self.wid_onzzer.setLayout(grid_box)
+        
+        self.wid_onzzer.setLayout(vbox)
         box_image.setPixmap(image)
-        
-        
-        
-       # grid_box.addWidget(box_image, 0, 2)
-        grid_box.addWidget(self.line, 1, 1, 1, 3)
-        grid_box.addWidget(searchButton, 1, 4)
-        grid_box.setVerticalSpacing(2)
-        grid_box.setContentsMargins(100, 100, 100, 300)
-        
-        box_image.setStyleSheet('background-color: black; ')
-        box_image.setFixedHeight(150)
-        box_image.setFixedWidth(400)
+        box_image.setAlignment(Qt.AlignCenter)
 
-        self.wid_onzzer.setFixedWidth(800)
-        self.line.setStyleSheet("background-color: white;")
-        searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
+        grid.addWidget(line, 0, 0, 1, 3)
+        grid.addWidget(searchButton, 0, 4)
+        wid_grid.setLayout(grid)
+        
+        vbox.addWidget(box_image, alignment= Qt.AlignBottom)
+        vbox.setAlignment(Qt.AlignCenter)
+        vbox.addWidget(wid_grid, alignment= Qt.AlignCenter)
+
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px;")
         searchButton.clicked.connect(self.action_fen2)
+        
 
-
-
+        wid_grid.setFixedWidth(600)
+        box_image.setFixedWidth(600)
+        
+        line.setStyleSheet("background-color: white;")
+        #self.wid_onzzer.setFixedSize(600, 800)
+        #self.wid_onzzer.setContentsMargins(0 , 50, 0, 0)
+        
+        #box_image.resize(200, 10)        
+        
     def tableau(self):
+
+
 
         table = QTableWidget()
         table.setRowCount(10)
-        table.setColumnCount(1)
+        table.setColumnCount(2)
         table.setGeometry(150 , 150 , 300 ,500)
         table.setContentsMargins( 100, 200, 100, 0)
         self.setCentralWidget(table)
+        
 
-        headerH = ["Musique de l'album"]
+        headerH = ["Titre Albums","Nom Artiste"]
         table.setHorizontalHeaderLabels(headerH)
+        
+        
+        header = table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)       
 
-        table.setColumnWidth(0,350)
 
-        table.setItem(0,0, QTableWidgetItem('Albert Einstein'))
+        table.setItem(0,0, QTableWidgetItem('test'))
     
 
 
@@ -126,35 +140,6 @@ def main():
         
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
