@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout, 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
 from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog, QTableWidget, QTableWidgetItem, QHeaderView
-from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap
+from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap, QLinearGradient
 from PyQt5.QtCore import Qt, QDir
 import onzzer
 
@@ -17,10 +17,9 @@ class Fenetre_principale(QMainWindow):
         self.setWindowIcon(QIcon('../onzzer/Icones/logo.png'))
         #self.setStyleSheet("background-color: Blue;")
         self.setGeometry(600,100,800,800)
-        self.setStyleSheet("background-color: white;")
-
+        self.setStyleSheet("background-color: black")
         self.menu()
-        self.accueil()    
+        self.accueil()
 
     def menu(self):
         eraseButton = QAction(QIcon('../onzzer/Icones/edit-undo.png'), 'Effacer', self)
@@ -51,6 +50,9 @@ class Fenetre_principale(QMainWindow):
         toolbar.addAction(eraseButton)
         toolbar.addAction(exitButton)
         
+        menu.setStyleSheet("background-color: grey")
+        toolbar.setStyleSheet("background-color: grey")
+        
 
 
     def accueil(self):
@@ -63,33 +65,31 @@ class Fenetre_principale(QMainWindow):
         vbox = QVBoxLayout()
         wid_grid = QWidget()
         grid = QGridLayout()
-        box_image = QWidget()
-        
+        box_image = QLabel()
         self.setCentralWidget(self.wid_onzzer)
         
-        box_image.setPixmap(image)
-
-        
         self.wid_onzzer.setLayout(vbox)
-        
+        box_image.setPixmap(image)
+        box_image.setAlignment(Qt.AlignCenter)
+
         grid.addWidget(line, 0, 0, 1, 3)
         grid.addWidget(searchButton, 0, 4)
         wid_grid.setLayout(grid)
         
-        vbox.addWidget(box_image, alignment= Qt.AlignCenter)
+        vbox.addWidget(box_image, alignment= Qt.AlignBottom)
         vbox.addWidget(wid_grid, alignment= Qt.AlignCenter)
 
         searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
         searchButton.clicked.connect(self.action_fen2)
-
+        
+        wid_grid.setFixedWidth(800)
+        box_image.setFixedWidth(800)
+        
+        line.setStyleSheet("background-color: white")
         #self.wid_onzzer.setFixedSize(600, 800)
         #self.wid_onzzer.setContentsMargins(0 , 50, 0, 0)
         
-        box_image.setFixedHeight(100)
-        box_image.setStyleSheet("background-color: black;")
-            
-        wid_grid.setStyleSheet("background-color: black;")
-
+        #box_image.resize(200, 10)        
         
     def tableau(self):
 
