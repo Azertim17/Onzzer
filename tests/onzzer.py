@@ -82,28 +82,38 @@ class Fenetre_principale(QMainWindow):
 
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px;")
         searchButton.clicked.connect(self.action_fen2)
-        
 
         wid_grid.setFixedWidth(600)
         box_image.setFixedWidth(600)
         
         line.setStyleSheet("background-color: white;")
-        #self.wid_onzzer.setFixedSize(600, 800)
-        #self.wid_onzzer.setContentsMargins(0 , 50, 0, 0)
-        
-        #box_image.resize(200, 10)        
+ 
         
     def tableau(self):
 
-
-
+        image = QPixmap('../onzzer/Icones/logo_long_blanc.png' ) 
+        searchButton = QPushButton("Nouvelle recherche")
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px;")
+        searchButton.clicked.connect(self.action_nouv_rech())
+        
+        self.wid_table = QWidget()
+        vbox = QVBoxLayout()
+        box_image = QLabel()
         table = QTableWidget()
         table.setRowCount(10)
         table.setColumnCount(2)
-        table.setGeometry(150 , 150 , 300 ,500)
+       # table.setGeometry(150 , 150 , 300 ,500)
         table.setContentsMargins( 100, 200, 100, 0)
-        self.setCentralWidget(table)
+        self.setCentralWidget(self.wid_table)
         
+        box_image.setPixmap(image)
+        vbox.addWidget(box_image)
+        
+        self.wid_table.setLayout(vbox)
+        vbox.addWidget(table)
+        
+        vbox.addWidget(searchButton)
+
 
         headerH = ["Titre Albums","Nom Artiste"]
         table.setHorizontalHeaderLabels(headerH)
@@ -129,6 +139,10 @@ class Fenetre_principale(QMainWindow):
     def action_fen2(self):
         self.wid_onzzer.close() 
         self.tableau()
+    
+    def action_nouv_rech(self):
+        self.wid_table.close()
+        self.accueil()
 
 
 
