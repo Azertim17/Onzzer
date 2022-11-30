@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap
 from PyQt5.QtCore import Qt, QDir
-from titre_album import Fenetre2
+import onzzer
 
 
 class Fenetre_principale(QMainWindow):
@@ -53,16 +53,16 @@ class Fenetre_principale(QMainWindow):
 
     def central(self):
         
-        wid_onzzer = QWidget()
+        self.wid_onzzer = QWidget()
         grid_box = QGridLayout()
         box_image = QLabel()
         image = QPixmap('Icones/logo_long.png')
         wid_search = QWidget()
         self.line = QLineEdit()
         searchButton = QPushButton("Recherche")
-        self.setCentralWidget(wid_onzzer)
+        self.setCentralWidget(self.wid_onzzer)
 
-        wid_onzzer.setLayout(grid_box)
+        self.wid_onzzer.setLayout(grid_box)
         box_image.setPixmap(image)
         
         grid_box.addWidget(box_image, 0, 2)
@@ -70,7 +70,7 @@ class Fenetre_principale(QMainWindow):
         grid_box.addWidget(searchButton, 1, 4)
         grid_box.setVerticalSpacing(2)
 
-        wid_onzzer.setFixedWidth(800)
+        self.wid_onzzer.setFixedWidth(800)
         self.line.setStyleSheet("background-color: white;")
         searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
         searchButton.clicked.connect(self.action_fen2)
@@ -86,9 +86,25 @@ class Fenetre_principale(QMainWindow):
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
 
     def action_fen2(self):
-        self.menu()
-        
-        
+        self.wid_onzzer.close() 
+        self.bloc()
+
+
+
+    def bloc (self):
+        bloc1 = QWidget()
+        self.setCentralWidget(bloc1)
+        bloc1_lay = QVBoxLayout()
+        bloc1.setLayout(bloc1_lay)
+
+        bloc2= QWidget()
+        bloc1_lay.addWidget(bloc2)
+        logo_onzzer = QLabel(self)
+        pixmap = QPixmap('Icones/logo.png')
+        logo_onzzer.setPixmap(pixmap)
+        self.setCentralWidget(logo_onzzer)
+
+
 
 def main():
     application = QApplication(sys.argv)
