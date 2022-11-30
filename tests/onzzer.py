@@ -21,8 +21,8 @@ class Fenetre_principale(QMainWindow):
         fonctions.central(self)  
         self.show() 
 
-    
-        
+
+      
 
 def main():
     application = QApplication(sys.argv)

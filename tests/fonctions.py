@@ -9,6 +9,9 @@ from PyQt5.QtCore import Qt, QDir
 import fonctions
 
 
+
+
+
 def menu(self):
     eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
     eraseButton.setShortcut('Ctrl+N')
@@ -42,6 +45,8 @@ def menu(self):
 
     self.show()
 
+
+
 def bloc (self):
     bloc1 = QWidget()
     self.setCentralWidget(bloc1)
@@ -62,29 +67,31 @@ def central(self):
     wid_onzzer = QWidget()
     grid_box = QGridLayout()
     box_image = QLabel()
+    line = QLineEdit()
     image = QPixmap('Icones/logo_long.png')
     wid_search = QWidget()
-    self.line = QLineEdit()
+
     searchButton = QPushButton("Recherche")
     self.setCentralWidget(wid_onzzer)
     wid_onzzer.setLayout(grid_box)
     box_image.setPixmap(image)
     
     grid_box.addWidget(box_image, 0, 2)
-    grid_box.addWidget(self.line, 1, 1, 1, 3)
+    grid_box.addWidget(line, 1, 1, 1, 3)
     grid_box.addWidget(searchButton, 1, 4)
     grid_box.setVerticalSpacing(2)
     wid_onzzer.setFixedWidth(800)
-    self.line.setStyleSheet("background-color: white;")
+    line.setStyleSheet("background-color: white;")
     searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
 
     self.show()
 
+
 def action_openfolder(self) :
     os.system("%SystemRoot%\explorer.exe /n,/e, monurl")
    
-def action_clear(self):
-    central.self.line.clear()
+def action_clear(line):
+    line.clear()
 
 def action_a_propos(self):
     QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
