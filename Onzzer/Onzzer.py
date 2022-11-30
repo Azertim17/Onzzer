@@ -48,7 +48,7 @@ class Fenetre_principale(QMainWindow):
         self.addToolBar(toolbar)
         toolbar.addAction(eraseButton)
         toolbar.addAction(exitButton)
-
+        
 
 
     def accueil(self):
@@ -62,13 +62,21 @@ class Fenetre_principale(QMainWindow):
         searchButton = QPushButton("Recherche")
         self.setCentralWidget(self.wid_onzzer)
 
+
         self.wid_onzzer.setLayout(grid_box)
         box_image.setPixmap(image)
         
-        grid_box.addWidget(box_image, 0, 2)
+        
+        
+       # grid_box.addWidget(box_image, 0, 2)
         grid_box.addWidget(self.line, 1, 1, 1, 3)
         grid_box.addWidget(searchButton, 1, 4)
         grid_box.setVerticalSpacing(2)
+        grid_box.setContentsMargins(100, 100, 100, 300)
+        
+        box_image.setStyleSheet('background-color: black; ')
+        box_image.setFixedHeight(150)
+        box_image.setFixedWidth(400)
 
         self.wid_onzzer.setFixedWidth(800)
         self.line.setStyleSheet("background-color: white;")
@@ -83,7 +91,7 @@ class Fenetre_principale(QMainWindow):
         table.setRowCount(10)
         table.setColumnCount(1)
         table.setGeometry(150 , 150 , 300 ,500)
-        table.setmar( 100, 200, 100, 0)
+        table.setContentsMargins( 100, 200, 100, 0)
         self.setCentralWidget(table)
 
         headerH = ["Musique de l'album"]
