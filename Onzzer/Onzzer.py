@@ -6,16 +6,17 @@ from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap
 from PyQt5.QtCore import Qt, QDir
+from titre_album import Fenetre2
 
 
-class MaPremiereAppli(QMainWindow):
+class Fenetre_principale(QMainWindow):
     
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))
         #self.setStyleSheet("background-color: Blue;")
-        self.resize(500,500)
+        self.setGeometry(600,300,500,500)
         self.menu()
         self.central()    
 
@@ -72,6 +73,7 @@ class MaPremiereAppli(QMainWindow):
         wid_onzzer.setFixedWidth(800)
         self.line.setStyleSheet("background-color: white;")
         searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
+        searchButton.clicked.connect(self.action_fen2)
 
     
     def action_openfolder(self) :
@@ -83,10 +85,14 @@ class MaPremiereAppli(QMainWindow):
     def action_a_propos(self):
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
 
+    def action_fen2(self):
+        self.menu()
+        
+        
 
 def main():
     application = QApplication(sys.argv)
-    fenetre = MaPremiereAppli()
+    fenetre = Fenetre_principale()
     fenetre.show()
     sys.exit(application.exec())
         

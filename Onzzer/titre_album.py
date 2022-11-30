@@ -7,12 +7,14 @@ from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence 
 from PyQt5.QtCore import Qt, QDir
 
+from onzzer.onzzer import MaPremiereAppli
 
 
-class MaPremiereAppli(QMainWindow):
+
+class Fenetre2(QMainWindow):
 
     def __init__(self):
-        super().__init__()
+        super(Fenetre2,self).__init__(MaPremiereAppli)
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))
         self.resize(1000,800)
