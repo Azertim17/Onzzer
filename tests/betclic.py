@@ -13,7 +13,6 @@ def matchs():
     
     for i in contenu:
     
-      try:
 
           print("Date :", i['date'])
           print("Match :", i['name'])
@@ -52,6 +51,3 @@ def matchs():
           else:
             pass
           
-      except:
-
-        pass

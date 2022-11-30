@@ -1,13 +1,22 @@
 #import json
 import requests
 
-url = "https://musicbrainz.org/ws/2/release-group/?query=release-group:Back%20in%20Black%20AND%20type:album&fmt=json"
+recherche = input('Nom de l Album: ')
+traitement1 = recherche.strip()
+replace = traitement1.replace(" ", "%20in%20")
+
+
+url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+url_fin = "%20AND%20type:album&fmt=json"
+url_complet = url_base + replace + url_fin
+print(url_complet)
+
+"""
 reponse = requests.get(url)
 contenu = reponse.json()
 
-for i in contenu:
 
-  try:
+for i in contenu:
 
       title = i['release-groups'][6]['releases'][3]['title']
       id_album = i['release-groups'][6]['releases'][0]['id']
@@ -21,14 +30,9 @@ for i in contenu:
       print("Id de l'artiste :", id_artiste)
       print()
 
-    
-  except:
-
-    pass
 
 
-'''
 fichier = open("data.txt", "a")
 fichier.write(json.dumps(contenu, sort_keys=True, indent=4))
 fichier.close()
-'''
+"""
