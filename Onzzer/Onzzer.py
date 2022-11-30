@@ -3,7 +3,7 @@ import os
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout, QPushButton
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
 from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
-from PyQt5.QtWidgets import QMessageBox, QInputDialog
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QTableWidget, QTableWidgetItem
 from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap
 from PyQt5.QtCore import Qt, QDir
 import onzzer
@@ -16,9 +16,9 @@ class Fenetre_principale(QMainWindow):
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))
         #self.setStyleSheet("background-color: Blue;")
-        self.setGeometry(600,300,500,500)
+        self.setGeometry(600,100,800,800)
         self.menu()
-        self.central()    
+        self.accueil()    
 
     def menu(self):
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
@@ -51,7 +51,7 @@ class Fenetre_principale(QMainWindow):
 
 
 
-    def central(self):
+    def accueil(self):
         
         self.wid_onzzer = QWidget()
         grid_box = QGridLayout()
@@ -75,7 +75,26 @@ class Fenetre_principale(QMainWindow):
         searchButton.setStyleSheet("background-color: white; border-style: outset; border-width: 1px;")
         searchButton.clicked.connect(self.action_fen2)
 
+
+
+    def tableau(self):
+
+        table = QTableWidget()
+        table.setRowCount(10)
+        table.setColumnCount(1)
+        table.setGeometry(150 , 150 , 300 ,500)
+        table.setmar( 100, 200, 100, 0)
+        self.setCentralWidget(table)
+
+        headerH = ["Musique de l'album"]
+        table.setHorizontalHeaderLabels(headerH)
+
+        table.setColumnWidth(0,350)
+
+        table.setItem(0,0, QTableWidgetItem('Albert Einstein'))
     
+
+
     def action_openfolder(self) :
         os.system("%SystemRoot%\explorer.exe /n,/e, monurl")
        
@@ -87,22 +106,7 @@ class Fenetre_principale(QMainWindow):
 
     def action_fen2(self):
         self.wid_onzzer.close() 
-        self.bloc()
-
-
-
-    def bloc (self):
-        bloc1 = QWidget()
-        self.setCentralWidget(bloc1)
-        bloc1_lay = QVBoxLayout()
-        bloc1.setLayout(bloc1_lay)
-
-        bloc2= QWidget()
-        bloc1_lay.addWidget(bloc2)
-        logo_onzzer = QLabel(self)
-        pixmap = QPixmap('Icones/logo.png')
-        logo_onzzer.setPixmap(pixmap)
-        self.setCentralWidget(logo_onzzer)
+        self.tableau()
 
 
 
