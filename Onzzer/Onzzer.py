@@ -1,33 +1,35 @@
 import sys 
 import os
-import subprocess
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFormLayout, QGridLayout, QPushButton
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu, QAction, QToolBar, QDockWidget
-from PyQt5.QtWidgets import QLabel, QLineEdit, QTextEdit, QGroupBox
-from PyQt5.QtWidgets import QMessageBox, QInputDialog, QTableWidget, QTableWidgetItem, QHeaderView
-from PyQt5.QtGui import QCursor, QIcon, QPixmap, QKeySequence, QPixmap, QLinearGradient
-from PyQt5.QtCore import Qt, QDir
-import onzzer
+from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QToolBar
+from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbstractItemView
+from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeaderView
+from PyQt5.QtGui import QIcon, QPixmap, QPixmap
+from PyQt5.QtCore import Qt
 
 
 class Fenetre_principale(QMainWindow):
     
     def __init__(self):
+    
         super().__init__()
         self.setWindowTitle("Onzzer")
-        self.setWindowIcon(QIcon('../onzzer/Icones/logo.png'))
+        self.setWindowIcon(QIcon('Icones/logo.png'))
         #self.setStyleSheet("background-color: Blue;")
         self.setGeometry(600,100,800,800)
         self.setStyleSheet("background-color: #202124")
         self.menu()
         self.accueil()
+        self.center()
+
+
         
     def menu(self):
-        eraseButton = QAction(QIcon('../onzzer/Icones/edit-undo.png'), 'Effacer', self)
+        eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
-        openButton = QAction(QIcon('../onzzer/Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
+        openButton = QAction(QIcon('Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
         openButton.setShortcut('Ctrl+O')
-        exitButton = QAction(QIcon('../onzzer/Icones/application-exit.png'), 'Quitter', self)
+        exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
@@ -58,9 +60,9 @@ class Fenetre_principale(QMainWindow):
 
     def accueil(self):
         
-        image = QPixmap('../onzzer/Icones/logo_long_blanc.png')
+        image = QPixmap('Icones/logo_long_blanc.png')
         searchButton = QPushButton("Recherche") 
-        line = QLineEdit()          
+        self.line = QLineEdit()          
 
         self.wid_onzzer = QWidget()
         vbox = QVBoxLayout()
@@ -72,8 +74,10 @@ class Fenetre_principale(QMainWindow):
         self.wid_onzzer.setLayout(vbox)
         box_image.setPixmap(image)
         box_image.setAlignment(Qt.AlignCenter)
+        
 
-        grid.addWidget(line, 0, 0, 1, 3)
+
+        grid.addWidget(self.line, 0, 0, 1, 3)
         grid.addWidget(searchButton, 0, 4)
         wid_grid.setLayout(grid)
         
@@ -87,12 +91,14 @@ class Fenetre_principale(QMainWindow):
         wid_grid.setFixedWidth(600)
         box_image.setFixedWidth(600)
         
-        line.setStyleSheet("background-color: white;")
+        self.line.setStyleSheet("background-color: white;")
  
         
+ 
+    
     def tableau(self):
 
-        image1 = QPixmap('../onzzer/Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -105,32 +111,80 @@ class Fenetre_principale(QMainWindow):
         table.setRowCount(10)
         table.setColumnCount(2)
         table.setContentsMargins(100, 200, 100, 0)
+        
         table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_table)
         
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-        
+  
         self.wid_table.setLayout(vbox)
         vbox.addWidget(table)
         
         vbox.addWidget(searchButton, alignment= Qt.AlignLeft)
-
-
+        
         headerH = ["Nom Artiste","Titre Albums"]
         table.setHorizontalHeaderLabels(headerH)
         
+        header = table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        
+        albumButton = QPushButton("Multitudes")
+        albumButton.clicked.connect(self.action_resulat)
+        
+        table.setItem(0,0, QTableWidgetItem("Stromae"))
+        table.setCellWidget(0,1,albumButton )
+        
+        
+        
+        
+        
+    def reponse(self):
+        
+        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image = image1.scaled(255, 68)
+        searchButton = QPushButton("Nouvelle recherche")
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        searchButton.clicked.connect(self.action_nouv_rech)
+        returnButton = QPushButton("Retour liste")
+        returnButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        returnButton.clicked.connect(self.action_return)
+        
+        self.wid_table = QWidget()
+        vbox = QVBoxLayout()
+        box_image = QLabel()
+        table = QTableWidget()
+        table.setRowCount(10)
+        table.setColumnCount(1)
+        table.setContentsMargins(100, 200, 100, 0)
+        table.setStyleSheet("background-color: #D0D1D2")
+        self.setCentralWidget(self.wid_table)
+        
+        box_image.setPixmap(image)
+        vbox.addWidget(box_image, alignment= Qt.AlignRight)
+  
+        self.wid_table.setLayout(vbox)
+        vbox.addWidget(table)
+        
+        vbox.addWidget(searchButton, alignment= Qt.AlignLeft)
+        vbox.addWidget(returnButton, alignment= Qt.AlignLeft)
+
+        headerH = ["Titres de l'Album"]
+        table.setHorizontalHeaderLabels(headerH)
         
         header = table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
 
         table.setItem(0,0, QTableWidgetItem('test'))
-    
-
+        
+        
+      
 
     def action_openfolder(self) :
-        os.system('start \Icones')
+        os.startfile('..\Onzzer\Icones')
         
         
     def action_clear(self):
@@ -138,6 +192,10 @@ class Fenetre_principale(QMainWindow):
 
     def action_a_propos(self):
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
+        
+    def action_return(self):
+        self.wid_table.close() 
+        self.tableau()
 
     def action_fen2(self):
         self.wid_onzzer.close() 
@@ -147,7 +205,15 @@ class Fenetre_principale(QMainWindow):
         self.wid_table.close()
         self.accueil()
 
-
+    def action_resulat(self):
+        self.wid_table.close()
+        self.reponse()
+    
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 def main():
     application = QApplication(sys.argv)
