@@ -11,7 +11,7 @@ root.setGeometry(100 , 100 , 600 , 600)
 table = QTableWidget(root)
 table.setRowCount(4)
 table.setColumnCount(1)
-table.setGeometry(50 , 50 , 500 ,500)
+table.setGeometry(50 , 50 , 300 ,500)
             
 # Header horizontale
 headerH = ["Musique de l'album"]
