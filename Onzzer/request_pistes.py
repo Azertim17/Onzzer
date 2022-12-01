@@ -19,7 +19,7 @@ def get_album_pays(album_id):
 
     for i in contenu ['releases'] :
         
-               
+        
         auteur = i['id']
         
         print(auteur)

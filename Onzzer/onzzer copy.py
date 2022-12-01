@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeader
 from PyQt5.QtGui import QIcon, QPixmap, QPixmap
 from PyQt5.QtCore import Qt
 import request_albums
-import request_pistes
+
 
 
 class Fenetre_principale(QMainWindow):
@@ -59,6 +59,7 @@ class Fenetre_principale(QMainWindow):
         
 
 
+
     def accueil(self):
         
         image = QPixmap('Icones/logo_long_blanc.png')
@@ -92,8 +93,8 @@ class Fenetre_principale(QMainWindow):
         
         self.line.setStyleSheet("background-color: white;")
         
+        self.recherche = self.line.text()
         
- 
         
     def tableau(self):
         
@@ -136,7 +137,6 @@ class Fenetre_principale(QMainWindow):
 
         table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
-        self.recherche = self.line.text()
         self.album = request_albums.get_dic_album_id(self, self.recherche)
         self.liste_albums = request_albums.get_nom_album(self, self.recherche)
         self.liste_artistes = request_albums.get_nom_artiste(self, self.recherche)
@@ -149,17 +149,18 @@ class Fenetre_principale(QMainWindow):
 
         row = 0  
         for i in self.liste_albums:             
-            row += 1
-
+            row += 1    
             albumButton = QPushButton(i)
             albumButton.clicked.connect(self.action_resulat)
-            table.setCellWidget(row-1,1,albumButton)    
+            table.setCellWidget(row-1,1,albumButton)
         
         
         
         
-    def reponse(self):
         
+    def pistes(self):
+        
+
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
@@ -205,16 +206,24 @@ class Fenetre_principale(QMainWindow):
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
         table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-
-        self.album_id = request_albums.get_album_id(self, self.recherche, )
+        self.album = request_albums.get_dic_album_id(self, self.recherche)
+        self.liste_pistes = request_albums.get_nom_album(self, self.recherche)
         
 
         row = 0
         for i in self.liste_artistes:
             row += 1
-
             table.setItem(row-1,0, QTableWidgetItem(i))
-        
+
+        row = 0  
+        for i in self.liste_albums:             
+            row += 1    
+            albumButton = QPushButton(i)
+            albumButton.clicked.connect(self.action_resulat)
+            table.setCellWidget(row-1,1,albumButton)
+
+
+        table.setItem(0,0, QTableWidgetItem('Santé'))
         
         
      
@@ -244,9 +253,7 @@ class Fenetre_principale(QMainWindow):
 
     def action_resulat(self):
         self.wid_table.close()
-        self.reponse()
-        
-        print(self.liste_albums)
+        self.pistes()
         
     def action_upload(self):
         os.startfile('..\Onzzer\Icones')

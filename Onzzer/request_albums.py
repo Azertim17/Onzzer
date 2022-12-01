@@ -1,6 +1,5 @@
 import json
 import requests
-import request_albums2
 
 def get_dic_album_id(self, album_recherche):
 
@@ -31,6 +30,41 @@ def get_dic_album_id(self, album_recherche):
         
         return dic_album_id
      
+
+
+def get_album_id(self, album_recherche, artiste):
+
+        recherche = str(album_recherche)
+        traitement1 = recherche.strip()
+        replace = traitement1.replace(" ", "%20in%20")
+        
+        
+        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        url_fin = "%20AND%20type:album&fmt=json"
+        url_complet = url_base + replace + url_fin
+        #print(url_complet)
+        
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+        
+        
+        for i in contenu ["release-groups"]:
+                
+                auteur = i['artist-credit'][0]['name']
+                id_album = i['releases'][0]['id']
+                
+                if auteur == artiste:
+                
+                    album_id = id_album
+                else :
+                    pass
+                
+                
+                
+        
+        return album_id
+
 
 
          
@@ -88,30 +122,6 @@ def get_nom_artiste(self, album_recherche):
 
 
 
-def compteur(self, album_recherche):
-
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        replace = traitement1.replace(" ", "%20in%20")
-        
-        
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        url_fin = "%20AND%20type:album&fmt=json"
-        url_complet = url_base + replace + url_fin        
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-        
-        compteur = 0
-        
-        for i in contenu ["release-groups"]:
-            
-                compteur = compteur+1 
-
-                
-        liste = range(compteur)
-        
-        return liste
 
 
 
