@@ -1,0 +1,60 @@
+! 	Exclamation 	                %21
+" 	Guillemet 	                    %22
+# 	Dièse 	                        %23
+$ 	Dollar 	                        %24
+% 	Pourcent 	                    %25
+& 	Esperluette 	                %26
+' 	Apostrophe 	                    %27
+( 	Parenthèse ouvrante 	        %28
+) 	Parenthèse fermante 	        %29
+* 	Astérisque 	                    %2A
++ 	Plus 	                        %2B
+, 	Virgule 	                    %2C
+- 	Trait d'union ou soustraction 	%2D
+. 	Point 	                        %2E
+/ 	Barre oblique ou division 	    %2F
+: 	Deux points 	                %3A
+; 	Point-virgule               	%3B
+< 	Plus petit que               	%3C
+= 	Égalité 	                    %3D
+> 	Plus grand que 	                %3E
+? 	Point d'interrogation 	        %3F
+@ 	Arobase, a commercial 	        %40
+[ 	Crochet carré ouvrant 	        %5B
+ \ 	Barre oblique inversée 	        %5C
+] 	Crochet carré fermant 	        %5D
+^ 	Accent circonflexe 	            %5E
+_ 	Trait bas 	                    %5F
+` 	Accent grave 	                %60
+{ 	Accolade ouvrante 	            %7B
+| 	Barre verticale 	            %7C
+} 	Accolade fermante 	            %7D
+~ 	Tilde ou équivalence 	        %7E
+
+
+« 	  	%C2%AB
+» 	  	%C2%BB
+À 	  	%C3%80
+Â 	  	%C3%82
+Ç 	  	%C3%87
+È 	  	%C3%88
+É 	  	%C3%89
+Ê 	  	%C3%8A
+Ë 	  	%C3%8B
+Î 	  	%C3%8E
+Ï 	  	%C3%8F
+Ô 	  	%C3%94
+Ù 	  	%C3%99
+Û 	  	%C3%9B
+à 	  	%C3%A0
+â 	  	%C3%A2
+ç 	  	%C3%A7
+è 	  	%C3%A8
+é 	  	%C3%A9
+ê 	  	%C3%AA
+ë 	  	%C3%AB
+î 	  	%C3%AE
+ï 	  	%C3%AF
+ô 	  	%C3%B4
+ù 	  	%C3%B9
+û 	  	%C3%BB

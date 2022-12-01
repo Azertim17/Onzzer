@@ -14,7 +14,7 @@ class Fenetre_principale(QMainWindow):
     
         super().__init__()
         self.setWindowTitle("Onzzer")
-        self.setWindowIcon(QIcon('Icones/logo.png'))
+        self.setWindowIcon(QIcon('../onzzer/Icones/logo.png'))
         self.setGeometry(600,100,800,800)
         self.setStyleSheet("background-color: #202124")
         self.menu()
@@ -24,11 +24,11 @@ class Fenetre_principale(QMainWindow):
 
         
     def menu(self):
-        eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
+        eraseButton = QAction(QIcon('../onzzer/Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
-        openButton = QAction(QIcon('Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
+        openButton = QAction(QIcon('../onzzer/Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
         openButton.setShortcut('Ctrl+O')
-        exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
+        exitButton = QAction(QIcon('../onzzer/Icones/application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
@@ -59,7 +59,7 @@ class Fenetre_principale(QMainWindow):
 
     def accueil(self):
         
-        image = QPixmap('Icones/logo_long_blanc.png')
+        image = QPixmap('../onzzer/Icones/logo_long_blanc.png')
         searchButton = QPushButton("Recherche") 
         self.line = QLineEdit()         
                 
@@ -98,7 +98,7 @@ class Fenetre_principale(QMainWindow):
         print(self.line.text)
         
 
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap('../onzzer/Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -147,7 +147,7 @@ class Fenetre_principale(QMainWindow):
         
     def reponse(self):
         
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap('../onzzer/Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -198,7 +198,7 @@ class Fenetre_principale(QMainWindow):
         
      
     def action_openfolder(self) :
-        os.startfile('..\Onzzer\Icones')
+        os.startfile('..\Onzzer\../onzzer/Icones')
         
         
     def action_clear(self):
@@ -225,7 +225,7 @@ class Fenetre_principale(QMainWindow):
         self.reponse()
         
     def action_upload(self):
-        os.startfile('..\Onzzer\Icones')
+        os.startfile('..\Onzzer\../onzzer/Icones')
 
     
     def center(self):
