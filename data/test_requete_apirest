@@ -13,3 +13,19 @@ GET /ws/2/release?collection=(variable2)
 
 en xml:
 curl https://musicbrainz.org/ws/2/release-group/3bd76d40-7f0e-36b7-9348-91a33afee20e
+
+https://musicbrainz.org/doc/MusicBrainz_API/Search
+
+--------------------------------------------
+
+curl https://musicbrainz.org/ws/2/release-group/?query=title:Multitude%20AND%20type:album
+
+https://musicbrainz.org/ws/2/release-group/d6cfccc8-026d-4028-b567-4f762354ff91?inc=releases&fmt=json
+
+https://musicbrainz.org/ws/2/release/f44a6be3-939e-4180-a4d7-e189849050a9?inc=artist-credits+labels+discids+recordings&fmt=json
+
+--------------------------------------------
+
+
+
+curl https://musicbrainz.org/ws/2/release-group/3bd76d40-7f0e-36b7-9348-91a33afee20e?inc=genres&fmt=json
