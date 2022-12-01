@@ -95,7 +95,6 @@ class Fenetre_principale(QMainWindow):
         
     def tableau(self):
 
-        print(self.line.text)
         
 
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
@@ -207,7 +206,6 @@ class Fenetre_principale(QMainWindow):
     def action_a_propos(self):
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
         
-
     def action_return(self):
         self.wid_table.close() 
         self.tableau()
@@ -215,6 +213,8 @@ class Fenetre_principale(QMainWindow):
     def action_fen2(self):
         self.wid_onzzer.close() 
         self.tableau()
+        self.recherche = self.line.text()
+        print(self.recherche)
     
     def action_nouv_rech(self):
         self.wid_table.close()
