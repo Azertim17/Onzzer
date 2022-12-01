@@ -188,6 +188,8 @@ class Fenetre_principale(QMainWindow):
         headerH = ["Titres de l'Album"]
         table.setHorizontalHeaderLabels(headerH)
         
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
         header = table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
@@ -236,8 +238,7 @@ class Fenetre_principale(QMainWindow):
 
         
         
-        
-        
+    
 
 def main():
     application = QApplication(sys.argv)

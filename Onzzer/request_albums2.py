@@ -3,11 +3,11 @@ import requests
 import request_albums
 
 
-def get_album_pays(id_album):
+def get_album_pays(album_id):
 
     url_base = "https://musicbrainz.org/ws/2/release-group/"
     url_fin = "?inc=releases&fmt=json"
-    url_complet = url_base + id_album + url_fin
+    url_complet = url_base + str(album_id) + url_fin
 
 
     print(url_complet)
@@ -17,12 +17,9 @@ def get_album_pays(id_album):
     contenu = reponse.json()
 
 
-    for i in contenu ["releases"][0]:
-            
-            #print(i["releases"][0]['title'])
-            
-            auteur = i['id']
-
-
+    for i in contenu ['releases'] :
         
-            print(auteur)
+               
+        auteur = i['id']
+        
+        print(auteur)

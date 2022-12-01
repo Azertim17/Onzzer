@@ -2,7 +2,7 @@ import json
 import requests
 import request_albums2
 
-def get_albums(album_recherche):
+def get_albums(self, album_recherche):
 
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
@@ -12,7 +12,7 @@ def get_albums(album_recherche):
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
         url_fin = "%20AND%20type:album&fmt=json"
         url_complet = url_base + replace + url_fin
-        print(url_complet)
+        #print(url_complet)
         
         
         reponse = requests.get(url_complet)
@@ -24,24 +24,18 @@ def get_albums(album_recherche):
                 #print(i["releases"][0]['title'])
                 
                 auteur = i['artist-credit'][0]['name']
-                id_album = (i['releases'][0]['id'])
-                id_auteur = (i['artist-credit'][0]['artist']['id'])
+                id_album = i['releases'][0]['id']
+                id_auteur = i['artist-credit'][0]['artist']['id']
+                
+                self.nom_album = i['releases'][0]['title']
 
-                album_id = {}
-                album_id[auteur] = id_album
+                self.album_id = {}
+                self.album_id[auteur] = id_album
         
-                print(album_id)
-                print(id_auteur)
+                print(self.album_id)
+                #print(id_auteur)
 
-                request_albums2.get_album_pays(album_id)
-
-
-
-
-
-
-
-
+              
 
 
 

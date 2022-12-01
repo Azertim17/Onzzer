@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbst
 from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeaderView, QHBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap, QPixmap
 from PyQt5.QtCore import Qt
+import request_albums
+
 
 
 class Fenetre_principale(QMainWindow):
@@ -135,11 +137,15 @@ class Fenetre_principale(QMainWindow):
 
         table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
-        albumButton = QPushButton("multitude")
-        albumButton.clicked.connect(self.action_resulat)
-        
-        table.setItem(0,0, QTableWidgetItem("Stromae"))
-        table.setCellWidget(0,1,albumButton )
+
+        for i in self.album_id:
+
+
+            albumButton = QPushButton("self.nom_album")
+            albumButton.clicked.connect(self.action_resulat)
+            
+            table.setItem(0,0, QTableWidgetItem("Stromae"))
+            table.setCellWidget(0,1,albumButton)
         
     
         
@@ -215,6 +221,7 @@ class Fenetre_principale(QMainWindow):
         self.tableau()
         self.recherche = self.line.text()
         print(self.recherche)
+        request_albums.get_albums(self, self.recherche)
     
     def action_nouv_rech(self):
         self.wid_table.close()

@@ -15,7 +15,7 @@ url_complet = "https://musicbrainz.org/ws/2/release-group/d6cfccc8-026d-4028-b56
 reponse = requests.get(url_complet)
 contenu = reponse.json()
 
-print(json.dumps(contenu, sort_keys=True, indent=4))
+print(json.dumps(contenu, sort_keys=True, indent=4),)
 
 
 fichier = open("data.txt", "a")
