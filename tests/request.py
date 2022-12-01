@@ -45,6 +45,10 @@ else:
 print("Titre: ", value)
 
 
+
+
+
+
 #fichier = open("data.txt", "a")
 #fichier.write(json.dumps(contenu, sort_keys=True, indent=4))
 #fichier.close()
