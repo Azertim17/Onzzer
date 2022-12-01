@@ -2,7 +2,7 @@ import json
 import requests
 import request_albums2
 
-def get_albums(self, album_recherche):
+def get_dic_album_id(self, album_recherche):
 
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
@@ -25,22 +25,134 @@ def get_albums(self, album_recherche):
                 
                 auteur = i['artist-credit'][0]['name']
                 id_album = i['releases'][0]['id']
-                id_auteur = i['artist-credit'][0]['artist']['id']
-                
-                self.nom_album = i['releases'][0]['title']
 
-                self.album_id = {}
-                self.album_id[auteur] = id_album
+                dic_album_id = {}
+                dic_album_id[auteur] = id_album
         
-                print(self.album_id)
-                #print(id_auteur)
+        return dic_album_id
+     
 
+
+         
+def get_nom_album(self, album_recherche):
+
+        recherche = str(album_recherche)
+        traitement1 = recherche.strip()
+        replace = traitement1.replace(" ", "%20in%20")
+        
+        
+        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        url_fin = "%20AND%20type:album&fmt=json"
+        url_complet = url_base + replace + url_fin
+        #print(url_complet)
+        
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+        
+        liste_albums = []
+        
+        for i in contenu ["release-groups"]:
+    
+                nom_album = i['releases'][0]['title']
+                liste_albums.append(nom_album)
+        return liste_albums
+
+
+
+
+
+def get_nom_artiste(self, album_recherche):
+
+        recherche = str(album_recherche)
+        traitement1 = recherche.strip()
+        replace = traitement1.replace(" ", "%20in%20")
+        
+        
+        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        url_fin = "%20AND%20type:album&fmt=json"
+        url_complet = url_base + replace + url_fin
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
               
+        liste_auteurs = []
+        
+        for i in contenu ["release-groups"]:
+                                
+                nom_auteur = i['artist-credit'][0]['artist']['name']
+                liste_auteurs.append(nom_auteur)
+                
+        return liste_auteurs
+
+
+
+
+def compteur(self, album_recherche):
+
+        recherche = str(album_recherche)
+        traitement1 = recherche.strip()
+        replace = traitement1.replace(" ", "%20in%20")
+        
+        
+        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        url_fin = "%20AND%20type:album&fmt=json"
+        url_complet = url_base + replace + url_fin        
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+        
+        compteur = 0
+        
+        for i in contenu ["release-groups"]:
+            
+                compteur = compteur+1 
+
+                
+        liste = range(compteur)
+        
+        return liste
 
 
 
 
 
+# def get_dic_album_id(self, album_recherche):
+
+#         recherche = str(album_recherche)
+#         traitement1 = recherche.strip()
+#         replace = traitement1.replace(" ", "%20in%20")
+        
+        
+#         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+#         url_fin = "%20AND%20type:album&fmt=json"
+#         url_complet = url_base + replace + url_fin
+#         #print(url_complet)
+        
+        
+#         reponse = requests.get(url_complet)
+#         contenu = reponse.json()
+        
+        
+#         for i in contenu ["release-groups"]:
+                
+#                 #print(i["releases"][0]['title'])
+                
+#                 auteur = i['artist-credit'][0]['name']
+#                 id_album = i['releases'][0]['id']
+#                 id_auteur = i['artist-credit'][0]['artist']['id']
+#                 nom_auteur = i['artist-credit'][0]['artist']['name']
+                
+#                 nom_album = i['releases'][0]['title']
+
+#                 dic_album_id = {}
+#                 dic_album_id[auteur] = id_album
+        
+#                 print(dic_album_id)
+#                 print(id_auteur)
+#                 print(nom_auteur)
+        
+#         return dic_album_id
 
 #fichier = open("data.txt", "a")
 #fichier.write(json.dumps(contenu, sort_keys=True, indent=4))

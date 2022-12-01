@@ -96,7 +96,6 @@ class Fenetre_principale(QMainWindow):
  
         
     def tableau(self):
-
         
 
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
@@ -137,17 +136,33 @@ class Fenetre_principale(QMainWindow):
 
         table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
-
-        for i in self.album_id:
-
-
-            albumButton = QPushButton("self.nom_album")
-            albumButton.clicked.connect(self.action_resulat)
-            
-            table.setItem(0,0, QTableWidgetItem("Stromae"))
-            table.setCellWidget(0,1,albumButton)
         
-    
+        self.recherche = self.line.text()
+        self.album = request_albums.get_dic_album_id(self, self.recherche)
+        self.liste_albums = request_albums.get_nom_album(self, self.recherche)
+        self.liste_artistes = request_albums.get_nom_artiste(self, self.recherche)
+        
+
+        row = 0
+        for i in self.liste_artistes:
+            row += 1
+                        
+            table.setItem(row-1,0, QTableWidgetItem(i))
+
+
+
+        row = 0  
+        for i in self.liste_albums:             
+            row += 1
+            
+            print(i)
+            
+            albumButton = QPushButton(i)
+            albumButton.clicked.connect(self.action_resulat)
+            table.setCellWidget(row-1,1,albumButton)
+        
+        
+        
         
         
     def reponse(self):
@@ -216,12 +231,13 @@ class Fenetre_principale(QMainWindow):
         self.wid_table.close() 
         self.tableau()
 
+
     def action_fen2(self):
         self.wid_onzzer.close() 
         self.tableau()
         self.recherche = self.line.text()
         print(self.recherche)
-        request_albums.get_albums(self, self.recherche)
+        
     
     def action_nouv_rech(self):
         self.wid_table.close()
