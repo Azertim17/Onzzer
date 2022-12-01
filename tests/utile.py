@@ -8,8 +8,10 @@ replace = traitement1.replace(" ", "%20in%20")
 
 url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
 url_fin = "%20AND%20type:album&fmt=json"
-url_complet = url_base + replace + url_fin
-    
+#url_complet = url_base + replace + url_fin
+url_complet =  
+
+   
 reponse = requests.get(url_complet)
 contenu = reponse.json()
 
