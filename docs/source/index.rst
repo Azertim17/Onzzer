@@ -1,11 +1,14 @@
-.. music_search documentation master file, created by
-   sphinx-quickstart on Fri Nov 18 07:54:51 2022.
+.. Onzzer documentation master file, created by
+   sphinx-quickstart on Thu Dec  1 11:25:38 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to music_search's documentation!
-========================================
-
+Welcome to Onzzer's documentation!
+==================================
+**Onzzer** is a Python program. It use PyQt5 library to work. 
+This application uses the Music-search database. 
+It allows to retrieve the titles of an album from its name.
+A recording function is available. This function saves the list of titles in text format.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
