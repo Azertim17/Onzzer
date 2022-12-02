@@ -18,6 +18,8 @@ A recording function is available. This function saves the list of titles in tex
    :maxdepth: 2
    :caption: Contents:
 
+   ./cahier_des_charges.rst
+
 
 
 Indices and tables
