@@ -5,21 +5,22 @@ import request_albums
 
 def get_album_pays(album_id):
 
-    url_base = "https://musicbrainz.org/ws/2/release-group/"
-    url_fin = "?inc=releases&fmt=json"
-    url_complet = url_base + str(album_id) + url_fin
-
-
-    print(url_complet)
-
+    recherche = str(album_id)
+    traitement1 = recherche.strip()
+    replace = traitement1.replace(" ", "%20in%20")
+    
+    url_base = "https://musicbrainz.org/ws/2/release/"
+    url_fin = "?inc=artist-credits+labels+discids+recordings&fmt=json"
+    url_complet = url_base + replace + url_fin
         
     reponse = requests.get(url_complet)
     contenu = reponse.json()
 
-
-    for i in contenu ['releases'] :
+    liste_titres = []
+    for i in contenu ['media'][0]['tracks'] :
         
         
-        auteur = i['id']
+        titre = i['title']
+        liste_titres.append(titre)
         
-        print(auteur)
+    return liste_titres

@@ -109,18 +109,18 @@ class Fenetre_principale(QMainWindow):
         vbox = QVBoxLayout()
         bouttonshbox = QHBoxLayout()
         box_image = QLabel()
-        table = QTableWidget()
-        table.setRowCount(25)
-        table.setColumnCount(2)
-        table.setContentsMargins(100, 200, 100, 0)
-        table.setStyleSheet("background-color: #D0D1D2")
+        self.table = QTableWidget()
+        self.table.setRowCount(25)
+        self.table.setColumnCount(3)
+        self.table.setContentsMargins(100, 200, 100, 0)
+        self.table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_table)
         
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
   
         self.wid_table.setLayout(vbox)
-        vbox.addWidget(table)
+        vbox.addWidget(self.table)
 
         wid_bouttons.setLayout(bouttonshbox)
         
@@ -128,37 +128,63 @@ class Fenetre_principale(QMainWindow):
         
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
         
-        headerH = ["Nom Artiste","Titre Albums"]
-        table.setHorizontalHeaderLabels(headerH)
+        headerH = ["Nom Artiste","Titre Albums","Voir les Pistes"]
+        self.table.setHorizontalHeaderLabels(headerH)
         
-        header = table.horizontalHeader()
+        header =self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
-        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
         self.recherche = self.line.text()
-        self.album = request_albums.get_dic_album_id(self, self.recherche)
         self.liste_albums = request_albums.get_nom_album(self, self.recherche)
-        self.liste_artistes = request_albums.get_nom_artiste(self, self.recherche)
+        self.liste_artistes = request_albums.get_liste_artiste(self, self.recherche)
         
 
         row = 0
         for i in self.liste_artistes:
             row += 1
-            table.setItem(row-1,0, QTableWidgetItem(i))
+            self.table.setItem(row-1,0, QTableWidgetItem(i))
 
         row = 0  
         for i in self.liste_albums:             
             row += 1
 
-            albumButton = QPushButton(i)
-            albumButton.clicked.connect(self.action_resulat)
-            table.setCellWidget(row-1,1,albumButton)    
+            self.table.setItem(row-1,1, QTableWidgetItem(i))
+            
+                
+
+            
+        row = 0
+        for i in range(0,25):             
+            row += 1
+            
+            selectButton = QPushButton("voir")
+            selectButton.setIcon(QIcon('Icones/go-last.png'))
+            
+            self.table.setCellWidget(row-1,2,selectButton)
+            
+
+            
+            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c))
+
+            
+            
+
+
+        
+    def id_album(self, row, col):
+        
+        artiste = self.table.item(row-1, 0).text()
+        
+        dic = request_albums.get_dic_album_id_artiste(self, self.recherche)
+        id = dic[artiste]
+        titres = request_pistes.get_album_pays(id)
+        
+        self.reponse(titres)
         
         
-        
-        
-    def reponse(self):
+    def reponse(self, titres):
         
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -177,18 +203,17 @@ class Fenetre_principale(QMainWindow):
         wid_bouttons = QWidget()
         bouttonshbox = QHBoxLayout()
         box_image = QLabel()
-        table = QTableWidget()
-        table.setRowCount(10)
-        table.setColumnCount(1)
-        table.setContentsMargins(100, 200, 100, 0)
-        table.setStyleSheet("background-color: #D0D1D2")
+        self.table = QTableWidget()
+        self.table.setColumnCount(1)
+        self.table.setContentsMargins(100, 200, 100, 0)
+        self.table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_table)
         
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
   
         self.wid_table.setLayout(vbox)
-        vbox.addWidget(table)
+        vbox.addWidget(self.table)
         
         wid_bouttons.setLayout(bouttonshbox)
         bouttonshbox.addWidget(searchButton)
@@ -199,21 +224,23 @@ class Fenetre_principale(QMainWindow):
         vbox.setAlignment(Qt.AlignTop)
 
         headerH = ["Titres de l'Album"]
-        table.setHorizontalHeaderLabels(headerH)
+        self.table.setHorizontalHeaderLabels(headerH)
         
-        header = table.horizontalHeader()
+        header = self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
-        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-
-
-        self.album_id = request_albums.get_album_id(self, self.recherche, )
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
+        
+        # artiste = 
+        # self.album_id = request_albums.get_album_id(self, self.recherche, )
+        nb_rows = len(titres)
+        self.table.setRowCount(nb_rows)
 
         row = 0
-        for i in self.liste_artistes:
+        for i in titres:
             row += 1
 
-            table.setItem(row-1,0, QTableWidgetItem(i))
+            self.table.setItem(row-1,0, QTableWidgetItem(i))
         
         
         
@@ -234,6 +261,7 @@ class Fenetre_principale(QMainWindow):
 
 
     def action_fen2(self):
+        self.recherche = self.line.text() 
         self.wid_onzzer.close() 
         self.tableau()
         
@@ -247,6 +275,8 @@ class Fenetre_principale(QMainWindow):
         self.reponse()
         
         print(self.liste_albums)
+        
+    
         
     def action_upload(self):
         os.startfile('..\Onzzer\Icones')

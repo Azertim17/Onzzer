@@ -17,7 +17,8 @@ def get_dic_album_id(self, album_recherche):
         reponse = requests.get(url_complet)
         contenu = reponse.json()
         
-        
+        dic_album_id = {}
+
         for i in contenu ["release-groups"]:
                 
                 #print(i["releases"][0]['title'])
@@ -25,12 +26,76 @@ def get_dic_album_id(self, album_recherche):
                 auteur = i['artist-credit'][0]['name']
                 id_album = i['releases'][0]['id']
 
-                dic_album_id = {}
                 dic_album_id[auteur] = id_album
         
         return dic_album_id
      
+        
+     
 
+
+def get_dic_album_id_artiste(self, album_recherche):
+
+        recherche = str(album_recherche)
+        traitement1 = recherche.strip()
+        replace = traitement1.replace(" ", "%20in%20")
+        
+        
+        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        url_fin = "%20AND%20type:album&fmt=json"
+        url_complet = url_base + replace + url_fin
+        #print(url_complet)
+        
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+        
+        dic_album_artiste = {}
+
+        for i in contenu ["release-groups"]:
+                
+                #print(i["releases"][0]['title'])
+                
+                auteur = i['artist-credit'][0]['name']
+                id_album = i['releases'][0]['id']
+
+
+                dic_album_artiste[auteur] = id_album
+        
+        return dic_album_artiste
+
+
+# def get_album_id(self, album_recherche, artiste):
+
+#         recherche = str(album_recherche)
+#         traitement1 = recherche.strip()
+#         replace = traitement1.replace(" ", "%20in%20")
+        
+        
+#         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+#         url_fin = "%20AND%20type:album&fmt=json"
+#         url_complet = url_base + replace + url_fin
+        
+        
+#         reponse = requests.get(url_complet)
+#         contenu = reponse.json()
+        
+        
+#         for i in contenu ["release-groups"]:
+                
+#                 #print(i["releases"][0]['title'])
+                
+#                 auteur = i['artist-credit'][0]['name']
+#                 id_album = i['releases'][0]['id']
+
+#                 dic_album_id = {}
+#                 dic_album_id[auteur] = id_album
+        
+#         return id_album
+    
+    
+    
+    
 
 def get_album_id(self, album_recherche, artiste):
 
@@ -48,21 +113,20 @@ def get_album_id(self, album_recherche, artiste):
         reponse = requests.get(url_complet)
         contenu = reponse.json()
         
+        album_id = "0"
         
+        # print(artiste)
         for i in contenu ["release-groups"]:
                 
                 auteur = i['artist-credit'][0]['name']
                 id_album = i['releases'][0]['id']
-                
                 if auteur == artiste:
                 
                     album_id = id_album
+                    print(album_id)
                 else :
                     pass
-                
-                
-                
-        
+                    
         return album_id
 
 
@@ -117,11 +181,32 @@ def get_nom_artiste(self, album_recherche):
                 nom_auteur = i['artist-credit'][0]['artist']['name']
                 liste_auteurs.append(nom_auteur)
                 
+        return nom_auteur
+
+
+
+def get_liste_artiste(self, album_recherche):
+
+        recherche = str(album_recherche)
+        traitement1 = recherche.strip()
+        replace = traitement1.replace(" ", "%20in%20")
+        
+        
+        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        url_fin = "%20AND%20type:album&fmt=json"
+        url_complet = url_base + replace + url_fin
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+              
+        liste_auteurs = []
+        
+        for i in contenu ["release-groups"]:
+                                
+                nom_auteur = i['artist-credit'][0]['artist']['name']
+                liste_auteurs.append(nom_auteur)
+                
         return liste_auteurs
-
-
-
-
 
 
 
