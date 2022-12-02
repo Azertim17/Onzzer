@@ -8,10 +8,17 @@ Welcome to Onzzer's documentation!
 **Onzzer** is a Python program. It use PyQt5 library to work. 
 This application uses the Music-search database. 
 It allows to retrieve the titles of an album from its name.
-A recording function is available. This function saves the list of titles in text format.
+A recording function is available. This function saves the list of titles in text format.\
+
+
+
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+   ./cahier_des_charges.rst
 
 
 
