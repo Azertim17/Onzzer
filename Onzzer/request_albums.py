@@ -11,7 +11,6 @@ def get_dic_album_id(self, album_recherche):
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
         url_fin = "%20AND%20type:album&fmt=json"
         url_complet = url_base + replace + url_fin
-        #print(url_complet)
         
         
         reponse = requests.get(url_complet)
@@ -20,9 +19,7 @@ def get_dic_album_id(self, album_recherche):
         dic_album_id = {}
 
         for i in contenu ["release-groups"]:
-                
-                #print(i["releases"][0]['title'])
-                
+                                
                 auteur = i['artist-credit'][0]['name']
                 id_album = i['releases'][0]['id']
 
@@ -44,7 +41,6 @@ def get_dic_album_id_artiste(self, album_recherche):
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
         url_fin = "%20AND%20type:album&fmt=json"
         url_complet = url_base + replace + url_fin
-        #print(url_complet)
         
         
         reponse = requests.get(url_complet)
@@ -53,15 +49,12 @@ def get_dic_album_id_artiste(self, album_recherche):
         dic_album_artiste = {}
 
         for i in contenu ["release-groups"]:
-                
-                #print(i["releases"][0]['title'])
-                
+                                
                 auteur = i['artist-credit'][0]['name']
                 id_album = i['releases'][0]['id']
 
 
-                dic_album_artiste[auteur] = id_album
-        
+                dic_album_artiste[auteur] = id_album        
         return dic_album_artiste
 
 
@@ -123,7 +116,6 @@ def get_album_id(self, album_recherche, artiste):
                 if auteur == artiste:
                 
                     album_id = id_album
-                    print(album_id)
                 else :
                     pass
                     
@@ -249,9 +241,7 @@ def get_liste_artiste(self, album_recherche):
         
 #         return dic_album_id
 
-#fichier = open("data.txt", "a")
-#fichier.write(json.dumps(contenu, sort_keys=True, indent=4))
-#fichier.close()
+
 
 
 
