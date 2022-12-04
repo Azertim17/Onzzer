@@ -8,6 +8,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QPixmap
 from PyQt5.QtCore import Qt
 import request_albums
 import request_pistes
+import youtube_search as YS
 
 
 class Fenetre_principale(QMainWindow):
@@ -18,7 +19,6 @@ class Fenetre_principale(QMainWindow):
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))
         self.setGeometry(600,100,800,800)
-        self.setStyleSheet("background-color: #202124")
         self.menu()
         self.accueil()
         self.center()
@@ -66,11 +66,14 @@ class Fenetre_principale(QMainWindow):
         self.line = QLineEdit()         
                 
         self.wid_onzzer = QWidget()
+        self.wid_onzzer.setStyleSheet("background-color: #202124")
+
         vbox = QVBoxLayout()
         wid_grid = QWidget()
         grid = QGridLayout()
         box_image = QLabel()
         self.setCentralWidget(self.wid_onzzer)
+        
         
         self.wid_onzzer.setLayout(vbox)
         box_image.setPixmap(image)
@@ -85,19 +88,18 @@ class Fenetre_principale(QMainWindow):
         vbox.addWidget(wid_grid, alignment= Qt.AlignCenter)
 
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; height: 20px;")
-        searchButton.clicked.connect(self.tableau)
+        searchButton.clicked.connect(lambda : self.tableau(self.line.text()))
 
         wid_grid.setFixedWidth(600)
         box_image.setFixedWidth(600)
         
         self.line.setStyleSheet("background-color: white;")
         
-        
+
  
         
-    def tableau(self):
-        
-
+    def tableau(self, recherche):
+                
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
@@ -105,6 +107,8 @@ class Fenetre_principale(QMainWindow):
         searchButton.clicked.connect(self.accueil)
         
         self.wid_table = QWidget()
+        self.wid_table.setStyleSheet("background-color: #202124")
+
         wid_bouttons = QWidget()
         vbox = QVBoxLayout()
         bouttonshbox = QHBoxLayout()
@@ -136,9 +140,9 @@ class Fenetre_principale(QMainWindow):
 
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
-        self.recherche = str(self.line.text())
-        self.liste_albums = request_albums.get_nom_album(self, self.recherche)
-        self.liste_artistes = request_albums.get_liste_artiste(self, self.recherche)
+        
+        self.liste_albums = request_albums.get_nom_album(self, recherche)
+        self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
         
 
         row = 0
@@ -158,11 +162,11 @@ class Fenetre_principale(QMainWindow):
             selectButton = QPushButton("voir")
             selectButton.setIcon(QIcon('Icones/go-last.png'))
             self.table.setCellWidget(row-1,2,selectButton)
-            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c)) 
+            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c, recherche)) 
 
         
         
-    def reponse(self, titres):
+    def reponse(self, titres, recherche):
         
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -171,12 +175,14 @@ class Fenetre_principale(QMainWindow):
         searchButton.clicked.connect(self.accueil)
         returnButton = QPushButton("Retour liste")
         returnButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
-        returnButton.clicked.connect(self.tableau)
+        returnButton.clicked.connect(lambda : self.tableau(recherche))
         uploadButton = QPushButton("Enregistrer")
         uploadButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
-        uploadButton.clicked.connect(self.action_upload)
+        uploadButton.clicked.connect(lambda : self.action_upload(titres))
         
         self.wid_pistes = QWidget()
+        self.wid_pistes.setStyleSheet("background-color: #202124")
+
         vbox = QVBoxLayout()
         wid_bouttons = QWidget()
         bouttonshbox = QHBoxLayout()
@@ -208,27 +214,28 @@ class Fenetre_principale(QMainWindow):
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
-        
-        # artiste = 
-        # self.album_id = request_albums.get_album_id(self, self.recherche, )
         nb_rows = len(titres)
         self.table.setRowCount(nb_rows)
 
         row = 0
         for i in titres:
             row += 1
-
             self.table.setItem(row-1,0, QTableWidgetItem(i))
       
         
       
         
-    def id_album(self, row, col):
-        artiste = self.table.item(row-1, 0).text()
-        dic = request_albums.get_dic_album_id_artiste(self, self.recherche)
-        id = dic[artiste]
+    def id_album(self, row, col, recherche):
+        
+        self.nom_album = self.table.item(row-1, 1).text()
+        
+        self.artiste = self.table.item(row-1, 0).text()
+        dic = request_albums.get_dic_album_id_artiste(self, recherche)
+        id = dic[self.artiste]
         titres = request_pistes.get_album_pays(id)
-        self.reponse(titres)
+        self.reponse(titres, recherche)
+        
+    
         
      
     def action_openfolder(self) :
@@ -242,8 +249,28 @@ class Fenetre_principale(QMainWindow):
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
         
         
-    def action_upload(self):
-        os.startfile('..\Onzzer\Icones')
+    def action_upload(self, titres):
+        
+        nom_fichier = self.nom_album + (" - ") + self.artiste + (".txt")
+        
+        with open(nom_fichier, "w") as fichier:
+            
+                fichier.write("Liste de chansons de l'album ")
+                fichier.write(self.nom_album)
+                fichier.write(" de l'artiste ")
+                fichier.write(self.artiste)
+                fichier.write("\n ")
+                
+                for i in titres:
+                    fichier.write("\n->")
+                    fichier.write(i)
+                  
+        QMessageBox.information(self,"Et voilà", "Fichier écrit avec le nom " + nom_fichier)
+
+
+                
+
+     
 
     
     def center(self):
@@ -287,4 +314,3 @@ if __name__ == '__main__':
 
 
 
- 

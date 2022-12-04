@@ -1,13 +1,14 @@
 import sys 
 import os
-from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget
+from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget, QFileDialog
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QToolBar, QStackedLayout
 from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbstractItemView
 from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeaderView, QHBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap, QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QFileInfo
 import request_albums
 import request_pistes
+import youtube_search as YS
 
 
 class Fenetre_principale(QMainWindow):
@@ -187,7 +188,7 @@ class Fenetre_principale(QMainWindow):
         bouttonshbox = QHBoxLayout()
         box_image = QLabel()
         self.table = QTableWidget()
-        self.table.setColumnCount(1)
+        self.table.setColumnCount(2)
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_pistes)
@@ -206,7 +207,7 @@ class Fenetre_principale(QMainWindow):
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
         vbox.setAlignment(Qt.AlignTop)
 
-        headerH = ["Titres de l'Album"]
+        headerH = ["Titres de l'Album","Ouvrir youtube"]
         self.table.setHorizontalHeaderLabels(headerH)
         
         header = self.table.horizontalHeader()
@@ -220,22 +221,28 @@ class Fenetre_principale(QMainWindow):
         for i in titres:
             row += 1
             self.table.setItem(row-1,0, QTableWidgetItem(i))
-      
-        
-      
-        
+            
+            ytButton = QPushButton(QIcon("Icones/youtube.jpg"),"")
+            self.table.setCellWidget(row-1, 1, ytButton)
+            ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 
+
+                
+    
     def id_album(self, row, col, recherche):
         
         self.nom_album = self.table.item(row-1, 1).text()
-        
         self.artiste = self.table.item(row-1, 0).text()
         dic = request_albums.get_dic_album_id_artiste(self, recherche)
         id = dic[self.artiste]
         titres = request_pistes.get_album_pays(id)
         self.reponse(titres, recherche)
         
-    
         
+    def youtube(self, row, col, recherche):
+        
+        self.nom_piste = self.table.item(row-1, 0).text()
+        YS.yt_search(self, self.artiste, self.nom_piste)
+    
      
     def action_openfolder(self) :
         os.startfile('..\Onzzer\Icones')
@@ -250,9 +257,15 @@ class Fenetre_principale(QMainWindow):
         
     def action_upload(self, titres):
         
-        nom_fichier = self.nom_album + (" - ") + self.artiste + (".txt")
+        nom_base = self.nom_album + (" - ") + self.artiste + (".txt")
+
         
-        with open(nom_fichier, "w") as fichier:
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        file_path, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",nom_base,"All Files (*);;Text Files (*.txt)", options=options)
+        
+        
+        with open(file_path, "w") as fichier:
             
                 fichier.write("Liste de chansons de l'album ")
                 fichier.write(self.nom_album)
@@ -263,11 +276,9 @@ class Fenetre_principale(QMainWindow):
                 for i in titres:
                     fichier.write("\n->")
                     fichier.write(i)
-                  
-        QMessageBox.information(self,"Et voilà", "Fichier écrit avec le nom " + nom_fichier)
-
-
-                
+                      
+        filename = QFileInfo(file_path).fileName()
+        QMessageBox.information(self,"Et voilà", "Fichier écrit avec le nom " + filename)
 
      
 
@@ -280,9 +291,6 @@ class Fenetre_principale(QMainWindow):
 
         
         
-        
-        
-
 def main():
     application = QApplication(sys.argv)
     fenetre = Fenetre_principale()
