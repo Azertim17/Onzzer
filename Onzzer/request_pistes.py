@@ -8,7 +8,7 @@ def get_album_pays(album_id):
     recherche = str(album_id)
     traitement1 = recherche.strip()
     replace = traitement1.replace(" ", "%20in%20")
-    replace.replace("'", "%27in%27")
+    replace.replace("'", "\'")
 
     
     url_base = "https://musicbrainz.org/ws/2/release/"

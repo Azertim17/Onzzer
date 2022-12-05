@@ -6,7 +6,7 @@ def get_dic_album_id(self, album_recherche):
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "%27in%27")
+        replace.replace("'", "\'")
         
         
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
@@ -37,7 +37,7 @@ def get_dic_album_id_artiste(self, album_recherche):
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "%27in%27")
+        replace.replace("'", "\'")
 
         
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
@@ -97,7 +97,7 @@ def get_album_id(self, album_recherche, artiste):
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "%27in%27")
+        replace.replace("'", "\'")
 
         
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
@@ -132,7 +132,7 @@ def get_nom_album(self, album_recherche):
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "%27in%27")
+        replace.replace("'", "\'")
 
         
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
@@ -161,7 +161,7 @@ def get_nom_artiste(self, album_recherche):
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "%27in%27")
+        replace.replace("'", "\'")
 
         
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
@@ -187,7 +187,7 @@ def get_liste_artiste(self, album_recherche):
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "%27in%27")
+        replace.replace("'", "\'")
 
         
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
