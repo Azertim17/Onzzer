@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Project specifications &mdash; Onzzer 0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Onzzer’s documentation" href="doc_classe.html" />
+    <link rel="prev" title="Welcome to Onzzer’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Onzzer
+          
+
+          
+            
+            <img src="_static/logo_long.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project specifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#framework-and-general-objective">Framework and general objective</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#development-environment-and-git-repository">Development environment and GIT repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scripting-programming-languages">Scripting/programming languages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc_classe.html">Onzzer’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc_classe.html#module1">module1</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Onzzer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Project specifications</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/cahier_des_charges.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="project-specifications">
+<h1>Project specifications<a class="headerlink" href="#project-specifications" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="framework-and-general-objective">
+<h2>Framework and general objective<a class="headerlink" href="#framework-and-general-objective" title="Permalink to this headline">¶</a></h2>
+<p>The project aims to develop a graphical interface in PyQt that will allow to query the MusicBrainz API in order to list and save in a text file all the tracks of a searched album.The main steps of the project are to:
+* understanding how the MusicBrainz API works;
+* designing, drawing and developing the graphical interface;
+* using the MVC_help Model View Controller (MVC) model to structure the application code</p>
+</div>
+<div class="section" id="development-environment-and-git-repository">
+<h2>Development environment and GIT repository<a class="headerlink" href="#development-environment-and-git-repository" title="Permalink to this headline">¶</a></h2>
+<p>The project must :</p>
+<ul>
+<li><p>use the Git version management tool and a Python development IDE ;</p></li>
+<li><p>be structured according to the tree structure shown below</p></li>
+<li><p>be able to run on the Linux system of the deb11-lxqt Virtual Machine in the datacenter during the final demonstration;</p></li>
+<li><p>be documented :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>project description in restructuredText format,</p></li>
+<li><p>relevant comments in the code (if useful for understanding),</p></li>
+<li><p>comments on the developed functions</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>have a test directory where all developed Python functions will have a unit test code</p></li>
+</ul>
+<p>The project is attached to a GIT repository that you will have created on GitHub and to the delivery of your computer codes. The repository must absolutely be handed over at the final delivery of the project. The versioning being traced and dated, it will be used for the evaluation of the work of the group and of each student.</p>
+</div>
+<div class="section" id="scripting-programming-languages">
+<h2>Scripting/programming languages<a class="headerlink" href="#scripting-programming-languages" title="Permalink to this headline">¶</a></h2>
+<p>The project must use :</p>
+<blockquote>
+<div><p>Python programming language (version &gt; 3.9) for source codes and PyQt for GUI projects
+PHP/MySQL for web application projects
+and/or the bash scripting language for scripts allowing the automation of certain processes and the publication of results (seen in R108-Basic operating systems)</p>
+</div></blockquote>
+<p>Project tree</p>
+<p>Your project must :</p>
+<blockquote>
+<div><p>be executed by means of a script project_name.py. This script will follow the classic program structure seen in R1.07-Programming basics and described in the Python form. It will take any parameters in arguments specified below.</p>
+<p>respect the following tree structure (PROJECTGitHUB designates the directory to which your project is attached and constitutes the base of the local Git repository) :</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="doc_classe.html" class="btn btn-neutral float-right" title="Onzzer’s documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Onzzer’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Tim.M, Baptiste.T, Matthieu.B, Eliot.M.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
