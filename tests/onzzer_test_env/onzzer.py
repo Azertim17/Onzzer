@@ -119,7 +119,10 @@ class Fenetre_principale(QMainWindow):
     
     
     def recherche_artiste(self, recherche):
-    
+        
+        
+        self.dic_type = request_artistes.get_artiste_id(self, recherche)
+        self.dic_name = request_artistes.get_artiste_name(self, recherche)
         
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -135,7 +138,8 @@ class Fenetre_principale(QMainWindow):
         bouttonshbox = QHBoxLayout()
         box_image = QLabel()
         self.table = QTableWidget()
-        self.table.setRowCount(25)
+        row = len(self.dic_name)
+        self.table.setRowCount(row)
         self.table.setColumnCount(3)
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("background-color: #D0D1D2")
@@ -153,7 +157,7 @@ class Fenetre_principale(QMainWindow):
         
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
         
-        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"]
+        headerH = ["Nom Artiste","Désignation","Voir la discrographie"]
         self.table.setHorizontalHeaderLabels(headerH)
         
         header =self.table.horizontalHeader()
@@ -161,36 +165,35 @@ class Fenetre_principale(QMainWindow):
 
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
-        
-        self.dic = request_artistes.get_artiste_id(self, recherche)
-        print(self.dic)
-        
-        # row = 0
-        # for i in self.liste_artistes:
-        #     row += 1
-        #     self.table.setItem(row-1,0, QTableWidgetItem(i))
 
-        # row = 0  
-        # for i in self.liste_albums:             
-        #     row += 1
-        #     self.table.setItem(row-1,1, QTableWidgetItem(i))
-                      
-        # row = 0
-        # for i in range(0,25):             
         
-        #     row += 1
+        
+        row = 0
+        for i in self.dic_name:
+            row += 1
+            self.table.setItem(row-1,0, QTableWidgetItem(self.dic_name[i]))
+
+        row = 0  
+        for i in self.dic_type:             
+            row += 1
+            self.table.setItem(row-1,1, QTableWidgetItem(self.dic_type[i]))
+                      
+        row = 0
+        for i in range(0,25):             
+        
+            row += 1
             
-        #     selectButton = QPushButton("voir")
-        #     selectButton.setIcon(QIcon('Icones/go-last.png'))
-        #     self.table.setCellWidget(row-1,2,selectButton)
-        #     selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c, recherche)) 
-    
-    
-    
+            selectButton = QPushButton("voir")
+            selectButton.setIcon(QIcon('Icones/go-last.png'))
+            self.table.setCellWidget(row-1,2,selectButton)
+            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c, recherche)) 
     
     
         
     def recherche_album(self, recherche):
+        
+        self.liste_albums = request_albums.get_nom_album(self, recherche)
+        self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
     
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -206,7 +209,8 @@ class Fenetre_principale(QMainWindow):
         bouttonshbox = QHBoxLayout()
         box_image = QLabel()
         self.table = QTableWidget()
-        self.table.setRowCount(25)
+        row = len(self.liste_albums)
+        self.table.setRowCount(row)
         self.table.setColumnCount(3)
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("background-color: #D0D1D2")
@@ -231,10 +235,6 @@ class Fenetre_principale(QMainWindow):
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
-        
-        self.liste_albums = request_albums.get_nom_album(self, recherche)
-        self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
         
         
         row = 0
