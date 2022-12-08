@@ -1,3 +1,4 @@
+"""Onzzer"""
 import sys 
 import os
 from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget, QFileDialog
@@ -12,13 +13,22 @@ import youtube_search as YS
 
 
 class Fenetre_principale(QMainWindow):
-    
+    """
+    this is Onzzer's window
+
+    """
     def __init__(self):
-    
+        """The constructor."""
         super().__init__()
+        """the super constructor"""
+        """paramètre de la fenetre 
+        :param titre : Onzzer
+        :param taille de la fenêtre
+        """
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))
         self.setGeometry(600,100,800,800)
+        
         self.menu()
         self.accueil()
         self.center()
@@ -26,6 +36,10 @@ class Fenetre_principale(QMainWindow):
 
         
     def menu(self):
+        """
+        définition du menu et de la toolbar 
+        
+        """
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
         openButton = QAction(QIcon('Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
@@ -60,6 +74,9 @@ class Fenetre_principale(QMainWindow):
 
 
     def accueil(self):
+        """code de la page d'accueil
+        
+        """
         
         image = QPixmap('Icones/logo_long_blanc.png')
         searchButton = QPushButton("Recherche") 
@@ -99,7 +116,9 @@ class Fenetre_principale(QMainWindow):
  
         
     def tableau(self, recherche):
-                
+        """code du tableau de la 2ème page
+        
+        """     
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")

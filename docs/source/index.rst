@@ -11,7 +11,8 @@ It allows to retrieve the titles of an album from its name.
 A recording function is available. This function saves the list of titles in text format.\
 
 
-
+.. NOTE::
+   Find our github in this `link <https://github.com/Azertim17/Onzzer>`_
 
 
 .. toctree::
@@ -19,6 +20,7 @@ A recording function is available. This function saves the list of titles in tex
    :caption: Contents:
 
    ./cahier_des_charges.rst
+   ./doc_classe.rst
 
 
 
