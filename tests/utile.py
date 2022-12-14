@@ -10,7 +10,8 @@ url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
 url_fin = "%20AND%20type:album&fmt=json"
 url_complet = url_base + replace + url_fin
 
-url_complet = "https://musicbrainz.org/ws/2/release-group/d6cfccc8-026d-4028-b567-4f762354ff91?inc=releases&fmt=json"
+url_complet = "https://musicbrainz.org/ws/2/artist/55304866-1b79-4365-a6b1-961c95e9fc57?inc=releases&fmt=json"
+url_complet = "https://musicbrainz.org/ws/2/releases/a8976fbd-9225-4c79-b607-6b1917e176dc?inc=artist-credits+labels+discids+recordings&fmt=json"
 
 # urlcomplet = "https://musicbrainz.org/search?query=d%27eux&type=release&method=indexed&fmt=json"
 
@@ -29,3 +30,4 @@ print(json.dumps(contenu, sort_keys=True, indent=4),)
 
 
 print(url_complet)
+

@@ -1,3 +1,0 @@
-requete sortant les titres de tous les albums d'un artiste 
-
-requete recherche d'un titre sortant tous les titres correspondants avec leur artiste

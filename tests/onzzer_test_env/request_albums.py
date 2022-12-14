@@ -178,7 +178,24 @@ def get_liste_artiste(self, album_recherche):
 
 
 
-
+def get_discographie(self, id):
+    
+        url_base = "https://musicbrainz.org/ws/2/artist/"
+        url_fin = "?inc=releases&fmt=json"
+        url_complet = url_base + id + url_fin
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+              
+        liste_albums = []
+        
+        for i in contenu ["releases"]:
+                                
+                album = i['title']
+                liste_albums.append(album)
+                
+        return liste_albums
+    
 
 
 

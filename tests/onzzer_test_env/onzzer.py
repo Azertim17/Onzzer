@@ -64,7 +64,7 @@ class Fenetre_principale(QMainWindow):
         
         image = QPixmap('Icones/logo_long_blanc.png')
         self.catcombo = QComboBox()
-        self.catcombo.addItems(["Album" , "Artiste" , "Chanson"])
+        self.catcombo.addItems(["Album" , "Artiste"])
         # self.catcombo.activated.connect(self.categorie)
 
         self.searchButton = QPushButton("Recherche") 
@@ -110,18 +110,14 @@ class Fenetre_principale(QMainWindow):
 
         elif select == "Artiste" :
             self.recherche_artiste(self.line.text())
-        
-        elif select == "Chanson" :
-            self.recherche_chanson(self.line.text())
             
-    
     
     
     
     def recherche_artiste(self, recherche):
         
         
-        self.dic_type = request_artistes.get_artiste_id(self, recherche)
+        self.dic_type = request_artistes.get_id_type(self, recherche)
         self.dic_name = request_artistes.get_artiste_name(self, recherche)
         
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
@@ -167,7 +163,6 @@ class Fenetre_principale(QMainWindow):
         
 
         
-        
         row = 0
         for i in self.dic_name:
             row += 1
@@ -186,7 +181,87 @@ class Fenetre_principale(QMainWindow):
             selectButton = QPushButton("voir")
             selectButton.setIcon(QIcon('Icones/go-last.png'))
             self.table.setCellWidget(row-1,2,selectButton)
-            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c, recherche)) 
+            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_artiste(r, c, recherche)) 
+    
+    
+    def id_artiste(self, row, col, recherche):
+        
+        self.nom_artiste = self.table.item(row-1, 0).text()        
+    
+        dic = request_artistes.get_artiste_id(self, recherche)
+        id = dic[row]
+        self.discographie(id)
+        
+        
+    
+
+
+
+    def discographie(self, id_artiste):
+        
+        
+         self.liste_albums = request_albums.get_discographie(self, id_artiste)
+         
+         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+         image = image1.scaled(255, 68)
+         searchButton = QPushButton("Nouvelle recherche")
+         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+         searchButton.clicked.connect(self.accueil)
+         
+         self.wid_discographie = QWidget()
+         self.wid_discographie.setStyleSheet("background-color: #202124")
+
+         wid_bouttons = QWidget()
+         vbox = QVBoxLayout()
+         bouttonshbox = QHBoxLayout()
+         box_image = QLabel()
+         self.table = QTableWidget()
+         row = len(self.liste_albums)
+         self.table.setRowCount(row)
+         self.table.setColumnCount(3)
+         self.table.setContentsMargins(100, 200, 100, 0)
+         self.table.setStyleSheet("background-color: #D0D1D2")
+         self.setCentralWidget(self.wid_discographie)
+         
+         box_image.setPixmap(image)
+         vbox.addWidget(box_image, alignment= Qt.AlignRight)
+   
+         self.wid_discographie.setLayout(vbox)
+         vbox.addWidget(self.table)
+
+         wid_bouttons.setLayout(bouttonshbox)
+         
+         bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
+         
+         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
+         
+         headerH = ["Titre Album","Voir les Pistes"]
+         self.table.setHorizontalHeaderLabels(headerH)
+         
+         header =self.table.horizontalHeader()
+         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+
+         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+         
+         
+         row = 0
+         for i in self.liste_albums:
+             row += 1
+             self.table.setItem(row-1,0, QTableWidgetItem(i))
+
+                       
+         row = 0
+         for i in range(0,25):             
+             row += 1
+             
+             selectButton = QPushButton("voir")
+             selectButton.setIcon(QIcon('Icones/go-last.png'))
+             self.table.setCellWidget(row-1,2,selectButton)
+             selectButton.clicked.connect(lambda _, r=row, c=3: self.pistes(r, c, id)) 
+    
+    
+    
+    
     
     
         
@@ -258,7 +333,7 @@ class Fenetre_principale(QMainWindow):
 
         
         
-    def reponse(self, titres, recherche):
+    def pistes(self, titres, recherche):
         
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -267,7 +342,7 @@ class Fenetre_principale(QMainWindow):
         searchButton.clicked.connect(self.accueil)
         returnButton = QPushButton("Retour liste")
         returnButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
-        returnButton.clicked.connect(lambda : self.tableau(recherche))
+        returnButton.clicked.connect(lambda : self.recherche_album(recherche))
         uploadButton = QPushButton("Enregistrer")
         uploadButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         uploadButton.clicked.connect(lambda : self.action_upload(titres))
@@ -327,7 +402,11 @@ class Fenetre_principale(QMainWindow):
         dic = request_albums.get_dic_album_id_artiste(self, recherche)
         id = dic[self.artiste]
         titres = request_pistes.get_pistes_album(id)
-        self.reponse(titres, recherche)
+        self.pistes(titres, recherche)
+        
+        
+    
+
         
         
     def youtube(self, row, col, recherche):
