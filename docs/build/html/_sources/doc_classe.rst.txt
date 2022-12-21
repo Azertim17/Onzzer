@@ -1,10 +1,10 @@
 Onzzer's documentation
-========================
+***********************
 
 .. automodule:: Onzzer
 
-module1
-=========
+Onzzer 
+========================
 
 .. automodule:: Onzzer.Onzzer
     :members:

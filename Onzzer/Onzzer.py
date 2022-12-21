@@ -1,4 +1,8 @@
-"""Onzzer"""
+"""
+.. module:: Onzzer
+    :synopsis: Module principale 
+
+Onzzer"""
 import sys 
 import os
 from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget, QFileDialog
