@@ -1,8 +1,9 @@
 """
 .. module:: Onzzer
-    :synopsis: Module principale 
+    :platform: Unix, Windows
+    :synopsis: Onzzer module principale du projet
 
-.. moduleauthor:: MB <matt.b@orange.fr>
+.. moduleauthor:: Matt Briss <matt.b@orange.fr>
 
 """
 import sys 
@@ -30,6 +31,7 @@ class Fenetre_principale(QMainWindow):
         """paramètre de la fenetre 
         :param titre : Onzzer
         :param taille de la fenêtre
+        returns: contruit les fenêtres de l'application 
         """
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))

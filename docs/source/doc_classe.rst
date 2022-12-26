@@ -6,6 +6,22 @@ Onzzer's documentation
 Onzzer 
 ========================
 
-.. automodule:: Onzzer.Onzzer
-    :members:
+.. automodule:: Onzzer
+    :members: 
     
+
+
+Request_albums
+========================
+.. automodule:: request_albums
+    :members: 
+
+Request_pistes
+========================
+.. automodule:: request_pistes
+    :members: 
+
+youtube_search
+========================
+.. automodule:: youtube_search
+    :members: 

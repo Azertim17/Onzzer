@@ -1,3 +1,12 @@
+"""
+.. module:: request_pistes
+    :platform: Unix, Windows
+    :synopsis: request_albums recherche album
+
+.. moduleauthor:: Matt Briss <matt.b@orange.fr>
+
+"""
+
 import json
 import requests
 import request_albums

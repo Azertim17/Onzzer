@@ -1,8 +1,29 @@
+"""
+.. module:: request_albums
+    :platform: Unix, Windows
+    :synopsis: request_albums recherche album
+
+.. moduleauthor:: Matt Briss <matt.b@orange.fr>
+
+"""
 import json
 import requests
 
 def get_dic_album_id(self, album_recherche):
+        """ Cette fonction fait quelque chose.
 
+        :param param1: premier paramètre.
+        :type param1: str
+        :param param2: deuxième paramètre.
+        :type param2: bool
+        :returns: description de la variable retournée.
+        :rtype: int
+        :raises: TypeError
+        
+        
+        
+
+        """
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
@@ -33,6 +54,20 @@ def get_dic_album_id(self, album_recherche):
 
 
 def get_dic_album_id_artiste(self, album_recherche):
+        """ Cette fonction fait quelque chose.
+
+        :param param1: premier paramètre.
+        :type param1: str
+        :param param2: deuxième paramètre.
+        :type param2: bool
+        :returns: description de la variable retournée.
+        :rtype: int
+        :raises: TypeError
+        
+        
+        
+
+        """
 
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
@@ -94,6 +129,21 @@ def get_dic_album_id_artiste(self, album_recherche):
 
 def get_album_id(self, album_recherche, artiste):
 
+        """ Cette fonction fait quelque chose.
+
+        :param param1: premier paramètre.
+        :type param1: str
+        :param param2: deuxième paramètre.
+        :type param2: bool
+        :returns: description de la variable retournée.
+        :rtype: int
+        :raises: TypeError
+        
+        
+        
+
+        """
+
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
         replace = traitement1.replace(" ", "%20in%20")
@@ -128,6 +178,20 @@ def get_album_id(self, album_recherche, artiste):
 
          
 def get_nom_album(self, album_recherche):
+        """ Cette fonction fait quelque chose.
+
+        :param param1: premier paramètre.
+        :type param1: str
+        :param param2: deuxième paramètre.
+        :type param2: bool
+        :returns: description de la variable retournée.
+        :rtype: int
+        :raises: TypeError
+        
+        
+        
+
+        """
 
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
@@ -157,6 +221,20 @@ def get_nom_album(self, album_recherche):
 
 
 def get_nom_artiste(self, album_recherche):
+        """ Cette fonction fait quelque chose.
+
+        :param param1: premier paramètre.
+        :type param1: str
+        :param param2: deuxième paramètre.
+        :type param2: bool
+        :returns: description de la variable retournée.
+        :rtype: int
+        :raises: TypeError
+        
+        
+        
+
+        """
 
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
@@ -183,6 +261,20 @@ def get_nom_artiste(self, album_recherche):
 
 
 def get_liste_artiste(self, album_recherche):
+        """ Cette fonction fait quelque chose.
+
+        :param param1: premier paramètre.
+        :type param1: str
+        :param param2: deuxième paramètre.
+        :type param2: bool
+        :returns: description de la variable retournée.
+        :rtype: int
+        :raises: TypeError
+        
+        
+        
+
+        """
 
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
