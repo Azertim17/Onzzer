@@ -2,7 +2,9 @@
 .. module:: Onzzer
     :synopsis: Module principale 
 
-Onzzer"""
+.. moduleauthor:: MB <matt.b@orange.fr>
+
+"""
 import sys 
 import os
 from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget, QFileDialog
