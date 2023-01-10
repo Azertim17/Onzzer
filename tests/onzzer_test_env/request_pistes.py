@@ -25,3 +25,4 @@ def get_pistes_album(album_id):
         liste_titres.append(titre)
         
     return liste_titres
+
