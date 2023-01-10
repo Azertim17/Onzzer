@@ -105,6 +105,8 @@ class Fenetre_principale(QMainWindow):
 
         :param param1: self.line
         :type param1: str
+        :param param2: searchButton
+        :type param2: button
         :returns: the information sought
         :rtype: 
         :raises: TypeError
@@ -113,10 +115,6 @@ class Fenetre_principale(QMainWindow):
         .. code-block:: python
 
          app = menu(self)
-
-
-         
-
 
 
         """
