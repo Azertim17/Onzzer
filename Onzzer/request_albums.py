@@ -300,6 +300,27 @@ def get_liste_artiste(self, album_recherche):
 
 
 
+def get_discographie(self, id_artiste):
+    
+        url_base = "https://musicbrainz.org/ws/2/artist/"
+        url_fin = "?inc=releases&fmt=json"
+        url_complet = url_base + id_artiste + url_fin
+        
+        reponse = requests.get(url_complet)
+        contenu = reponse.json()
+        
+        print(url_complet)
+        
+        liste_albums = {}
+        
+        for i in contenu ["releases"]:
+                                
+                nom_album = i['title']
+                id_album = i['id']
+                
+                liste_albums[nom_album] = id_album
+                
+        return liste_albums
 
 
 # def get_dic_album_id(self, album_recherche):
