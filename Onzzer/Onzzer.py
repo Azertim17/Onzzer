@@ -31,7 +31,7 @@ class Fenetre_principale(QMainWindow):
         """paramètre de la fenetre 
         :param titre : Onzzer
         :param taille de la fenêtre
-        returns: contruit les fenêtres de l'application 
+        :returns: contruit les fenêtres de l'application 
         """
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon('Icones/logo.png'))
@@ -45,8 +45,24 @@ class Fenetre_principale(QMainWindow):
         
     def menu(self):
         """
-        définition du menu et de la toolbar 
-        
+        menu & toolbar creation 
+
+        :param param1: premier paramètre
+        :type param1: str
+        :returns: menu and toolbar
+        :rtype: app
+        :raises: TypeError
+        :exemple:
+
+        .. code-block:: python
+
+         app = menu(self)
+
+
+         
+
+
+
         """
         eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
@@ -82,8 +98,27 @@ class Fenetre_principale(QMainWindow):
 
 
     def accueil(self):
-        """code de la page d'accueil
-        
+        """
+        This fonction create the first page.
+        She recuvers the inscription in "LINEedit" et give this values in "tableau" fonction.
+
+
+        :param param1: self.line
+        :type param1: str
+        :returns: the information sought
+        :rtype: 
+        :raises: TypeError
+        :exemple:
+
+        .. code-block:: python
+
+         app = menu(self)
+
+
+         
+
+
+
         """
         
         image = QPixmap('Icones/logo_long_blanc.png')
