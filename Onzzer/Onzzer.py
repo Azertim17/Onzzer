@@ -173,7 +173,7 @@ class Fenetre_principale(QMainWindow):
     
     
     def recherche_artiste(self, recherche):
-        """code du tableau de la 2ème page
+        """code du tableau regroupant les artistes portant le nom recherché 
         
         """        
         self.dic_type = request_artistes.get_id_type(self, recherche)
