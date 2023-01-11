@@ -34,35 +34,42 @@ Arborescence du projet
 ::
 
    Onzzer
-      ├── .git/
       ├── data/
-      │   └── rapport_intermédiaire.txt
-      │   └── test_requete.txt
+      │     ├── database/
+      │             └── ...
+      │     ├── rapport_intermédiaire.txt
+      │     └── test_requete.txt
       ├── docs/
       │     ├── build/
-      │     │    └── html/
+      │     │     ├── doctrees/     
+      │     │     └── html/
       │     └── source/
-      │          ├── index.rst
-      │          ├── conf.py
-      │          ├── content/
-      │          ├── _static/
-      │          └── _templates/
+      │            ├── index.rst
+      │            ├── conf.py
+      │            ├── content/
+      │            ├── _static/
+      │            └── _templates/
       ├── html/
-      │   └── ...
-      ├── __init__.py
+      │     └── ...
       ├── onzzer/
-      │     └── onzzer.py
-      │     └── request_albums.py
-      │     └── request_pistes.py
-      │     └── youtube_search.py
-      |     └── Icones/
+      │      ├── __init__.py
+      │      ├── onzzer.exe
+      │      ├── onzzer_setup.exe
+      │      ├── onzzer.py
+      │      ├── request_albums.py
+      │      ├── request_pistes.py
+      │      ├── youtube_search.py
+      |      ├── Icones/
+      |      ├── dist/
+      |      ├── build/Onzzer/
+      │      └── __pycache__/
       ├── tests/
-      │   ├── __init__.py
-      │   └── onzzer_copy.py
+      │     ├── __init__.py
+      │     └── onzzer_copy.py
+      ├── venv/
       ├── .gitignore
       ├── AUTHORS
-      │
-      └── requirements.txt
+      └── README.rst
       
 ####
 
