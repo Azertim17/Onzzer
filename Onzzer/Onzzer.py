@@ -37,11 +37,13 @@ class Fenetre_principale(QMainWindow):
         :returns: contruit les fenêtres de l'application 
         """
         self.setWindowTitle("Onzzer")
-        self.setWindowIcon(QIcon('Icones/logo.png'))
+        self.setWindowIcon(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo.png'))
         self.setGeometry(600,100,800,800)
         self.menu()
         self.accueil()
         self.center()
+
+    
 
 
         
@@ -65,11 +67,11 @@ class Fenetre_principale(QMainWindow):
 
 
         """
-        eraseButton = QAction(QIcon('Icones/edit-undo.png'), 'Effacer', self)
+        eraseButton = QAction(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
-        openButton = QAction(QIcon('Icones/mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
+        openButton = QAction(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\mail-send.png'), "Ouvrir l'emplacement d'enregistrement", self)
         openButton.setShortcut('Ctrl+O')
-        exitButton = QAction(QIcon('Icones/application-exit.png'), 'Quitter', self)
+        exitButton = QAction(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\application-exit.png'), 'Quitter', self)
         exitButton.setShortcut('Ctrl+Q')
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
@@ -120,8 +122,10 @@ class Fenetre_principale(QMainWindow):
 
 
 
-        """        
-        image = QPixmap('Icones/logo_long_blanc.png')
+        """     
+
+
+        image = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png')
         self.catcombo = QComboBox()
         self.catcombo.addItems(["Album" , "Artiste"])
 
@@ -219,7 +223,7 @@ class Fenetre_principale(QMainWindow):
         self.dic_type = request_artistes.get_id_type(self, recherche)
         self.dic_name = request_artistes.get_artiste_name(self, recherche)
         
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -278,7 +282,7 @@ class Fenetre_principale(QMainWindow):
             row += 1
             
             selectButton = QPushButton("voir")
-            selectButton.setIcon(QIcon('Icones/go-last.png'))
+            selectButton.setIcon(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\go-last.png'))
             self.table.setCellWidget(row-1,2,selectButton)
             selectButton.clicked.connect(lambda _, r=row, c=3: self.id_artiste(r, c, recherche)) 
     
@@ -297,7 +301,7 @@ class Fenetre_principale(QMainWindow):
         
          self.liste_albums = request_albums.get_discographie(self, id_artiste)
 
-         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+         image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
          image = image1.scaled(255, 68)
          searchButton = QPushButton("Nouvelle recherche")
          searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -348,7 +352,7 @@ class Fenetre_principale(QMainWindow):
              row += 1
              
              selectButton = QPushButton("voir")
-             selectButton.setIcon(QIcon('Icones/go-last.png'))
+             selectButton.setIcon(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\go-last.png'))
              self.table.setCellWidget(row-1,1,selectButton)
              selectButton.clicked.connect(lambda _, r=row, c=3: self.get_pistes_by_album(r, c, id_artiste)) 
     
@@ -366,11 +370,10 @@ class Fenetre_principale(QMainWindow):
         
     def recherche_album(self, recherche):
         
-        print(recherche)
         self.liste_albums = request_albums.get_nom_album(self, recherche)
         self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
     
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -427,7 +430,7 @@ class Fenetre_principale(QMainWindow):
             row += 1
             
             selectButton = QPushButton("voir")
-            selectButton.setIcon(QIcon('Icones/go-last.png'))
+            selectButton.setIcon(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\go-last.png'))
             self.table.setCellWidget(row-1,2,selectButton)
             selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c, recherche)) 
 
@@ -435,7 +438,7 @@ class Fenetre_principale(QMainWindow):
         
     def pistes(self, titres, recherche):
         
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -496,7 +499,7 @@ class Fenetre_principale(QMainWindow):
             row += 1
             self.table.setItem(row-1,0, QTableWidgetItem(i))
             
-            ytButton = QPushButton(QIcon("Icones/youtube.jpg"),"")
+            ytButton = QPushButton(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\youtube.jpg'),"")
             self.table.setCellWidget(row-1, 1, ytButton)
             ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 
 
@@ -520,7 +523,7 @@ class Fenetre_principale(QMainWindow):
     
      
     def action_openfolder(self) :
-        os.startfile('..\Onzzer\Icones')
+        os.startfile("")
         
         
     def action_clear(self):
