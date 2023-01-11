@@ -245,7 +245,7 @@ class Fenetre_principale(QMainWindow):
         self.table.setRowCount(row)
         self.table.setColumnCount(3)
         self.table.setContentsMargins(100, 200, 100, 0)
-        self.table.setStyleSheet("background-color: #D0D1D2")
+        self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_artiste)
         
         box_image.setPixmap(image)
@@ -291,7 +291,7 @@ class Fenetre_principale(QMainWindow):
             selectButton.clicked.connect(lambda _, r=row, c=3: self.id_artiste(r, c, recherche)) 
     
     
-    def id_artiste(self, row, recherche):
+    def id_artiste(self, row, column, recherche):
         """
         Give the number of line if I click in the row. Get back the id_artist 
 
@@ -327,21 +327,17 @@ class Fenetre_principale(QMainWindow):
         :raises: TypeError
         
         """
-
-<<<<<<< HEAD
-         image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
-         image = image1.scaled(255, 68)
-         searchButton = QPushButton("Nouvelle recherche")
-         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
-         searchButton.clicked.connect(self.accueil)
+        image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
+        image = image1.scaled(255, 68)
+        searchButton = QPushButton("Nouvelle recherche")
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        searchButton.clicked.connect(self.accueil)
          
-         self.wid_discographie = QWidget()
-         self.wid_discographie.setStyleSheet("background-color: #202124")
-=======
+        self.wid_discographie = QWidget()
+        self.wid_discographie.setStyleSheet("background-color: #202124")
         
         
         self.liste_albums = request_albums.get_discographie(self, id_artiste)
->>>>>>> bb66447bf85e3aed9b20f9d1b980a11b2021863a
 
         image1 = QPixmap('Icones/logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -361,7 +357,7 @@ class Fenetre_principale(QMainWindow):
         self.table.setRowCount(row)
         self.table.setColumnCount(2)
         self.table.setContentsMargins(100, 200, 100, 0)
-        self.table.setStyleSheet("background-color: #D0D1D2")
+        self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_discographie)
         
         box_image.setPixmap(image)
@@ -424,9 +420,6 @@ class Fenetre_principale(QMainWindow):
     def recherche_album(self, recherche):
         """
         
-<<<<<<< HEAD
-=======
-        
         :param param1: id_artiste
         :type param1: str
         :returns: 
@@ -436,7 +429,6 @@ class Fenetre_principale(QMainWindow):
         
         """
         print(recherche)
->>>>>>> bb66447bf85e3aed9b20f9d1b980a11b2021863a
         self.liste_albums = request_albums.get_nom_album(self, recherche)
         self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
     
@@ -458,7 +450,7 @@ class Fenetre_principale(QMainWindow):
         self.table.setRowCount(row)
         self.table.setColumnCount(3)
         self.table.setContentsMargins(100, 200, 100, 0)
-        self.table.setStyleSheet("background-color: #D0D1D2")
+        self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_table)
         
         box_image.setPixmap(image)
@@ -545,7 +537,7 @@ class Fenetre_principale(QMainWindow):
         self.table = QTableWidget()
         self.table.setColumnCount(2)
         self.table.setContentsMargins(100, 200, 100, 0)
-        self.table.setStyleSheet("background-color: #D0D1D2")
+        self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_pistes)
         
         box_image.setPixmap(image)
@@ -580,7 +572,6 @@ class Fenetre_principale(QMainWindow):
             ytButton = QPushButton(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\youtube.jpg'),"")
             self.table.setCellWidget(row-1, 1, ytButton)
             ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 
-
                 
     
     def id_album(self, row, col, recherche):
@@ -623,9 +614,7 @@ class Fenetre_principale(QMainWindow):
     
      
     def action_openfolder(self) :
-<<<<<<< HEAD
         os.startfile("")
-=======
         """
         
         
@@ -638,7 +627,6 @@ class Fenetre_principale(QMainWindow):
         
         """
         os.startfile('..\Onzzer\Icones')
->>>>>>> bb66447bf85e3aed9b20f9d1b980a11b2021863a
         
         
     def action_clear(self):
