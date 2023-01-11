@@ -12,12 +12,11 @@ import requests
 def get_dic_album_id(self, album_recherche):
         """ Cette fonction fait quelque chose.
 
-        :param param1: premier paramètre.
+        :param param1: album_recherche
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
-        :returns: description de la variable retournée.
-        :rtype: int
+        
+        :returns: dictionary album with ID 
+        :rtype: ?
         :raises: TypeError
         
         
@@ -54,12 +53,9 @@ def get_dic_album_id(self, album_recherche):
 
 
 def get_dic_album_id_artiste(self, album_recherche):
-        """ Cette fonction fait quelque chose.
-
-        :param param1: premier paramètre.
+        """ create a dictionary album / Artist 
+        :param param1: album_recherche
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
         :returns: description de la variable retournée.
         :rtype: int
         :raises: TypeError
@@ -129,13 +125,14 @@ def get_dic_album_id_artiste(self, album_recherche):
 
 def get_album_id(self, album_recherche, artiste):
 
-        """ Cette fonction fait quelque chose.
+        """ 
+        Returne a ID for album 
 
-        :param param1: premier paramètre.
+        :param param1: album_recherche
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
-        :returns: description de la variable retournée.
+        :param param2: artiste
+        :type param2: str
+        :returns: album id
         :rtype: int
         :raises: TypeError
         
@@ -178,14 +175,13 @@ def get_album_id(self, album_recherche, artiste):
 
          
 def get_nom_album(self, album_recherche):
-        """ Cette fonction fait quelque chose.
+        """ 
+        This function intterogates API withe name enter in Line Edith
 
-        :param param1: premier paramètre.
+        :param param1: album_recherche
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
-        :returns: description de la variable retournée.
-        :rtype: int
+        :returns: album name 
+        :rtype: str
         :raises: TypeError
         
         
@@ -221,14 +217,13 @@ def get_nom_album(self, album_recherche):
 
 
 def get_nom_artiste(self, album_recherche):
-        """ Cette fonction fait quelque chose.
+        """ 
+        This function research all singer's music album in API
 
-        :param param1: premier paramètre.
+        :param param1: album_recherche
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
-        :returns: description de la variable retournée.
-        :rtype: int
+        :returns: author name 
+        :rtype: str
         :raises: TypeError
         
         
@@ -261,14 +256,13 @@ def get_nom_artiste(self, album_recherche):
 
 
 def get_liste_artiste(self, album_recherche):
-        """ Cette fonction fait quelque chose.
-
-        :param param1: premier paramètre.
+        """ 
+        
+        
+        :param param1: album_recherche
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
-        :returns: description de la variable retournée.
-        :rtype: int
+        :returns: author name 
+        :rtype: str
         :raises: TypeError
         
         
@@ -301,6 +295,21 @@ def get_liste_artiste(self, album_recherche):
 
 
 def get_discographie(self, id_artiste):
+
+        """ 
+        This fonction list all singer's album 
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns:  list all singer's album
+        :rtype: str
+        :raises: TypeError
+        
+        
+        
+
+        """
     
         url_base = "https://musicbrainz.org/ws/2/artist/"
         url_fin = "?inc=releases&fmt=json"
