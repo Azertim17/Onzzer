@@ -184,8 +184,7 @@ def ws_ext_parse(extstr: Optional[str], isserver: bool = False) -> Tuple[int, bo
         if not defext:
             compress = 15
             break
-        match = _WS_EXT_RE.match(defext)
-        if match:
+        if match := _WS_EXT_RE.match(defext):
             compress = 15
             if isserver:
                 # Server never fail to detect compress handshake.
@@ -201,8 +200,6 @@ def ws_ext_parse(extstr: Optional[str], isserver: bool = False) -> Tuple[int, bo
                         continue
                 if match.group(1):
                     notakeover = True
-                # Ignore regex group 5 & 6 for client_max_window_bits
-                break
             else:
                 if match.group(6):
                     compress = int(match.group(6))
@@ -214,11 +211,10 @@ def ws_ext_parse(extstr: Optional[str], isserver: bool = False) -> Tuple[int, bo
                         raise WSHandshakeError("Invalid window size")
                 if match.group(2):
                     notakeover = True
-                # Ignore regex group 5 & 6 for client_max_window_bits
-                break
-        # Return Fail if client side and not match
+            # Ignore regex group 5 & 6 for client_max_window_bits
+            break
         elif not isserver:
-            raise WSHandshakeError("Extension for deflate not supported" + ext.group(1))
+            raise WSHandshakeError(f"Extension for deflate not supported{ext.group(1)}")
 
     return compress, notakeover
 
@@ -237,7 +233,7 @@ def ws_ext_gen(
         enabledext.append("client_max_window_bits")
 
     if compress < 15:
-        enabledext.append("server_max_window_bits=" + str(compress))
+        enabledext.append(f"server_max_window_bits={compress}")
     if server_notakeover:
         enabledext.append("server_no_context_takeover")
     # if client_notakeover:
@@ -347,20 +343,17 @@ class WebSocketReader:
                     if self._max_msg_size and len(self._partial) >= self._max_msg_size:
                         raise WebSocketError(
                             WSCloseCode.MESSAGE_TOO_BIG,
-                            "Message size {} exceeds limit {}".format(
-                                len(self._partial), self._max_msg_size
-                            ),
+                            f"Message size {len(self._partial)} exceeds limit {self._max_msg_size}",
                         )
                 else:
                     # previous frame was non finished
                     # we should get continuation opcode
-                    if self._partial:
-                        if opcode != WSMsgType.CONTINUATION:
-                            raise WebSocketError(
-                                WSCloseCode.PROTOCOL_ERROR,
-                                "The opcode in non-fin frame is expected "
-                                "to be zero, got {!r}".format(opcode),
-                            )
+                    if self._partial and opcode != WSMsgType.CONTINUATION:
+                        raise WebSocketError(
+                            WSCloseCode.PROTOCOL_ERROR,
+                            "The opcode in non-fin frame is expected "
+                            "to be zero, got {!r}".format(opcode),
+                        )
 
                     if opcode == WSMsgType.CONTINUATION:
                         assert self._opcode is not None
@@ -371,9 +364,7 @@ class WebSocketReader:
                     if self._max_msg_size and len(self._partial) >= self._max_msg_size:
                         raise WebSocketError(
                             WSCloseCode.MESSAGE_TOO_BIG,
-                            "Message size {} exceeds limit {}".format(
-                                len(self._partial), self._max_msg_size
-                            ),
+                            f"Message size {len(self._partial)} exceeds limit {self._max_msg_size}",
                         )
 
                     # Decompress process must to be done after all packets
@@ -387,9 +378,7 @@ class WebSocketReader:
                             left = len(self._decompressobj.unconsumed_tail)
                             raise WebSocketError(
                                 WSCloseCode.MESSAGE_TOO_BIG,
-                                "Decompressed message size {} exceeds limit {}".format(
-                                    self._max_msg_size + left, self._max_msg_size
-                                ),
+                                f"Decompressed message size {self._max_msg_size + left} exceeds limit {self._max_msg_size}",
                             )
                     else:
                         payload_merged = bytes(self._partial)
@@ -426,100 +415,94 @@ class WebSocketReader:
         buf_length = len(buf)
 
         while True:
-            # read header
             if self._state == WSParserState.READ_HEADER:
-                if buf_length - start_pos >= 2:
-                    data = buf[start_pos : start_pos + 2]
-                    start_pos += 2
-                    first_byte, second_byte = data
+                if buf_length - start_pos < 2:
+                    break
 
-                    fin = (first_byte >> 7) & 1
-                    rsv1 = (first_byte >> 6) & 1
-                    rsv2 = (first_byte >> 5) & 1
-                    rsv3 = (first_byte >> 4) & 1
-                    opcode = first_byte & 0xF
+                data = buf[start_pos : start_pos + 2]
+                start_pos += 2
+                first_byte, second_byte = data
 
-                    # frame-fin = %x0 ; more frames of this message follow
-                    #           / %x1 ; final frame of this message
-                    # frame-rsv1 = %x0 ;
-                    #    1 bit, MUST be 0 unless negotiated otherwise
-                    # frame-rsv2 = %x0 ;
-                    #    1 bit, MUST be 0 unless negotiated otherwise
-                    # frame-rsv3 = %x0 ;
-                    #    1 bit, MUST be 0 unless negotiated otherwise
-                    #
-                    # Remove rsv1 from this test for deflate development
-                    if rsv2 or rsv3 or (rsv1 and not self._compress):
-                        raise WebSocketError(
-                            WSCloseCode.PROTOCOL_ERROR,
-                            "Received frame with non-zero reserved bits",
-                        )
+                fin = (first_byte >> 7) & 1
+                rsv1 = (first_byte >> 6) & 1
+                rsv2 = (first_byte >> 5) & 1
+                rsv3 = (first_byte >> 4) & 1
+                opcode = first_byte & 0xF
 
-                    if opcode > 0x7 and fin == 0:
-                        raise WebSocketError(
-                            WSCloseCode.PROTOCOL_ERROR,
-                            "Received fragmented control frame",
-                        )
+                # frame-fin = %x0 ; more frames of this message follow
+                #           / %x1 ; final frame of this message
+                # frame-rsv1 = %x0 ;
+                #    1 bit, MUST be 0 unless negotiated otherwise
+                # frame-rsv2 = %x0 ;
+                #    1 bit, MUST be 0 unless negotiated otherwise
+                # frame-rsv3 = %x0 ;
+                #    1 bit, MUST be 0 unless negotiated otherwise
+                #
+                # Remove rsv1 from this test for deflate development
+                if rsv2 or rsv3 or (rsv1 and not self._compress):
+                    raise WebSocketError(
+                        WSCloseCode.PROTOCOL_ERROR,
+                        "Received frame with non-zero reserved bits",
+                    )
 
-                    has_mask = (second_byte >> 7) & 1
-                    length = second_byte & 0x7F
+                if opcode > 0x7 and fin == 0:
+                    raise WebSocketError(
+                        WSCloseCode.PROTOCOL_ERROR,
+                        "Received fragmented control frame",
+                    )
 
-                    # Control frames MUST have a payload
-                    # length of 125 bytes or less
-                    if opcode > 0x7 and length > 125:
-                        raise WebSocketError(
-                            WSCloseCode.PROTOCOL_ERROR,
-                            "Control frame payload cannot be " "larger than 125 bytes",
-                        )
+                has_mask = (second_byte >> 7) & 1
+                length = second_byte & 0x7F
+
+                # Control frames MUST have a payload
+                # length of 125 bytes or less
+                if opcode > 0x7 and length > 125:
+                    raise WebSocketError(
+                        WSCloseCode.PROTOCOL_ERROR,
+                        "Control frame payload cannot be " "larger than 125 bytes",
+                    )
 
                     # Set compress status if last package is FIN
                     # OR set compress status if this is first fragment
                     # Raise error if not first fragment with rsv1 = 0x1
-                    if self._frame_fin or self._compressed is None:
-                        self._compressed = True if rsv1 else False
-                    elif rsv1:
-                        raise WebSocketError(
-                            WSCloseCode.PROTOCOL_ERROR,
-                            "Received frame with non-zero reserved bits",
-                        )
+                if self._frame_fin or self._compressed is None:
+                    self._compressed = bool(rsv1)
+                elif rsv1:
+                    raise WebSocketError(
+                        WSCloseCode.PROTOCOL_ERROR,
+                        "Received frame with non-zero reserved bits",
+                    )
 
-                    self._frame_fin = bool(fin)
-                    self._frame_opcode = opcode
-                    self._has_mask = bool(has_mask)
-                    self._payload_length_flag = length
-                    self._state = WSParserState.READ_PAYLOAD_LENGTH
-                else:
-                    break
-
+                self._frame_fin = bool(fin)
+                self._frame_opcode = opcode
+                self._has_mask = bool(has_mask)
+                self._payload_length_flag = length
+                self._state = WSParserState.READ_PAYLOAD_LENGTH
             # read payload length
             if self._state == WSParserState.READ_PAYLOAD_LENGTH:
                 length = self._payload_length_flag
-                if length == 126:
-                    if buf_length - start_pos >= 2:
-                        data = buf[start_pos : start_pos + 2]
-                        start_pos += 2
-                        length = UNPACK_LEN2(data)[0]
-                        self._payload_length = length
-                        self._state = (
-                            WSParserState.READ_PAYLOAD_MASK
-                            if self._has_mask
-                            else WSParserState.READ_PAYLOAD
-                        )
-                    else:
-                        break
+                if length == 126 and buf_length - start_pos >= 2:
+                    data = buf[start_pos : start_pos + 2]
+                    start_pos += 2
+                    length = UNPACK_LEN2(data)[0]
+                    self._payload_length = length
+                    self._state = (
+                        WSParserState.READ_PAYLOAD_MASK
+                        if self._has_mask
+                        else WSParserState.READ_PAYLOAD
+                    )
+                elif length == 126 or length > 126 and buf_length - start_pos < 8:
+                    break
                 elif length > 126:
-                    if buf_length - start_pos >= 8:
-                        data = buf[start_pos : start_pos + 8]
-                        start_pos += 8
-                        length = UNPACK_LEN3(data)[0]
-                        self._payload_length = length
-                        self._state = (
-                            WSParserState.READ_PAYLOAD_MASK
-                            if self._has_mask
-                            else WSParserState.READ_PAYLOAD
-                        )
-                    else:
-                        break
+                    data = buf[start_pos : start_pos + 8]
+                    start_pos += 8
+                    length = UNPACK_LEN3(data)[0]
+                    self._payload_length = length
+                    self._state = (
+                        WSParserState.READ_PAYLOAD_MASK
+                        if self._has_mask
+                        else WSParserState.READ_PAYLOAD
+                    )
                 else:
                     self._payload_length = length
                     self._state = (
@@ -528,15 +511,13 @@ class WebSocketReader:
                         else WSParserState.READ_PAYLOAD
                     )
 
-            # read payload mask
             if self._state == WSParserState.READ_PAYLOAD_MASK:
-                if buf_length - start_pos >= 4:
-                    self._frame_mask = buf[start_pos : start_pos + 4]
-                    start_pos += 4
-                    self._state = WSParserState.READ_PAYLOAD
-                else:
+                if buf_length - start_pos < 4:
                     break
 
+                self._frame_mask = buf[start_pos : start_pos + 4]
+                start_pos += 4
+                self._state = WSParserState.READ_PAYLOAD
             if self._state == WSParserState.READ_PAYLOAD:
                 length = self._payload_length
                 payload = self._frame_payload
@@ -551,20 +532,19 @@ class WebSocketReader:
                     payload.extend(buf[start_pos : start_pos + length])
                     start_pos = start_pos + length
 
-                if self._payload_length == 0:
-                    if self._has_mask:
-                        assert self._frame_mask is not None
-                        _websocket_mask(self._frame_mask, payload)
-
-                    frames.append(
-                        (self._frame_fin, self._frame_opcode, payload, self._compressed)
-                    )
-
-                    self._frame_payload = bytearray()
-                    self._state = WSParserState.READ_HEADER
-                else:
+                if self._payload_length != 0:
                     break
 
+                if self._has_mask:
+                    assert self._frame_mask is not None
+                    _websocket_mask(self._frame_mask, payload)
+
+                frames.append(
+                    (self._frame_fin, self._frame_opcode, payload, self._compressed)
+                )
+
+                self._frame_payload = bytearray()
+                self._state = WSParserState.READ_HEADER
         self._tail = buf[start_pos:]
 
         return frames
@@ -622,16 +602,12 @@ class WebSocketWriter:
             )
             if message.endswith(_WS_DEFLATE_TRAILING):
                 message = message[:-4]
-            rsv = rsv | 0x40
+            rsv |= 0x40
 
         msg_length = len(message)
 
         use_mask = self.use_mask
-        if use_mask:
-            mask_bit = 0x80
-        else:
-            mask_bit = 0
-
+        mask_bit = 0x80 if use_mask else 0
         if msg_length < 126:
             header = PACK_LEN1(0x80 | rsv | opcode, msg_length | mask_bit)
         elif msg_length < (1 << 16):

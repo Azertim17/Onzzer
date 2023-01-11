@@ -159,8 +159,7 @@ class Application(MutableMapping[str, Any]):
 
     def __init_subclass__(cls: Type["Application"]) -> None:
         warnings.warn(
-            "Inheritance class {} from web.Application "
-            "is discouraged".format(cls.__name__),
+            f"Inheritance class {cls.__name__} from web.Application is discouraged",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -170,8 +169,7 @@ class Application(MutableMapping[str, Any]):
         def __setattr__(self, name: str, val: Any) -> None:
             if name not in self.ATTRS:
                 warnings.warn(
-                    "Setting custom web.Application.{} attribute "
-                    "is discouraged".format(name),
+                    f"Setting custom web.Application.{name} attribute is discouraged",
                     DeprecationWarning,
                     stacklevel=2,
                 )
@@ -257,7 +255,7 @@ class Application(MutableMapping[str, Any]):
         # hardcoded per app that sets up the current_app attribute. If no
         # middlewares are configured the handler will receive the proper
         # current_app without needing all of this code.
-        self._run_middlewares = True if self.middlewares else False
+        self._run_middlewares = bool(self.middlewares)
 
         for subapp in self._subapps:
             subapp.pre_freeze()
@@ -371,8 +369,7 @@ class Application(MutableMapping[str, Any]):
 
         if not issubclass(access_log_class, AbstractAccessLogger):
             raise TypeError(
-                "access_log_class must be subclass of "
-                "aiohttp.abc.AbstractAccessLogger, got {}".format(access_log_class)
+                f"access_log_class must be subclass of aiohttp.abc.AbstractAccessLogger, got {access_log_class}"
             )
 
         self._set_loop(loop)
@@ -471,20 +468,18 @@ class Application(MutableMapping[str, Any]):
         loop = asyncio.get_event_loop()
         debug = loop.get_debug()
         match_info = await self._router.resolve(request)
-        if debug:  # pragma: no cover
-            if not isinstance(match_info, AbstractMatchInfo):
-                raise TypeError(
-                    "match_info should be AbstractMatchInfo "
-                    "instance, not {!r}".format(match_info)
-                )
+        if debug and not isinstance(match_info, AbstractMatchInfo):
+            raise TypeError(
+                "match_info should be AbstractMatchInfo "
+                "instance, not {!r}".format(match_info)
+            )
         match_info.add_app(self)
 
         match_info.freeze()
 
         resp = None
         request._match_info = match_info
-        expect = request.headers.get(hdrs.EXPECT)
-        if expect:
+        if expect := request.headers.get(hdrs.EXPECT):
             resp = await match_info.expect_handler(request)
             await request.writer.drain()
 

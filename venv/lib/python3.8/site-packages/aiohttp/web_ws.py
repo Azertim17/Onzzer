@@ -145,19 +145,14 @@ class WebSocketResponse(StreamResponse):
         self, request: BaseRequest
     ) -> Tuple["CIMultiDict[str]", str, bool, bool]:
         headers = request.headers
-        if "websocket" != headers.get(hdrs.UPGRADE, "").lower().strip():
+        if headers.get(hdrs.UPGRADE, "").lower().strip() != "websocket":
             raise HTTPBadRequest(
-                text=(
-                    "No WebSocket UPGRADE hdr: {}\n Can "
-                    '"Upgrade" only to "WebSocket".'
-                ).format(headers.get(hdrs.UPGRADE))
+                text=f'No WebSocket UPGRADE hdr: {headers.get(hdrs.UPGRADE)}\n Can "Upgrade" only to "WebSocket".'
             )
 
         if "upgrade" not in headers.get(hdrs.CONNECTION, "").lower():
             raise HTTPBadRequest(
-                text="No CONNECTION upgrade hdr: {}".format(
-                    headers.get(hdrs.CONNECTION)
-                )
+                text=f"No CONNECTION upgrade hdr: {headers.get(hdrs.CONNECTION)}"
             )
 
         # find common sub-protocol between client and server
@@ -346,46 +341,45 @@ class WebSocketResponse(StreamResponse):
             reader.feed_data(WS_CLOSING_MESSAGE, 0)
             await self._waiting
 
-        if not self._closed:
-            self._closed = True
-            try:
-                await self._writer.close(code, message)
-                writer = self._payload_writer
-                assert writer is not None
-                await writer.drain()
-            except (asyncio.CancelledError, asyncio.TimeoutError):
-                self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-                raise
-            except Exception as exc:
-                self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-                self._exception = exc
-                return True
-
-            if self._closing:
-                return True
-
-            reader = self._reader
-            assert reader is not None
-            try:
-                async with async_timeout.timeout(self._timeout):
-                    msg = await reader.read()
-            except asyncio.CancelledError:
-                self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-                raise
-            except Exception as exc:
-                self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-                self._exception = exc
-                return True
-
-            if msg.type == WSMsgType.CLOSE:
-                self._close_code = msg.data
-                return True
-
-            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-            self._exception = asyncio.TimeoutError()
-            return True
-        else:
+        if self._closed:
             return False
+        self._closed = True
+        try:
+            await self._writer.close(code, message)
+            writer = self._payload_writer
+            assert writer is not None
+            await writer.drain()
+        except (asyncio.CancelledError, asyncio.TimeoutError):
+            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+            raise
+        except Exception as exc:
+            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+            self._exception = exc
+            return True
+
+        if self._closing:
+            return True
+
+        reader = self._reader
+        assert reader is not None
+        try:
+            async with async_timeout.timeout(self._timeout):
+                msg = await reader.read()
+        except asyncio.CancelledError:
+            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+            raise
+        except Exception as exc:
+            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+            self._exception = exc
+            return True
+
+        if msg.type == WSMsgType.CLOSE:
+            self._close_code = msg.data
+            return True
+
+        self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+        self._exception = asyncio.TimeoutError()
+        return True
 
     async def receive(self, timeout: Optional[float] = None) -> WSMessage:
         if self._reader is None:

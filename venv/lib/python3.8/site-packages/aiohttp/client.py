@@ -221,9 +221,8 @@ class ClientSession:
         trace_configs: Optional[List[TraceConfig]] = None,
         read_bufsize: int = 2**16,
     ) -> None:
-        if loop is None:
-            if connector is not None:
-                loop = connector._loop
+        if loop is None and connector is not None:
+            loop = connector._loop
 
         loop = get_running_loop(loop)
 
@@ -295,10 +294,7 @@ class ClientSession:
         self._read_bufsize = read_bufsize
 
         # Convert to list of tuples
-        if headers:
-            real_headers: CIMultiDict[str] = CIMultiDict(headers)
-        else:
-            real_headers = CIMultiDict()
+        real_headers = CIMultiDict(headers) if headers else CIMultiDict()
         self._default_headers: CIMultiDict[str] = real_headers
         if skip_auto_headers is not None:
             self._skip_auto_headers = frozenset(istr(i) for i in skip_auto_headers)
@@ -315,8 +311,7 @@ class ClientSession:
 
     def __init_subclass__(cls: Type["ClientSession"]) -> None:
         warnings.warn(
-            "Inheritance class {} from ClientSession "
-            "is discouraged".format(cls.__name__),
+            f"Inheritance class {cls.__name__} from ClientSession is discouraged",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -326,8 +321,7 @@ class ClientSession:
         def __setattr__(self, name: str, val: Any) -> None:
             if name not in self.ATTRS:
                 warnings.warn(
-                    "Setting custom ClientSession.{} attribute "
-                    "is discouraged".format(name),
+                    f"Setting custom ClientSession.{name} attribute is discouraged",
                     DeprecationWarning,
                     stacklevel=2,
                 )
@@ -335,10 +329,7 @@ class ClientSession:
 
     def __del__(self, _warnings: Any = warnings) -> None:
         if not self.closed:
-            if PY_36:
-                kwargs = {"source": self}
-            else:
-                kwargs = {}
+            kwargs = {"source": self} if PY_36 else {}
             _warnings.warn(
                 f"Unclosed client session {self!r}", ResourceWarning, **kwargs
             )
@@ -357,9 +348,8 @@ class ClientSession:
         url = URL(str_or_url)
         if self._base_url is None:
             return url
-        else:
-            assert not url.is_absolute() and url.path.startswith("/")
-            return self._base_url.join(url)
+        assert not url.is_absolute() and url.path.startswith("/")
+        return self._base_url.join(url)
 
     async def _request(
         self,
@@ -438,10 +428,11 @@ class ClientSession:
         if timeout is sentinel:
             real_timeout: ClientTimeout = self._timeout
         else:
-            if not isinstance(timeout, ClientTimeout):
-                real_timeout = ClientTimeout(total=timeout)  # type: ignore[arg-type]
-            else:
-                real_timeout = timeout
+            real_timeout = (
+                timeout
+                if isinstance(timeout, ClientTimeout)
+                else ClientTimeout(total=timeout)
+            )
         # timeout is cumulative for all request operations
         # (request, redirects, responses, data consuming)
         tm = TimeoutHandle(self._loop, real_timeout.total)
@@ -495,8 +486,7 @@ class ClientSession:
                     if cookies is not None:
                         tmp_cookie_jar = CookieJar()
                         tmp_cookie_jar.update_cookies(cookies)
-                        req_cookies = tmp_cookie_jar.filter_cookies(url)
-                        if req_cookies:
+                        if req_cookies := tmp_cookie_jar.filter_cookies(url):
                             all_cookies.load(req_cookies)
 
                     if proxy is not None:
@@ -537,9 +527,7 @@ class ClientSession:
                                 req, traces=traces, timeout=real_timeout
                             )
                     except asyncio.TimeoutError as exc:
-                        raise ServerTimeoutError(
-                            "Connection timeout " "to host {}".format(url)
-                        ) from exc
+                        raise ServerTimeoutError(f"Connection timeout to host {url}") from exc
 
                     assert conn.transport is not None
 
@@ -748,11 +736,7 @@ class ClientSession:
         max_msg_size: int = 4 * 1024 * 1024,
     ) -> ClientWebSocketResponse:
 
-        if headers is None:
-            real_headers: CIMultiDict[str] = CIMultiDict()
-        else:
-            real_headers = CIMultiDict(headers)
-
+        real_headers = CIMultiDict() if headers is None else CIMultiDict(headers)
         default_headers = {
             hdrs.UPGRADE: "websocket",
             hdrs.CONNECTION: "upgrade",
@@ -846,8 +830,9 @@ class ClientSession:
             # websocket compress
             notakeover = False
             if compress:
-                compress_hdrs = resp.headers.get(hdrs.SEC_WEBSOCKET_EXTENSIONS)
-                if compress_hdrs:
+                if compress_hdrs := resp.headers.get(
+                    hdrs.SEC_WEBSOCKET_EXTENSIONS
+                ):
                     try:
                         compress, notakeover = ws_ext_parse(compress_hdrs)
                     except WSHandshakeError as exc:
@@ -1131,8 +1116,7 @@ class _BaseRequestContextManager(Coroutine[Any, Any, _RetType], Generic[_RetType
         return self._coro.close()
 
     def __await__(self) -> Generator[Any, None, _RetType]:
-        ret = self._coro.__await__()
-        return ret
+        return self._coro.__await__()
 
     def __iter__(self) -> Generator[Any, None, _RetType]:
         return self.__await__()

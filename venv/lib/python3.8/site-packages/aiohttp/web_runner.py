@@ -257,8 +257,7 @@ class BaseRunner(ABC):
             if server is not None:
                 sockets = server.sockets
                 if sockets is not None:
-                    for sock in sockets:
-                        ret.append(sock.getsockname())
+                    ret.extend(sock.getsockname() for sock in sockets)
         return ret
 
     @property
