@@ -3,7 +3,7 @@
     :platform: Unix, Windows
     :synopsis: Onzzer module principale du projet
 
-.. moduleauthor:: Matt Briss <matt.b@orange.fr>
+.. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
 
 """
 import sys 
@@ -602,9 +602,9 @@ class Fenetre_principale(QMainWindow):
         :returns: number of row
         :param param2: recherche
         :type param2: str
-        :returns: 
+        :returns: listing about singer with same name 
                 
-        :rtype: listing about singer with same name 
+        :rtype: 
         :raises: TypeError
         
         """
@@ -718,10 +718,9 @@ class Fenetre_principale(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-<<<<<<< HEAD
-=======
 
     def resource_path(relative_path):
+
         """ 
         Get absolute path to resource, works for dev and for PyInstaller 
         
@@ -734,9 +733,7 @@ class Fenetre_principale(QMainWindow):
 
         return os.path.join(base_path, relative_path)
 
->>>>>>> c168255 (mbV16)
-        
-        
+
 def main():
     application = QApplication(sys.argv)
     fenetre = Fenetre_principale()

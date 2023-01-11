@@ -16,6 +16,11 @@ Request_albums
 .. automodule:: request_albums
     :members: 
 
+Request_Artistes
+========================
+.. automodule:: request_artistes
+    :members: 
+
 Request_pistes
 ========================
 .. automodule:: request_pistes

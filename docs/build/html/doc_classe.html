@@ -90,6 +90,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Onzzer’s documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-1">Onzzer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-request_albums">Request_albums</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-request_artistes">Request_Artistes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-request_pistes">Request_pistes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-youtube_search">youtube_search</a></li>
 </ul>
@@ -308,10 +309,10 @@ If select = Artiste then “recherche_artiste” is call</p>
 <dd class="field-even"><p>number of row</p>
 </dd>
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
+<dd class="field-odd"><p>listing about singer with same name</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>listing about singer with same name</p>
+<dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p>TypeError</p>
@@ -398,35 +399,21 @@ If select = Artiste then “recherche_artiste” is call</p>
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.recherche_album">
 <code class="sig-name descname">recherche_album</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.recherche_album" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><dl class="field-list simple">
-<dt class="field-odd">param param1</dt>
-<dd class="field-odd"><p>id_artiste</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param1</strong> (<em>str</em>) – id_artiste</p></li>
+<li><p><strong>param1</strong> – recherche</p></li>
+</ul>
 </dd>
-</dl>
-</dd>
-</dl>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param param1</dt>
-<dd class="field-odd"><p>recherche</p>
-</dd>
-</dl>
-</div></blockquote>
-<dl class="simple">
-<dt>&gt;&gt;&gt;&gt;&gt;&gt;&gt; a4e5396 (mbV14)</dt><dd><dl class="field-list simple">
-<dt class="field-odd">type param1</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">returns</dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>list all album with the same</p>
 </dd>
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">raises</dt>
-<dd class="field-even"><p>TypeError</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
 </dd>
-</dl>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
 </dd>
 </dl>
 </dd></dl>
@@ -625,32 +612,141 @@ She builds with this informations the table.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-request_pistes">
-<span id="request-pistes"></span><h2>Request_pistes<a class="headerlink" href="#module-request_pistes" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-4"></span></div>
-<div class="section" id="module-youtube_search">
-<span id="youtube-search"></span><h2>youtube_search<a class="headerlink" href="#module-youtube_search" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-5"></span><dl class="py function">
-<dt id="youtube_search.yt_search">
-<code class="sig-prename descclassname">youtube_search.</code><code class="sig-name descname">yt_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">artiste</span></em>, <em class="sig-param"><span class="n">titre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#youtube_search.yt_search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cette fonction fait quelque chose.</p>
+<div class="section" id="module-request_artistes">
+<span id="request-artistes"></span><h2>Request_Artistes<a class="headerlink" href="#module-request_artistes" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-4"></span><dl class="py function">
+<dt id="request_artistes.get_artiste_id">
+<code class="sig-prename descclassname">request_artistes.</code><code class="sig-name descname">get_artiste_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">artiste_recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#request_artistes.get_artiste_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>this fonction recuvers artiste and give a ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>param1</strong> (<em>str</em>) – premier paramètre.</p></li>
-<li><p><strong>param2</strong> (<em>bool</em>) – deuxième paramètre.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – artiste_recherche</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>description de la variable retournée.</p>
+<dd class="field-even"><p>dictionnary</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p>TypeError</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="request_artistes.get_artiste_name">
+<code class="sig-prename descclassname">request_artistes.</code><code class="sig-name descname">get_artiste_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">artiste_recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#request_artistes.get_artiste_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>this fonction recuvers name of artiste and give a ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – artiste_recherche</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionnary</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="request_artistes.get_id_type">
+<code class="sig-prename descclassname">request_artistes.</code><code class="sig-name descname">get_id_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">artiste_recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#request_artistes.get_id_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>this fonction recuvers type of artiste and give a ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – artiste_recherche</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionnary</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-request_pistes">
+<span id="request-pistes"></span><h2>Request_pistes<a class="headerlink" href="#module-request_pistes" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-5"></span><dl class="py function">
+<dt id="request_pistes.get_album_pays">
+<code class="sig-prename descclassname">request_pistes.</code><code class="sig-name descname">get_album_pays</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#request_pistes.get_album_pays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – album_id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>liste list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="request_pistes.get_pistes_album">
+<code class="sig-prename descclassname">request_pistes.</code><code class="sig-name descname">get_pistes_album</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#request_pistes.get_pistes_album" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – album_id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>liste list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-youtube_search">
+<span id="youtube-search"></span><h2>youtube_search<a class="headerlink" href="#module-youtube_search" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-6"></span><dl class="py function">
+<dt id="youtube_search.yt_search">
+<code class="sig-prename descclassname">youtube_search.</code><code class="sig-name descname">yt_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">artiste</span></em>, <em class="sig-param"><span class="n">titre</span></em><span class="sig-paren">)</span><a class="headerlink" href="#youtube_search.yt_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function buil query to lisen a tracks in Youtube (use trask title and singer name )</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param1</strong> (<em>str</em>) – artiste</p></li>
+<li><p><strong>param2</strong> (<em>str</em>) – titre</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>build a html link</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">celine</span> <span class="n">Dion</span><span class="p">,</span> <span class="n">Grand</span> <span class="n">maman</span><span class="p">):</span>
+
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://www.youtube.com/results?search_query=&quot;</span>
+<span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">celine</span> <span class="n">dion</span> <span class="o">+</span> <span class="s2">&quot;+&quot;</span> <span class="o">+</span>  <span class="n">Grand</span> <span class="n">maman</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

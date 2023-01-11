@@ -1,9 +1,29 @@
+"""
+.. module:: request_artistes
+    :platform: Unix, Windows
+    :synopsis: request_artistes recherche artistes
+
+.. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
+
+"""
+
 import json
 import requests
 
 
 
 def get_id_type(self, artiste_recherche):
+        """
+        this fonction recuvers type of artiste and give a ID 
+        
+        :param param1: artiste_recherche
+        :type param1: str
+        :returns: dictionnary
+        
+        :rtype:  
+        :raises: TypeError
+        
+        """
 
         recherche = str(artiste_recherche)
         traitement1 = recherche.strip()
@@ -36,6 +56,17 @@ def get_id_type(self, artiste_recherche):
 
 
 def get_artiste_name(self, artiste_recherche):
+        """
+        this fonction recuvers name of artiste and give a ID 
+        
+        :param param1: artiste_recherche
+        :type param1: str
+        :returns: dictionnary
+        
+        :rtype:  
+        :raises: TypeError
+        
+        """
 
         recherche = str(artiste_recherche)
         traitement1 = recherche.strip()
@@ -64,6 +95,18 @@ def get_artiste_name(self, artiste_recherche):
 
 
 def get_artiste_id(self, artiste_recherche):
+
+        """
+        this fonction recuvers artiste and give a ID 
+        
+        :param param1: artiste_recherche
+        :type param1: str
+        :returns: dictionnary
+        
+        :rtype:  
+        :raises: TypeError
+        
+        """
 
         recherche = str(artiste_recherche)
         traitement1 = recherche.strip()
