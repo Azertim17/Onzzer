@@ -407,9 +407,12 @@ class Fenetre_principale(QMainWindow):
         """
         
         
-        :param param1: id_artiste
+        :param param1: row
         :type param1: str
         :returns: 
+        :param param2: row
+        :type param2: str
+        :returns:
                 
         :rtype: listing about singer with same name 
         :raises: TypeError
@@ -428,11 +431,16 @@ class Fenetre_principale(QMainWindow):
     def recherche_album(self, recherche):
         """
         
+<<<<<<< HEAD
         :param param1: id_artiste
+=======
+        
+        :param param1: recherche
+>>>>>>> a4e5396 (mbV14)
         :type param1: str
-        :returns: 
+        :returns: list all album with the same 
                 
-        :rtype: listing about singer with same name 
+        :rtype: 
         :raises: TypeError
         
         """
@@ -506,11 +514,13 @@ class Fenetre_principale(QMainWindow):
         """
         
         
-        :param param1: id_artiste
+        :param param1: titres
         :type param1: str
         :returns: 
-                
-        :rtype: listing about singer with same name 
+        :param param2: trecherche 
+        :type param2: str
+        :returns:       
+        :rtype: 
         :raises: TypeError
         
         """
