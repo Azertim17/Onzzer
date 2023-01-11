@@ -54,9 +54,7 @@ class Fenetre_principale(QMainWindow):
         self.accueil()
         self.center()
 
-        if self.connect():
-            pass
-        else :
+        if not self.connect():
             QMessageBox.information(self,"Pas d'accès internet", "Vous devez être connecté à internet pour utiliser l'application")
 
     def connect(self):
@@ -69,9 +67,9 @@ class Fenetre_principale(QMainWindow):
         
     def menu(self):
         """
-        menu & toolbar creation 
+        menu & toolbar creation
 
-        
+
         :returns: menu and toolbar
         :rtype: app
         :raises: TypeError
@@ -79,10 +77,9 @@ class Fenetre_principale(QMainWindow):
 
         .. code-block:: python
 
-         app = menu(self)
-         
+        app = menu(self)
+
         """
-        
         eraseButton = QAction(QIcon(Fenetre_principale.newPath + "\edit-undo.png"), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
         openButton = QAction(QIcon(Fenetre_principale.newPath + "\mail-send.png"), "Ouvrir l'emplacement d'enregistrement", self)
@@ -91,7 +88,7 @@ class Fenetre_principale(QMainWindow):
         exitButton.setShortcut('Ctrl+Q')
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
-        
+
         eraseButton.triggered.connect(self.action_clear)
         exitButton.triggered.connect(self.close)
         openButton.triggered.connect(self.action_openfolder)
@@ -99,18 +96,15 @@ class Fenetre_principale(QMainWindow):
 
         menu = self.menuBar()
         menufichier = menu.addMenu("&Fichier")
-        menufichier.addAction(eraseButton)
-        menufichier.addAction(openButton)
-        menufichier.addAction(exitButton)
-        
+        menufichier.addActions([eraseButton, openButton, exitButton])
+
         menuAide = menu.addMenu("&Aide")
         menuAide.addAction(manButton)
-               
+
         toolbar = QToolBar("Ma barre d'outils")
         self.addToolBar(toolbar)
-        toolbar.addAction(eraseButton)
-        toolbar.addAction(exitButton)
-        
+        toolbar.addActions([eraseButton, exitButton])
+
         menu.setStyleSheet("background-color: #3655B2")
         toolbar.setStyleSheet("background-color: #3655B2")
         
