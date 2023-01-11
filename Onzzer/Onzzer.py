@@ -8,6 +8,7 @@
 """
 import sys 
 import os
+import urllib.request
 from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidget, QFileDialog
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QToolBar, QStackedLayout
 from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbstractItemView, QComboBox
@@ -52,8 +53,18 @@ class Fenetre_principale(QMainWindow):
         self.menu()
         self.accueil()
         self.center()
-    
 
+        if self.connect():
+            pass
+        else :
+            QMessageBox.information(self,"Pas d'accès internet", "Vous devez être connecté à internet pour utiliser l'application")
+
+    def connect(self):
+        try:
+            urllib.request.urlopen("http://google.com") 
+            return True
+        except:
+            return False
 
         
     def menu(self):
@@ -431,12 +442,9 @@ class Fenetre_principale(QMainWindow):
     def recherche_album(self, recherche):
         """
         
-<<<<<<< HEAD
         :param param1: id_artiste
-=======
         
         :param param1: recherche
->>>>>>> a4e5396 (mbV14)
         :type param1: str
         :returns: list all album with the same 
                 
@@ -724,17 +732,6 @@ class Fenetre_principale(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
-    def resource_path(relative_path):
-        """ Get absolute path to resource, works for dev and for PyInstaller """
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
-
-        return os.path.join(base_path, relative_path)
-
         
         
 def main():
