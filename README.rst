@@ -17,6 +17,16 @@ Description
    __ https://updago.univ-poitiers.fr/pluginfile.php/4706186/mod_resource/content/1/build/index.html
    __ https://musicbrainz.org/doc/MusicBrainz_API
     
+    
+####
+
+Téléchargement
+==============
+
+   - Cliquez ici__ pour telecharger la version Windows en .exe
+   __ https://github.com/Azertim17/Onzzer/raw/main/Onzzer/Onzzer.exe
+
+
 ####
 
 Arborescence du projet
@@ -46,23 +56,6 @@ Arborescence du projet
       │     └── request_pistes.py
       │     └── youtube_search.py
       |     └── Icones/
-      │           └── application-exit.png
-      │           └── document-new.png
-      │           └── document-open.png
-      │           └── document-save-as.png
-      │           └── document-save.png
-      │           └── edit-copy.png
-      │           └── edit-cut.png
-      │           └── edit-paste.png
-      │           └── edit-undo.png
-      │           └── go-last.png
-      │           └── help-about.png
-      │           └── icone-appli.png
-      │           └── logo.png
-      │           └── logo_long.png
-      │           └── logo_long_blanc.png
-      │           └── mail-send.png
-      │           └── youtube.jpg
       ├── tests/
       │   ├── __init__.py
       │   └── onzzer_copy.py
