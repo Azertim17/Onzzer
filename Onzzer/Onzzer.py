@@ -517,7 +517,7 @@ class Fenetre_principale(QMainWindow):
         :param param1: titres
         :type param1: str
         :returns: 
-        :param param2: trecherche 
+        :param param2: recherche 
         :type param2: str
         :returns:       
         :rtype: 
@@ -591,12 +591,15 @@ class Fenetre_principale(QMainWindow):
             ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 
                 
     
-    def id_album(self, row, col, recherche):
+    def id_album(self, row, recherche):
         """
         
         
-        :param param1: id_artiste
-        :type param1: str
+        :param param1: row
+        :type param1: int
+        :returns: number of row
+        :param param2: recherche
+        :type param2: str
         :returns: 
                 
         :rtype: listing about singer with same name 
@@ -621,7 +624,7 @@ class Fenetre_principale(QMainWindow):
         :type param1: str
         :returns: 
                 
-        :rtype: listing about singer with same name 
+         
         :raises: TypeError
         
         """
@@ -635,11 +638,9 @@ class Fenetre_principale(QMainWindow):
         """
         
         
-        :param param1: id_artiste
-        :type param1: str
-        :returns: 
+        
                 
-        :rtype: listing about singer with same name 
+        
         :raises: TypeError
         
         """
@@ -650,12 +651,9 @@ class Fenetre_principale(QMainWindow):
         """
         
         
-        :param param1: id_artiste
-        :type param1: str
-        :returns: 
+        
                 
-        :rtype: listing about singer with same name 
-        :raises: TypeError
+        
         
         """
         self.line.clear()
@@ -664,12 +662,7 @@ class Fenetre_principale(QMainWindow):
         """
         
         
-        :param param1: id_artiste
-        :type param1: str
-        :returns: 
-                
-        :rtype: listing about singer with same name 
-        :raises: TypeError
+        
         
         """
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
@@ -677,14 +670,13 @@ class Fenetre_principale(QMainWindow):
         
     def action_upload(self, titres):
         """
+        This function allow save all tracks from an album in file .txt 
         
-        
-        :param param1: id_artiste
+        :param param1: titre
         :type param1: str
         :returns: 
                 
-        :rtype: listing about singer with same name 
-        :raises: TypeError
+        
         
         """
         
