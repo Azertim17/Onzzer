@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QPushButton, QDesktopWidge
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QToolBar, QStackedLayout
 from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbstractItemView, QComboBox
 from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeaderView, QHBoxLayout
-from PyQt5.QtGui import QIcon, QPixmap, QPixmap
+from PyQt5.QtGui import QIcon, QPixmap, QPixmap, QPalette, QColor
 from PyQt5.QtCore import Qt, QFileInfo
 import request_albums
 import request_pistes
@@ -125,6 +125,9 @@ class Fenetre_principale(QMainWindow):
         self.catcombo = QComboBox()
         self.catcombo.addItems(["Album" , "Artiste"])
 
+        self.catcombo.setStyleSheet("QListView {background-color : white; }")
+        
+                                    
         self.searchButton = QPushButton("Recherche") 
         self.line = QLineEdit()         
         self.wid_onzzer = QWidget()
@@ -245,7 +248,7 @@ class Fenetre_principale(QMainWindow):
     
     def id_artiste(self, row, col, recherche):
         
-        self.nom_artiste = self.table.item(row-1, 0).text()        
+        self.artiste = self.table.item(row-1, 0).text()        
         
         dic = request_artistes.get_artiste_id(self, recherche)
         id = dic[row]
@@ -512,6 +515,8 @@ class Fenetre_principale(QMainWindow):
                     fichier.write("\n->")
                     fichier.write(i)
                       
+                    
+                    
         filename = QFileInfo(file_path).fileName()
         QMessageBox.information(self,"Et voilà", "Fichier écrit avec le nom " + filename)
 
