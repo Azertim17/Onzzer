@@ -638,12 +638,7 @@ class Fenetre_principale(QMainWindow):
     def action_openfolder(self) :
         os.startfile("")
         """
-        
-        
-        
-                
-        
-        :raises: TypeError
+        This function open forder 
         
         """
         os.startfile('..\Onzzer\Icones')
@@ -651,7 +646,7 @@ class Fenetre_principale(QMainWindow):
         
     def action_clear(self):
         """
-        
+        This function clear th line edith
         
         
                 
@@ -662,10 +657,9 @@ class Fenetre_principale(QMainWindow):
 
     def action_a_propos(self):
         """
+        This fonction give informations about programmer's application 
         
-        
-        
-        
+           
         """
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
         
@@ -676,7 +670,7 @@ class Fenetre_principale(QMainWindow):
         
         :param param1: titre
         :type param1: str
-        :returns: 
+        :returns: file .txt
                 
         
         
@@ -714,18 +708,33 @@ class Fenetre_principale(QMainWindow):
         """
         
         
-        :param param1: id_artiste
-        :type param1: str
-        :returns: 
+        
+        
                 
-        :rtype: listing about singer with same name 
-        :raises: TypeError
+        
         
         """
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+<<<<<<< HEAD
+=======
+
+    def resource_path(relative_path):
+        """ 
+        Get absolute path to resource, works for dev and for PyInstaller 
+        
+        """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
+>>>>>>> c168255 (mbV16)
         
         
 def main():

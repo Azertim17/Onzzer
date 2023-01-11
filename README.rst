@@ -24,7 +24,7 @@ Téléchargement
 ==============
 
    - Cliquez ici__ pour télécharger la version Windows en .exe
-   __ https://github.com/Azertim17/Onzzer/raw/main/Onzzer/Onzzer.exe
+   __ https://github.com/Azertim17/Onzzer/raw/main/Onzzer/Onzzer_setup.exe
 
 
 ####
