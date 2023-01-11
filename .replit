@@ -1,6 +1,0 @@
-
-run = "music_search/music_search.py"
-# compile = "make"
-
-# [nix]
-# channel = "stable-21_11"
