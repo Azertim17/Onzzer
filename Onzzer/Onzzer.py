@@ -27,14 +27,13 @@ class Fenetre_principale(QMainWindow):
     this is Onzzer's window
 
     """   
-
+    #Creation of the path used to find the pictures in directory 'Icones'
     #Path of the current file
     absolutepath = os.path.abspath(__file__)
     fileDirectory = os.path.dirname(absolutepath)
 
-    #Navigate to Icones directory
+    #Navigate to 'Icones' directory
     newPath = os.path.join(fileDirectory, 'Icones')
-    print(newPath) 
 
 
     def __init__(self):
@@ -47,6 +46,8 @@ class Fenetre_principale(QMainWindow):
         
         :returns: contruit les fenêtres de l'application 
         """
+
+        # Defining the main settings of the application window
         self.setWindowTitle("Onzzer")
         self.setWindowIcon(QIcon(Fenetre_principale.newPath + "\logo.png"))
         self.setGeometry(600,100,800,800)
@@ -54,10 +55,14 @@ class Fenetre_principale(QMainWindow):
         self.accueil()
         self.center()
 
+        # Call the connect function that test the internet connexion, if no connection, display a information message 
         if not self.connect():
             QMessageBox.information(self,"Pas d'accès internet", "Vous devez être connecté à internet pour utiliser l'application")
 
     def connect(self):
+
+
+        # function that test the internet connection with google website 
         try:
             urllib.request.urlopen("http://google.com") 
             return True
@@ -80,6 +85,10 @@ class Fenetre_principale(QMainWindow):
         app = menu(self)
 
         """
+
+        # Fonction who generate the menu (menu bar and toolbar) with shortcuts and informations 
+
+        # Creation of diffents buttons with picture, shortcut and name 
         eraseButton = QAction(QIcon(Fenetre_principale.newPath + "\edit-undo.png"), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
         openButton = QAction(QIcon(Fenetre_principale.newPath + "\mail-send.png"), "Ouvrir l'emplacement d'enregistrement", self)
@@ -89,11 +98,13 @@ class Fenetre_principale(QMainWindow):
         manButton = QAction('A Propos', self)
         manButton.setShortcut('F1')
 
+        # Defines the actions associated with the different buttons, calls the corresponding function onclick
         eraseButton.triggered.connect(self.action_clear)
         exitButton.triggered.connect(self.close)
         openButton.triggered.connect(self.action_openfolder)
         manButton.triggered.connect(self.action_a_propos)
 
+        # Added menus to the menu bar: File and Help
         menu = self.menuBar()
         menufichier = menu.addMenu("&Fichier")
         menufichier.addActions([eraseButton, openButton, exitButton])
@@ -101,10 +112,12 @@ class Fenetre_principale(QMainWindow):
         menuAide = menu.addMenu("&Aide")
         menuAide.addAction(manButton)
 
+        # Added shortcut to the toolbar 
         toolbar = QToolBar("Ma barre d'outils")
         self.addToolBar(toolbar)
         toolbar.addActions([eraseButton, exitButton])
 
+        # Set the styleSheet of the menu (the blue background-color)
         menu.setStyleSheet("background-color: #3655B2")
         toolbar.setStyleSheet("background-color: #3655B2")
         
@@ -112,104 +125,156 @@ class Fenetre_principale(QMainWindow):
 
     def accueil(self):
         """
-        This fonction create the first page. Include Style 
+        This function creates the first page and includes styles.
+        It retrieves the inscription in "LINEedit" and calls the "categorie" function.
         
-        She recuvers the inscription in "LINEedit". 
-        
-
-
-        
-        :returns: She call the "categorie"'s fonction
-         
+        :returns: It calls the "categorie" function.
         :raises: TypeError
-        :exemple:
+        :example:
+            self.searchButton.clicked.connect(self.categorie) 
+        """
+        # This is the main page of our application, the one allowing to search for an album or an artist
 
-        .. code-block:: python
-
-          self.searchButton.clicked.connect(self.categorie) 
-
-        """     
-
-
+        # Create the various widgets for the home page: the edit line, the drop-down list, the search button, the Onzzer logo,
+        # and other invisible but useful widgets for the layout of the interface
         image = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png")
         self.catcombo = QComboBox()
         self.catcombo.addItems(["Album" , "Artiste"])
-
+        # This line set the style of the dropdown list view of the combobox to white.
         self.catcombo.setStyleSheet("QListView {background-color : white; }")
-        
-                                    
         self.searchButton = QPushButton("Recherche") 
-        self.line = QLineEdit()         
+        self.searchButton.clicked.connect(self.categorie)
+        self.line = QLineEdit()
         self.wid_onzzer = QWidget()
+        # This line set the background color of the main widget to dark gray
         self.wid_onzzer.setStyleSheet("background-color: #202124")
 
+        # Use a vertical layout for the main widget
         vbox = QVBoxLayout()
         wid_grid = QWidget()
         grid = QGridLayout()
         box_image = QLabel()
         self.setCentralWidget(self.wid_onzzer)
-        
+
         self.wid_onzzer.setLayout(vbox)
         box_image.setPixmap(image)
         box_image.setAlignment(Qt.AlignCenter)
-        
+        # add widget to the grid layout
         grid.addWidget(self.line, 0, 0, 1, 3)
         grid.addWidget(self.searchButton, 1, 1, 1, 2)
         grid.addWidget(self.catcombo, 0, 4)
         wid_grid.setLayout(grid)
-        
-        vbox.addWidget(box_image, alignment= Qt.AlignBottom)
+        # add image to the main layout
+        vbox.addWidget(box_image, alignment=Qt.AlignBottom)
+
         vbox.setAlignment(Qt.AlignCenter)
+        # add grid layout to the main layout
         vbox.addWidget(wid_grid, alignment= Qt.AlignCenter)
 
+        # Set styles for various widgets
         self.searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; height: 20px;")
-        self.searchButton.clicked.connect(self.categorie)
-
         self.catcombo.setStyleSheet("background-color: white; border-style: outset; height: 22px;")
+        self.line.setStyleSheet("background-color: white;")
 
+        # set the fixed width for widgets
         wid_grid.setFixedWidth(600)
         box_image.setFixedWidth(600)
-        
-        self.line.setStyleSheet("background-color: white;")
 
 
     def categorie(self):
-        
         """
-        
-        This fonction call the different fonction between 2 categories.
+        This function calls different functions based on the selection in the drop-down list.
 
-
-        :returns: If select = Album then "recherche_album" is call, 
-         If select = Artiste then "recherche_artiste" is call 
-        :rtype: 
+        :returns: If the selection is "Album", it calls the "recherche_album" function with the text from the line edit widget.
+                If the selection is "Artiste", it calls the "recherche_artiste" function with the text from the line edit widget.
         :raises: TypeError
-
-        :exemple:
-
-        .. code-block:: python
-
+        :example:
             select = self.catcombo.currentText()
-            
             if select == "Album":
                 self.recherche_album(self.line.text())
-
             elif select == "Artiste" :
                 self.recherche_artiste(self.line.text())
-            
-
         """
         select = self.catcombo.currentText()
-        
+        # use `if-elif` construct instead of the `if-if` to avoid checking the second condition if the first condition is true
         if select == "Album":
             self.recherche_album(self.line.text())
-
         elif select == "Artiste" :
             self.recherche_artiste(self.line.text())
-            
     
+
+
+
+    def recherche_album(self, recherche):
+        """
+        
+        :param param1: id_artiste
+        
+        :param param1: recherche
+        :type param1: str
+        :returns: list all album with the same 
+                
+        :rtype: 
+        :raises: TypeError
+        
+        """
+        # retrieve the albums and artistes data
+        self.liste_albums = request_albums.get_nom_album(self, recherche)
+        self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
+        
+        # create the image for the logo
+        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
+        image = image1.scaled(255, 68)
+        
+        # create the new search button
+        searchButton = QPushButton("Nouvelle recherche")
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        searchButton.clicked.connect(self.accueil)
+        
+        # Create the main widget, table widget and its layout
+        self.wid_table = QWidget()
+        self.wid_table.setStyleSheet("background-color: #202124")
+        wid_bouttons = QWidget()
+        vbox = QVBoxLayout()
+        bouttonshbox = QHBoxLayout()
+        box_image = QLabel()
+        self.table = QTableWidget()
+        self.table.setRowCount(len(self.liste_albums))
+        self.table.setColumnCount(3)
+        self.table.setContentsMargins(100, 200, 100, 0)
+        self.table.setStyleSheet("QTableWidget::item {color: white;}")
+        self.setCentralWidget(self.wid_table)
+        
+        # Set image for the logo
+        box_image.setPixmap(image)
+        vbox.addWidget(box_image, alignment= Qt.AlignRight)
+
+        # Set the main layout
+        self.wid_table.setLayout(vbox)
+        vbox.addWidget(self.table)
+
+        wid_bouttons.setLayout(bouttonshbox)
+        
+        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
     
+        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
+        
+        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"]
+        self.table.setHorizontalHeaderLabels(headerH)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        for i in range(len(self.liste_artistes)):
+            self.table.setItem(i, 0, QTableWidgetItem(self.liste_artistes[i]))
+            self.table.setItem(i, 1, QTableWidgetItem(self.liste_albums[i]))
+            selectButton = QPushButton("voir")
+            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
+            self.table.setCellWidget(i, 2, selectButton)
+            selectButton.clicked.connect(lambda _, r=i+1, c=3: self.id_album(r, recherche))
     
+
+
+
     def recherche_artiste(self, recherche):
         """
         Code of the table grouping the artists bearing the name sought
@@ -433,82 +498,7 @@ class Fenetre_principale(QMainWindow):
 
 
         
-    def recherche_album(self, recherche):
-        """
-        
-        :param param1: id_artiste
-        
-        :param param1: recherche
-        :type param1: str
-        :returns: list all album with the same 
-                
-        :rtype: 
-        :raises: TypeError
-        
-        """
-        self.liste_albums = request_albums.get_nom_album(self, recherche)
-        self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
     
-        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
-        image = image1.scaled(255, 68)
-        searchButton = QPushButton("Nouvelle recherche")
-        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
-        searchButton.clicked.connect(self.accueil)
-        
-        self.wid_table = QWidget()
-        self.wid_table.setStyleSheet("background-color: #202124")
-
-        wid_bouttons = QWidget()
-        vbox = QVBoxLayout()
-        bouttonshbox = QHBoxLayout()
-        box_image = QLabel()
-        self.table = QTableWidget()
-        row = len(self.liste_albums)
-        self.table.setRowCount(row)
-        self.table.setColumnCount(3)
-        self.table.setContentsMargins(100, 200, 100, 0)
-        self.table.setStyleSheet("QTableWidget::item {color: white;}")
-        self.setCentralWidget(self.wid_table)
-        
-        box_image.setPixmap(image)
-        vbox.addWidget(box_image, alignment= Qt.AlignRight)
-  
-        self.wid_table.setLayout(vbox)
-        vbox.addWidget(self.table)
-
-        wid_bouttons.setLayout(bouttonshbox)
-        
-        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
-        
-        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
-        
-        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"]
-        self.table.setHorizontalHeaderLabels(headerH)
-        
-        header =self.table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
-
-        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
-        
-        row = 0
-        for i in self.liste_artistes:
-            row += 1
-            self.table.setItem(row-1,0, QTableWidgetItem(i))
-
-        row = 0  
-        for i in self.liste_albums:             
-            row += 1
-            self.table.setItem(row-1,1, QTableWidgetItem(i))
-                      
-        row = 0
-        for i in range(0,25):             
-            row += 1
-            
-            selectButton = QPushButton("voir")
-            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
-            self.table.setCellWidget(row-1,2,selectButton)
-            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_album(r, c, recherche)) 
 
         
         
@@ -718,8 +708,6 @@ class Fenetre_principale(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-<<<<<<< HEAD
-=======
 
     def resource_path(relative_path):
         """ 
@@ -734,7 +722,6 @@ class Fenetre_principale(QMainWindow):
 
         return os.path.join(base_path, relative_path)
 
->>>>>>> c168255 (mbV16)
         
         
 def main():
