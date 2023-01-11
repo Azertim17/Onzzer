@@ -11,8 +11,8 @@ SAE 302 Onzzer
 Description
 ===========
 
-   - Application__ graphique d’interrogation d’une Base de données de musique.
-   - Base de données MusicBrainz__ 
+   - Application__ graphique pour faire vos recherches musicales !
+   - Utilise la base de données MusicBrainz__ 
    
    __ https://updago.univ-poitiers.fr/pluginfile.php/4706186/mod_resource/content/1/build/index.html
    __ https://musicbrainz.org/doc/MusicBrainz_API
