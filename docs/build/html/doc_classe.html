@@ -172,14 +172,157 @@
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.accueil">
 <code class="sig-name descname">accueil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.accueil" title="Permalink to this definition">¶</a></dt>
-<dd><p>This fonction create the first page.
-She recuvers the inscription in “LINEedit” et give this values in “tableau” fonction.</p>
+<dd><p>This fonction create the first page. Include Style</p>
+<p>She recuvers the inscription in “LINEedit”.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>She call the “categorie“‘s fonction</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+<dt class="field-odd">Exemple</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorie</span><span class="p">)</span> 
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.action_a_propos">
+<code class="sig-name descname">action_a_propos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.action_a_propos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – self.line</p>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the information sought</p>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.action_clear">
+<code class="sig-name descname">action_clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.action_clear" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.action_openfolder">
+<code class="sig-name descname">action_openfolder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.action_openfolder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.action_upload">
+<code class="sig-name descname">action_upload</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">titres</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.action_upload" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.categorie">
+<code class="sig-name descname">categorie</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.categorie" title="Permalink to this definition">¶</a></dt>
+<dd><p>This fonction call the different fonction between 2 categories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If select = Album then “recherche_album” is call, 
+If select = Artiste then “recherche_artiste” is call</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>TypeError</p>
+</dd>
+<dt class="field-even">Exemple</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Album&quot;</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+<span class="k">elif</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Artiste&quot;</span> <span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.center">
+<code class="sig-name descname">center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.center" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.discographie">
+<code class="sig-name descname">discographie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id_artiste</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.discographie" title="Permalink to this definition">¶</a></dt>
+<dd><p>print discography corresponding at id_artiste</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p></p>
@@ -187,12 +330,74 @@ She recuvers the inscription in “LINEedit” et give this values in “tableau
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p>TypeError</p>
 </dd>
-<dt class="field-odd">Exemple</dt>
-<dd class="field-odd"><p></p></dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</pre></div>
-</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.get_pistes_by_album">
+<code class="sig-name descname">get_pistes_by_album</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em>, <em class="sig-param"><span class="n">column</span></em>, <em class="sig-param"><span class="n">id_artiste</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.get_pistes_by_album" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.id_album">
+<code class="sig-name descname">id_album</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.id_album" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.id_artiste">
+<code class="sig-name descname">id_artiste</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em>, <em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.id_artiste" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the number of line if I click in the row. Get back the id_artist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param1</strong> (<em>str</em>) – recherche</p></li>
+<li><p><strong>param2</strong> (<em>int</em>) – row</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list all artist with same name and their type</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of line if I click</p>
+</dd>
+</dl>
+<p>:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -200,20 +405,17 @@ She recuvers the inscription in “LINEedit” et give this values in “tableau
 <code class="sig-name descname">menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>menu &amp; toolbar creation</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – premier paramètre</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>menu and toolbar</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>menu and toolbar</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>app</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>app</p>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>TypeError</p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>TypeError</p>
-</dd>
-<dt class="field-odd">Exemple</dt>
-<dd class="field-odd"><p></p></dd>
+<dt class="field-even">Exemple</dt>
+<dd class="field-even"><p></p></dd>
 </dl>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </pre></div>
@@ -221,9 +423,92 @@ She recuvers the inscription in “LINEedit” et give this values in “tableau
 </dd></dl>
 
 <dl class="py method">
+<dt id="Onzzer.Fenetre_principale.pistes">
+<code class="sig-name descname">pistes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">titres</span></em>, <em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.pistes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.recherche_album">
+<code class="sig-name descname">recherche_album</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.recherche_album" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="Onzzer.Fenetre_principale.recherche_artiste">
 <code class="sig-name descname">recherche_artiste</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.recherche_artiste" title="Permalink to this definition">¶</a></dt>
-<dd><p>code du tableau de la 2ème page</p>
+<dd><p>Code of the table grouping the artists bearing the name sought</p>
+<p>He has got a button to retourn in Acceuil and made a new research.</p>
+<p>She calls and recover the information returned by the request_artist function 
+She builds with this informations the table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – recherche</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list all artist with same name and their type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tab</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+<dt class="field-odd">Exemple</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recherche_artiste</span> <span class="o">=</span> <span class="n">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;celine dion&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id1">
+<a class="reference internal image-reference" href="docs/source/_static/celine_dion.jpeg"><img alt="docs/source/_static/celine_dion.jpeg" src="docs/source/_static/celine_dion.jpeg" /></a>
+<p class="caption"><span class="caption-text">résultat de la receherche céline Dion</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.youtube">
+<code class="sig-name descname">youtube</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Onzzer.Fenetre_principale.youtube" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – id_artiste</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>listing about singer with same name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

@@ -60,12 +60,7 @@ class Fenetre_principale(QMainWindow):
         .. code-block:: python
 
          app = menu(self)
-
-
          
-
-
-
         """
         eraseButton = QAction(QIcon(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\edit-undo.png'), 'Effacer', self)
         eraseButton.setShortcut('Ctrl+N')
@@ -102,23 +97,21 @@ class Fenetre_principale(QMainWindow):
 
     def accueil(self):
         """
-        This fonction create the first page.
-        She recuvers the inscription in "LINEedit".
+        This fonction create the first page. Include Style 
+        
+        She recuvers the inscription in "LINEedit". 
         
 
 
         
-        :returns: the information sought
-        :rtype: 
+        :returns: She call the "categorie"'s fonction
+         
         :raises: TypeError
         :exemple:
 
         .. code-block:: python
 
-         app = acceuil(self)
-
-
-         
+          self.searchButton.clicked.connect(self.categorie) 
 
 
 
@@ -171,13 +164,11 @@ class Fenetre_principale(QMainWindow):
         
         """
         
-        This fonction call the different fonction between 2 categories 
-        
+        This fonction call the different fonction between 2 categories.
 
 
-        :param param1: select
-        :type param1: str
-        :returns: 
+        :returns: If select = Album then "recherche_album" is call, 
+         If select = Artiste then "recherche_artiste" is call 
         :rtype: 
         :raises: TypeError
 
@@ -185,14 +176,14 @@ class Fenetre_principale(QMainWindow):
 
         .. code-block:: python
 
-        select = self.catcombo.currentText()
-        
-        if select == "Album":
-            self.recherche_album(self.line.text())
+            select = self.catcombo.currentText()
+            
+            if select == "Album":
+                self.recherche_album(self.line.text())
 
-        elif select == "Artiste" :
-            self.recherche_artiste(self.line.text())
-         
+            elif select == "Artiste" :
+                self.recherche_artiste(self.line.text())
+            
 
         """
         select = self.catcombo.currentText()
@@ -210,15 +201,28 @@ class Fenetre_principale(QMainWindow):
         """
         Code of the table grouping the artists bearing the name sought
 
+        He has got a button to retourn in Acceuil and made a new research. 
+
+        She calls and recover the information returned by the request_artist function 
+        She builds with this informations the table.
+
         :param param1: recherche
-        :type param1:str 
-        :returns:  
-        :param param2: self.dic_name
-        :type param2: 
-        :returns:
-        :rtype: listing about singer with same name 
+        :type param1: str 
+        :returns: list all artist with same name and their type 
+        :rtype: tab
         :raises: TypeError
+        :exemple:
+        .. code-block:: python
+
+            recherche_artiste = recherche_artiste(self, "celine dion")
         
+        .. figure:: docs/source/_static/celine_dion.jpeg
+            :scale: 200
+            
+            résultat de la receherche céline Dion
+
+
+
         """        
         self.dic_type = request_artistes.get_id_type(self, recherche)
         self.dic_name = request_artistes.get_artiste_name(self, recherche)
@@ -287,8 +291,22 @@ class Fenetre_principale(QMainWindow):
             selectButton.clicked.connect(lambda _, r=row, c=3: self.id_artiste(r, c, recherche)) 
     
     
-    def id_artiste(self, row, col, recherche):
+    def id_artiste(self, row, recherche):
+        """
+        Give the number of line if I click in the row. Get back the id_artist 
+
+        :param param1: recherche
+        :type param1: str 
+        :returns: list all artist with same name and their type
+        :param param2: row
+        :type param2: int
+        :returns: number of line if I click
+        :
+
         
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        """
         self.artiste = self.table.item(row-1, 0).text()        
         
         dic = request_artistes.get_artiste_id(self, recherche)
@@ -298,9 +316,19 @@ class Fenetre_principale(QMainWindow):
     
   
     def discographie(self, id_artiste):
+        """
+        print discography corresponding at id_artiste
         
-         self.liste_albums = request_albums.get_discographie(self, id_artiste)
+        :param param1: id_artiste
+        :type param1: str
+        :returns:  
+                
+        :rtype: 
+        :raises: TypeError
+        
+        """
 
+<<<<<<< HEAD
          image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
          image = image1.scaled(255, 68)
          searchButton = QPushButton("Nouvelle recherche")
@@ -309,46 +337,60 @@ class Fenetre_principale(QMainWindow):
          
          self.wid_discographie = QWidget()
          self.wid_discographie.setStyleSheet("background-color: #202124")
+=======
+        
+        
+        self.liste_albums = request_albums.get_discographie(self, id_artiste)
+>>>>>>> bb66447bf85e3aed9b20f9d1b980a11b2021863a
 
-         wid_bouttons = QWidget()
-         vbox = QVBoxLayout()
-         bouttonshbox = QHBoxLayout()
-         box_image = QLabel()
-         self.table = QTableWidget()
-         row = len(self.liste_albums)
-         self.table.setRowCount(row)
-         self.table.setColumnCount(2)
-         self.table.setContentsMargins(100, 200, 100, 0)
-         self.table.setStyleSheet("background-color: #D0D1D2")
-         self.setCentralWidget(self.wid_discographie)
+        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image = image1.scaled(255, 68)
+        searchButton = QPushButton("Nouvelle recherche")
+        searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
+        searchButton.clicked.connect(self.accueil)
          
-         box_image.setPixmap(image)
-         vbox.addWidget(box_image, alignment= Qt.AlignRight)
+        self.wid_discographie = QWidget()
+        self.wid_discographie.setStyleSheet("background-color: #202124")
+
+        wid_bouttons = QWidget()
+        vbox = QVBoxLayout()
+        bouttonshbox = QHBoxLayout()
+        box_image = QLabel()
+        self.table = QTableWidget()
+        row = len(self.liste_albums)
+        self.table.setRowCount(row)
+        self.table.setColumnCount(2)
+        self.table.setContentsMargins(100, 200, 100, 0)
+        self.table.setStyleSheet("background-color: #D0D1D2")
+        self.setCentralWidget(self.wid_discographie)
+        
+        box_image.setPixmap(image)
+        vbox.addWidget(box_image, alignment= Qt.AlignRight)
    
-         self.wid_discographie.setLayout(vbox)
-         vbox.addWidget(self.table)
+        self.wid_discographie.setLayout(vbox)
+        vbox.addWidget(self.table)
 
-         wid_bouttons.setLayout(bouttonshbox)
+        wid_bouttons.setLayout(bouttonshbox)
          
-         bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
+        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
          
-         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
+        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
          
-         headerH = ["Titre Album","Voir les Pistes"]
-         self.table.setHorizontalHeaderLabels(headerH)
-         header = self.table.horizontalHeader()
-         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
-         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        headerH = ["Titre Album","Voir les Pistes"]
+        self.table.setHorizontalHeaderLabels(headerH)
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
          
          
-         row = 0
-         for i in self.liste_albums:
+        row = 0
+        for i in self.liste_albums:
              row += 1
              self.table.setItem(row-1,0, QTableWidgetItem(i))
              
                        
-         row = 0
-         for i in range(0,25):             
+        row = 0
+        for i in range(0,25):             
              row += 1
              
              selectButton = QPushButton("voir")
@@ -358,6 +400,17 @@ class Fenetre_principale(QMainWindow):
     
     
     def get_pistes_by_album(self,row ,column, id_artiste):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         
         dic_album_id = request_albums.get_discographie(self, id_artiste)
         self.nom_album = self.table.item(row-1, 0).text()
@@ -369,7 +422,21 @@ class Fenetre_principale(QMainWindow):
 
         
     def recherche_album(self, recherche):
+        """
         
+<<<<<<< HEAD
+=======
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
+        print(recherche)
+>>>>>>> bb66447bf85e3aed9b20f9d1b980a11b2021863a
         self.liste_albums = request_albums.get_nom_album(self, recherche)
         self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
     
@@ -437,6 +504,17 @@ class Fenetre_principale(QMainWindow):
         
         
     def pistes(self, titres, recherche):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         
         image1 = QPixmap(r'C:\Users\Tim\source\repos\Azertim17\Onzzer\Onzzer\Icones\logo_long_blanc.png' ) 
         image = image1.scaled(255, 68)
@@ -506,6 +584,17 @@ class Fenetre_principale(QMainWindow):
                 
     
     def id_album(self, row, col, recherche):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         
         self.nom_album = self.table.item(row-1, 1).text()
         self.artiste = self.table.item(row-1, 0).text()
@@ -517,23 +606,82 @@ class Fenetre_principale(QMainWindow):
         
         
     def youtube(self, row, col, recherche):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         
         self.nom_piste = self.table.item(row-1, 0).text()
         YS.yt_search(self, self.artiste, self.nom_piste)
     
      
     def action_openfolder(self) :
+<<<<<<< HEAD
         os.startfile("")
+=======
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
+        os.startfile('..\Onzzer\Icones')
+>>>>>>> bb66447bf85e3aed9b20f9d1b980a11b2021863a
         
         
     def action_clear(self):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         self.line.clear()
 
     def action_a_propos(self):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
         
         
     def action_upload(self, titres):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         
         nom_base = self.nom_album + (" - ") + self.artiste + (".txt")
 
@@ -564,6 +712,17 @@ class Fenetre_principale(QMainWindow):
 
     
     def center(self):
+        """
+        
+        
+        :param param1: id_artiste
+        :type param1: str
+        :returns: 
+                
+        :rtype: listing about singer with same name 
+        :raises: TypeError
+        
+        """
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
