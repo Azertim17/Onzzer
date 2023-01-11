@@ -1,6 +1,8 @@
 Onzzer's documentation
 ***********************
 
+All functions are here!!
+
 .. automodule:: Onzzer
 
 Onzzer 

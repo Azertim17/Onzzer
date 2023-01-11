@@ -14,13 +14,15 @@ A recording function is available. This function saves the list of titles in tex
 .. NOTE::
    Find our github in this `link <https://github.com/Azertim17/Onzzer>`_
 
-
+.. NOTE::
+   `Dowload our app  <https://github.com/Azertim17/Onzzer/blob/419e8a142e1035793a09baf90f62e757edb6de83/Onzzer/Onzzer.exe>`_
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: sommaire:
 
    ./cahier_des_charges.rst
    ./doc_classe.rst
+   ./manuel_d_utilisation.rst
 
 
 
