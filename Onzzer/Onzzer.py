@@ -428,7 +428,6 @@ class Fenetre_principale(QMainWindow):
         :raises: TypeError
         
         """
-        print(recherche)
         self.liste_albums = request_albums.get_nom_album(self, recherche)
         self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
     
