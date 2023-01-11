@@ -33,7 +33,7 @@ class Fenetre_principale(QMainWindow):
         """the super constructor"""
         """paramètre de la fenetre 
         :param titre : Onzzer
-        :param taille de la fenêtre
+        
         :returns: contruit les fenêtres de l'application 
         """
         self.setWindowTitle("Onzzer")
@@ -49,8 +49,7 @@ class Fenetre_principale(QMainWindow):
         """
         menu & toolbar creation 
 
-        :param param1: premier paramètre
-        :type param1: str
+        
         :returns: menu and toolbar
         :rtype: app
         :raises: TypeError
@@ -102,11 +101,11 @@ class Fenetre_principale(QMainWindow):
     def accueil(self):
         """
         This fonction create the first page.
-        She recuvers the inscription in "LINEedit" et give this values in "tableau" fonction.
+        She recuvers the inscription in "LINEedit".
+        
 
 
-        :param param1: self.line
-        :type param1: str
+        
         :returns: the information sought
         :rtype: 
         :raises: TypeError
@@ -114,7 +113,7 @@ class Fenetre_principale(QMainWindow):
 
         .. code-block:: python
 
-         app = menu(self)
+         app = acceuil(self)
 
 
          
@@ -165,6 +164,33 @@ class Fenetre_principale(QMainWindow):
 
 
     def categorie(self):
+        
+        """
+        
+        This fonction call the different fonction between 2 categories 
+        
+
+
+        :param param1: select
+        :type param1: str
+        :returns: 
+        :rtype: 
+        :raises: TypeError
+
+        :exemple:
+
+        .. code-block:: python
+
+        select = self.catcombo.currentText()
+        
+        if select == "Album":
+            self.recherche_album(self.line.text())
+
+        elif select == "Artiste" :
+            self.recherche_artiste(self.line.text())
+         
+
+        """
         select = self.catcombo.currentText()
         
         if select == "Album":
@@ -177,7 +203,17 @@ class Fenetre_principale(QMainWindow):
     
     
     def recherche_artiste(self, recherche):
-        """code du tableau regroupant les artistes portant le nom recherché 
+        """
+        Code of the table grouping the artists bearing the name sought
+
+        :param param1: recherche
+        :type param1:str 
+        :returns:  
+        :param param2: self.dic_name
+        :type param2: 
+        :returns:
+        :rtype: listing about singer with same name 
+        :raises: TypeError
         
         """        
         self.dic_type = request_artistes.get_id_type(self, recherche)
