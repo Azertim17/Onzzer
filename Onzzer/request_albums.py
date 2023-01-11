@@ -309,7 +309,6 @@ def get_discographie(self, id_artiste):
         reponse = requests.get(url_complet)
         contenu = reponse.json()
         
-        print(url_complet)
         
         liste_albums = {}
         
