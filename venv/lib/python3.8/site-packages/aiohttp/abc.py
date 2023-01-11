@@ -129,12 +129,7 @@ class AbstractResolver(ABC):
         """Release resolver"""
 
 
-if TYPE_CHECKING:  # pragma: no cover
-    IterableBase = Iterable[Morsel[str]]
-else:
-    IterableBase = Iterable
-
-
+IterableBase = Iterable[Morsel[str]] if TYPE_CHECKING else Iterable
 ClearCookiePredicate = Callable[["Morsel[str]"], bool]
 
 

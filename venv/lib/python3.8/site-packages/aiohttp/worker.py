@@ -75,8 +75,7 @@ class GunicornWebWorker(base.Worker):  # type: ignore[misc,no-any-unimported]
                 app = wsgi
         else:
             raise RuntimeError(
-                "wsgi app should be either Application or "
-                "async function returning Application, got {}".format(self.wsgi)
+                f"wsgi app should be either Application or async function returning Application, got {self.wsgi}"
             )
 
         if runner is None:

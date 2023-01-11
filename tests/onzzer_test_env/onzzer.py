@@ -160,12 +160,12 @@ class Fenetre_principale(QMainWindow):
         """code du tableau de la 2ème page
         
         """     
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap('Icones/logo_long_blanc.png' )
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         searchButton.clicked.connect(self.accueil)
-        
+
         self.wid_table = QWidget()
         self.wid_table.setStyleSheet("background-color: #202124")
 
@@ -179,46 +179,39 @@ class Fenetre_principale(QMainWindow):
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_table)
-        
+
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-  
+
         self.wid_table.setLayout(vbox)
         vbox.addWidget(self.table)
 
         wid_bouttons.setLayout(bouttonshbox)
-        
+
         bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
-        
+
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
-        
+
         headerH = ["Nom Artiste","Titre Album","Voir les Pistes"]
         self.table.setHorizontalHeaderLabels(headerH)
-        
+
         header =self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
-        
+
+
         self.liste_albums = request_albums.get_nom_album(self, recherche)
         self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
-        
 
-        row = 0
-        for i in self.liste_artistes:
-            row += 1
+
+        for row, i in enumerate(self.liste_artistes, start=1):
             self.table.setItem(row-1,0, QTableWidgetItem(i))
 
-        row = 0  
-        for i in self.liste_albums:             
-            row += 1
+        for row, i in enumerate(self.liste_albums, start=1):         
             self.table.setItem(row-1,1, QTableWidgetItem(i))
-                      
-        row = 0
-        for i in range(0,25):             
-            row += 1
-            
+
+        for row, _ in enumerate(range(25), start=1):
             selectButton = QPushButton("voir")
             selectButton.setIcon(QIcon('Icones/go-last.png'))
             self.table.setCellWidget(row-1,2,selectButton)
@@ -228,7 +221,7 @@ class Fenetre_principale(QMainWindow):
         
     def reponse(self, titres, recherche):
         
-        image1 = QPixmap('Icones/logo_long_blanc.png' ) 
+        image1 = QPixmap('Icones/logo_long_blanc.png' )
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
@@ -239,7 +232,7 @@ class Fenetre_principale(QMainWindow):
         uploadButton = QPushButton("Enregistrer")
         uploadButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         uploadButton.clicked.connect(lambda : self.action_upload(titres))
-        
+
         self.wid_pistes = QWidget()
         self.wid_pistes.setStyleSheet("background-color: #202124")
 
@@ -252,13 +245,13 @@ class Fenetre_principale(QMainWindow):
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("background-color: #D0D1D2")
         self.setCentralWidget(self.wid_pistes)
-        
+
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-  
+
         self.wid_pistes.setLayout(vbox)
         vbox.addWidget(self.table)
-        
+
         wid_bouttons.setLayout(bouttonshbox)
         bouttonshbox.addWidget(searchButton)
         bouttonshbox.addWidget(returnButton)
@@ -269,19 +262,17 @@ class Fenetre_principale(QMainWindow):
 
         headerH = ["Titres de l'Album","Ouvrir youtube"]
         self.table.setHorizontalHeaderLabels(headerH)
-        
+
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
+
         nb_rows = len(titres)
         self.table.setRowCount(nb_rows)
 
-        row = 0
-        for i in titres:
-            row += 1
+        for row, i in enumerate(titres, start=1):
             self.table.setItem(row-1,0, QTableWidgetItem(i))
-            
+
             ytButton = QPushButton(QIcon("Icones/youtube.jpg"),"")
             self.table.setCellWidget(row-1, 1, ytButton)
             ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 
@@ -317,28 +308,30 @@ class Fenetre_principale(QMainWindow):
         
     def action_upload(self, titres):
         
-        nom_base = self.nom_album + (" - ") + self.artiste + (".txt")
+        nom_base = f"{self.nom_album} - {self.artiste}.txt"
 
-        
+
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         file_path, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",nom_base,"All Files (*);;Text Files (*.txt)", options=options)
-        
-        
+
+
         with open(file_path, "w") as fichier:
-            
+
                 fichier.write("Liste de chansons de l'album ")
                 fichier.write(self.nom_album)
                 fichier.write(" de l'artiste ")
                 fichier.write(self.artiste)
                 fichier.write("\n ")
-                
+
                 for i in titres:
                     fichier.write("\n->")
                     fichier.write(i)
-                      
+
         filename = QFileInfo(file_path).fileName()
-        QMessageBox.information(self,"Et voilà", "Fichier écrit avec le nom " + filename)
+        QMessageBox.information(
+            self, "Et voilà", f"Fichier écrit avec le nom {filename}"
+        )
 
      
 

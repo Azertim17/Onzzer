@@ -98,16 +98,16 @@ class AccessLogger(AbstractAccessLogger):
         """
         # list of (key, method) tuples, we don't use an OrderedDict as users
         # can repeat the same key more than once
-        methods = list()
+        methods = []
 
         for atom in self.FORMAT_RE.findall(log_format):
             if atom[1] == "":
                 format_key1 = self.LOG_FORMAT_MAP[atom[0]]
-                m = getattr(AccessLogger, "_format_%s" % atom[0])
+                m = getattr(AccessLogger, f"_format_{atom[0]}")
                 key_method = KeyMethod(format_key1, m)
             else:
                 format_key2 = (self.LOG_FORMAT_MAP[atom[2]], atom[1])
-                m = getattr(AccessLogger, "_format_%s" % atom[2])
+                m = getattr(AccessLogger, f"_format_{atom[2]}")
                 key_method = KeyMethod(format_key2, functools.partial(m, atom[1]))
 
             methods.append(key_method)
@@ -120,11 +120,7 @@ class AccessLogger(AbstractAccessLogger):
     def _format_i(
         key: str, request: BaseRequest, response: StreamResponse, time: float
     ) -> str:
-        if request is None:
-            return "(no headers)"
-
-        # suboptimal, make istr(key) once
-        return request.headers.get(key, "-")
+        return "(no headers)" if request is None else request.headers.get(key, "-")
 
     @staticmethod
     def _format_o(
@@ -148,18 +144,13 @@ class AccessLogger(AbstractAccessLogger):
 
     @staticmethod
     def _format_P(request: BaseRequest, response: StreamResponse, time: float) -> str:
-        return "<%s>" % os.getpid()
+        return f"<{os.getpid()}>"
 
     @staticmethod
     def _format_r(request: BaseRequest, response: StreamResponse, time: float) -> str:
         if request is None:
             return "-"
-        return "{} {} HTTP/{}.{}".format(
-            request.method,
-            request.path_qs,
-            request.version.major,
-            request.version.minor,
-        )
+        return f"{request.method} {request.path_qs} HTTP/{request.version.major}.{request.version.minor}"
 
     @staticmethod
     def _format_s(request: BaseRequest, response: StreamResponse, time: float) -> int:
@@ -190,8 +181,8 @@ class AccessLogger(AbstractAccessLogger):
         try:
             fmt_info = self._format_line(request, response, time)
 
-            values = list()
-            extra = dict()
+            values = []
+            extra = {}
             for key, value in fmt_info:
                 values.append(value)
 
