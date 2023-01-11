@@ -73,7 +73,7 @@ Arborescence du projet
       
 ####
 
-Database
+Database MUSICBRAINZ
 ======================      
       
 .. image:: https://wiki.musicbrainz.org/images/5/52/ngs.png
