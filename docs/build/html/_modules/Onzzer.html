@@ -1,0 +1,945 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Onzzer &mdash; Onzzer 0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Onzzer
+          
+
+          
+            
+            <img src="../_static/logo_long.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cahier_des_charges.html">Project specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc_classe.html">Onzzer’s documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Onzzer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>Onzzer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for Onzzer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: Onzzer</span>
+<span class="sd">    :platform: Unix, Windows</span>
+<span class="sd">    :synopsis: Onzzer module principale du projet</span>
+
+<span class="sd">.. moduleauthor:: Matthieu Brissonnet &lt;matthieu.brissonnet@etu.univ-poitiers.fr&gt;, Tim Mazzoloni &lt;tim.mazzolini@etu.univ-poitiers.fr&gt;, Baptiste Tarte &lt;baptiste.tarte@etu.univ-poitiers.fr&gt;, Eliot Monneau &lt;elio.moneau@etu.univ-poitiers.fr&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span> 
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QVBoxLayout</span><span class="p">,</span> <span class="n">QGridLayout</span><span class="p">,</span> <span class="n">QPushButton</span><span class="p">,</span> <span class="n">QDesktopWidget</span><span class="p">,</span> <span class="n">QFileDialog</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QAction</span><span class="p">,</span> <span class="n">QToolBar</span><span class="p">,</span> <span class="n">QStackedLayout</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QLineEdit</span><span class="p">,</span> <span class="n">QPlainTextEdit</span><span class="p">,</span> <span class="n">QTableView</span><span class="p">,</span> <span class="n">QAbstractItemView</span><span class="p">,</span> <span class="n">QComboBox</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QMessageBox</span><span class="p">,</span> <span class="n">QTableWidget</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">,</span> <span class="n">QHeaderView</span><span class="p">,</span> <span class="n">QHBoxLayout</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span><span class="p">,</span> <span class="n">QPixmap</span><span class="p">,</span> <span class="n">QPixmap</span><span class="p">,</span> <span class="n">QPalette</span><span class="p">,</span> <span class="n">QColor</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span> <span class="n">QFileInfo</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">sip</span>
+<span class="kn">import</span> <span class="nn">request_albums</span>
+<span class="kn">import</span> <span class="nn">request_pistes</span>
+<span class="kn">import</span> <span class="nn">request_artistes</span>
+<span class="kn">import</span> <span class="nn">youtube_search</span> <span class="k">as</span> <span class="nn">YS</span>
+
+
+<div class="viewcode-block" id="Fenetre_principale"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale">[docs]</a><span class="k">class</span> <span class="nc">Fenetre_principale</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this is Onzzer&#39;s window</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>   
+
+    <span class="c1">#Path of the current file</span>
+    <span class="n">absolutepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">fileDirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">absolutepath</span><span class="p">)</span>
+
+    <span class="c1">#Navigate to Icones directory</span>
+    <span class="n">newPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fileDirectory</span><span class="p">,</span> <span class="s1">&#39;Icones&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">newPath</span><span class="p">)</span> 
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    
+        <span class="sd">&quot;&quot;&quot;The constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;the super constructor&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;paramètre de la fenetre </span>
+<span class="sd">        :param titre : Onzzer</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: contruit les fenêtres de l&#39;application </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Onzzer&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">800</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">():</span>
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;Pas d&#39;accès internet&quot;</span><span class="p">,</span> <span class="s2">&quot;Vous devez être connecté à internet pour utiliser l&#39;application&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://google.com&quot;</span><span class="p">)</span> 
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        
+<div class="viewcode-block" id="Fenetre_principale.menu"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.menu">[docs]</a>    <span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        menu &amp; toolbar creation</span>
+
+
+<span class="sd">        :returns: menu and toolbar</span>
+<span class="sd">        :rtype: app</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        :exemple:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">        app = menu(self)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eraseButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\edit-undo.png&quot;</span><span class="p">),</span> <span class="s1">&#39;Effacer&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">eraseButton</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+N&#39;</span><span class="p">)</span>
+        <span class="n">openButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\mail-send.png&quot;</span><span class="p">),</span> <span class="s2">&quot;Ouvrir l&#39;emplacement d&#39;enregistrement&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">openButton</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+O&#39;</span><span class="p">)</span>
+        <span class="n">exitButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\zapplication-exit.png&quot;</span><span class="p">),</span> <span class="s1">&#39;Quitter&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">exitButton</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+Q&#39;</span><span class="p">)</span>
+        <span class="n">manButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;A Propos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">manButton</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;F1&#39;</span><span class="p">)</span>
+
+        <span class="n">eraseButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_clear</span><span class="p">)</span>
+        <span class="n">exitButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
+        <span class="n">openButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_openfolder</span><span class="p">)</span>
+        <span class="n">manButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_a_propos</span><span class="p">)</span>
+
+        <span class="n">menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span>
+        <span class="n">menufichier</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Fichier&quot;</span><span class="p">)</span>
+        <span class="n">menufichier</span><span class="o">.</span><span class="n">addActions</span><span class="p">([</span><span class="n">eraseButton</span><span class="p">,</span> <span class="n">openButton</span><span class="p">,</span> <span class="n">exitButton</span><span class="p">])</span>
+
+        <span class="n">menuAide</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Aide&quot;</span><span class="p">)</span>
+        <span class="n">menuAide</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">manButton</span><span class="p">)</span>
+
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="n">QToolBar</span><span class="p">(</span><span class="s2">&quot;Ma barre d&#39;outils&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="n">toolbar</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">addActions</span><span class="p">([</span><span class="n">eraseButton</span><span class="p">,</span> <span class="n">exitButton</span><span class="p">])</span>
+
+        <span class="n">menu</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #3655B2&quot;</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #3655B2&quot;</span><span class="p">)</span></div>
+        
+
+
+<div class="viewcode-block" id="Fenetre_principale.accueil"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.accueil">[docs]</a>    <span class="k">def</span> <span class="nf">accueil</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This fonction create the first page. Include Style </span>
+<span class="sd">        </span>
+<span class="sd">        She recuvers the inscription in &quot;LINEedit&quot;. </span>
+<span class="sd">        </span>
+
+
+<span class="sd">        </span>
+<span class="sd">        :returns: She call the &quot;categorie&quot;&#39;s fonction</span>
+<span class="sd">         </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        :exemple:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">          self.searchButton.clicked.connect(self.categorie) </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>     
+
+
+        <span class="n">image</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s2">&quot;Album&quot;</span> <span class="p">,</span> <span class="s2">&quot;Artiste&quot;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QListView {background-color : white; }&quot;</span><span class="p">)</span>
+        
+                                    
+        <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Recherche&quot;</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>         
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+
+        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">wid_grid</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+        
+        <span class="n">grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">wid_grid</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+        
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_grid</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorie</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: white; border-style: outset; height: 22px;&quot;</span><span class="p">)</span>
+
+        <span class="n">wid_grid</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: white;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Fenetre_principale.categorie"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.categorie">[docs]</a>    <span class="k">def</span> <span class="nf">categorie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        This fonction call the different fonction between 2 categories.</span>
+
+
+<span class="sd">        :returns: If select = Album then &quot;recherche_album&quot; is call, </span>
+<span class="sd">         If select = Artiste then &quot;recherche_artiste&quot; is call </span>
+<span class="sd">        :rtype: </span>
+<span class="sd">        :raises: TypeError</span>
+
+<span class="sd">        :exemple:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            select = self.catcombo.currentText()</span>
+<span class="sd">            </span>
+<span class="sd">            if select == &quot;Album&quot;:</span>
+<span class="sd">                self.recherche_album(self.line.text())</span>
+
+<span class="sd">            elif select == &quot;Artiste&quot; :</span>
+<span class="sd">                self.recherche_artiste(self.line.text())</span>
+<span class="sd">            </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Album&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+        <span class="k">elif</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Artiste&quot;</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>
+            
+    
+    
+    
+<div class="viewcode-block" id="Fenetre_principale.recherche_artiste"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.recherche_artiste">[docs]</a>    <span class="k">def</span> <span class="nf">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Code of the table grouping the artists bearing the name sought</span>
+
+<span class="sd">        He has got a button to retourn in Acceuil and made a new research. </span>
+
+<span class="sd">        She calls and recover the information returned by the request_artist function </span>
+<span class="sd">        She builds with this informations the table.</span>
+
+<span class="sd">        :param param1: recherche</span>
+<span class="sd">        :type param1: str </span>
+<span class="sd">        :returns: list all artist with same name and their type </span>
+<span class="sd">        :rtype: tab</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        :exemple:</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            recherche_artiste = recherche_artiste(self, &quot;celine dion&quot;)</span>
+<span class="sd">        </span>
+<span class="sd">        .. figure:: docs/source/_static/celine_dion.jpeg</span>
+<span class="sd">            :scale: 200</span>
+<span class="sd">            </span>
+<span class="sd">            résultat de la receherche céline Dion</span>
+
+
+
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">dic_type</span> <span class="o">=</span> <span class="n">request_artistes</span><span class="o">.</span><span class="n">get_id_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dic_name</span> <span class="o">=</span> <span class="n">request_artistes</span><span class="o">.</span><span class="n">get_artiste_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        
+        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_artiste</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_artiste</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+
+        <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dic_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_artiste</span><span class="p">)</span>
+        
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+  
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_artiste</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+
+        <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span>
+        
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+        
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+        
+        <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Nom Artiste&quot;</span><span class="p">,</span><span class="s2">&quot;Désignation&quot;</span><span class="p">,</span><span class="s2">&quot;Voir la discrographie&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span>
+        
+        <span class="n">header</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span>
+        
+        
+        
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dic_name</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dic_name</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>  
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dic_type</span><span class="p">:</span>             
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dic_type</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                      
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">):</span>             
+        
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="n">selectButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;voir&quot;</span><span class="p">)</span>
+            <span class="n">selectButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\go-last.png&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">selectButton</span><span class="p">)</span>
+            <span class="n">selectButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_artiste</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">recherche</span><span class="p">))</span> </div>
+    
+    
+<div class="viewcode-block" id="Fenetre_principale.id_artiste"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.id_artiste">[docs]</a>    <span class="k">def</span> <span class="nf">id_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Give the number of line if I click in the row. Get back the id_artist </span>
+
+<span class="sd">        :param param1: recherche</span>
+<span class="sd">        :type param1: str </span>
+<span class="sd">        :returns: list all artist with same name and their type</span>
+<span class="sd">        :param param2: row</span>
+<span class="sd">        :type param2: int</span>
+<span class="sd">        :returns: number of line if I click</span>
+<span class="sd">        :</span>
+
+<span class="sd">        </span>
+<span class="sd">        :rtype: listing about singer with same name </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artiste</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>        
+        
+        <span class="n">dic</span> <span class="o">=</span> <span class="n">request_artistes</span><span class="o">.</span><span class="n">get_artiste_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discographie</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+        
+    
+  
+<div class="viewcode-block" id="Fenetre_principale.discographie"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.discographie">[docs]</a>    <span class="k">def</span> <span class="nf">discographie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        print discography corresponding at id_artiste</span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: id_artiste</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns:  </span>
+<span class="sd">                </span>
+<span class="sd">        :rtype: </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
+         
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_discographie</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_discographie</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+        
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_discographie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">)</span>
+
+        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
+         
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_discographie</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_discographie</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+
+        <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_discographie</span><span class="p">)</span>
+        
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+   
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_discographie</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+
+        <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span>
+         
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+         
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+         
+        <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Titre Album&quot;</span><span class="p">,</span><span class="s2">&quot;Voir les Pistes&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span>
+         
+         
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">:</span>
+             <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+             
+       
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">):</span>             
+             <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+             
+             <span class="n">selectButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;voir&quot;</span><span class="p">)</span>
+             <span class="n">selectButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\go-last.png&quot;</span><span class="p">))</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">selectButton</span><span class="p">)</span>
+             <span class="n">selectButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pistes_by_album</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">))</span> </div>
+    
+    
+<div class="viewcode-block" id="Fenetre_principale.get_pistes_by_album"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.get_pistes_by_album">[docs]</a>    <span class="k">def</span> <span class="nf">get_pistes_by_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">row</span> <span class="p">,</span><span class="n">column</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: row</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: </span>
+<span class="sd">        :param param2: row</span>
+<span class="sd">        :type param2: str</span>
+<span class="sd">        :returns:</span>
+<span class="sd">                </span>
+<span class="sd">        :rtype: listing about singer with same name </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">dic_album_id</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_discographie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom_album</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">album_id</span> <span class="o">=</span> <span class="n">dic_album_id</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nom_album</span><span class="p">]</span>
+        <span class="n">titres</span> <span class="o">=</span> <span class="n">request_pistes</span><span class="o">.</span><span class="n">get_pistes_album</span><span class="p">(</span><span class="n">album_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pistes</span><span class="p">(</span><span class="n">titres</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">)</span></div>
+        
+
+
+        
+<div class="viewcode-block" id="Fenetre_principale.recherche_album"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.recherche_album">[docs]</a>    <span class="k">def</span> <span class="nf">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: id_artiste</span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: list all album with the same </span>
+<span class="sd">                </span>
+<span class="sd">        :rtype: </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_nom_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_liste_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+    
+        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+
+        <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="p">)</span>
+        
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+  
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+
+        <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span>
+        
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+        
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+        
+        <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Nom Artiste&quot;</span><span class="p">,</span><span class="s2">&quot;Titre Album&quot;</span><span class="p">,</span><span class="s2">&quot;Voir les Pistes&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span>
+        
+        <span class="n">header</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span>
+        
+        
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>  
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">:</span>             
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                      
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">):</span>             
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="n">selectButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;voir&quot;</span><span class="p">)</span>
+            <span class="n">selectButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\go-last.png&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">selectButton</span><span class="p">)</span>
+            <span class="n">selectButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_album</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">recherche</span><span class="p">))</span> </div>
+
+        
+        
+<div class="viewcode-block" id="Fenetre_principale.pistes"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.pistes">[docs]</a>    <span class="k">def</span> <span class="nf">pistes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titres</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: titres</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: </span>
+<span class="sd">        :param param2: recherche </span>
+<span class="sd">        :type param2: str</span>
+<span class="sd">        :returns:       </span>
+<span class="sd">        :rtype: </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
+        <span class="n">returnButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Retour liste&quot;</span><span class="p">)</span>
+        <span class="n">returnButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recherche</span><span class="p">)</span> <span class="o">==</span> <span class="mi">36</span><span class="p">:</span>
+            <span class="n">returnButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">discographie</span><span class="p">(</span><span class="n">recherche</span><span class="p">))</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">returnButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recherche_album</span><span class="p">(</span><span class="n">recherche</span><span class="p">))</span>
+            
+            
+        <span class="n">uploadButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Enregistrer&quot;</span><span class="p">)</span>
+        <span class="n">uploadButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">uploadButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_upload</span><span class="p">(</span><span class="n">titres</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+
+        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span><span class="p">)</span>
+        
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+  
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+        
+        <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span>
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">)</span>
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">returnButton</span><span class="p">)</span>
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">uploadButton</span><span class="p">)</span>
+
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">)</span>
+
+        <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Titres de l&#39;Album&quot;</span><span class="p">,</span><span class="s2">&quot;Ouvrir youtube&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span>
+        
+        <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span>
+        
+        <span class="n">nb_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">titres</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">nb_rows</span><span class="p">)</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">titres</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            
+            <span class="n">ytButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\youtube.jpg&quot;</span><span class="p">),</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ytButton</span><span class="p">)</span>
+            <span class="n">ytButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">youtube</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">recherche</span><span class="p">))</span> </div>
+                
+    
+<div class="viewcode-block" id="Fenetre_principale.id_album"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.id_album">[docs]</a>    <span class="k">def</span> <span class="nf">id_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: row</span>
+<span class="sd">        :type param1: int</span>
+<span class="sd">        :returns: number of row</span>
+<span class="sd">        :param param2: recherche</span>
+<span class="sd">        :type param2: str</span>
+<span class="sd">        :returns: listing about singer with same name </span>
+<span class="sd">                </span>
+<span class="sd">        :rtype: </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom_album</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artiste</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">dic</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_dic_album_id_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">artiste</span><span class="p">]</span>
+        <span class="n">titres</span> <span class="o">=</span> <span class="n">request_pistes</span><span class="o">.</span><span class="n">get_pistes_album</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pistes</span><span class="p">(</span><span class="n">titres</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span></div>
+        
+        
+        
+<div class="viewcode-block" id="Fenetre_principale.youtube"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.youtube">[docs]</a>    <span class="k">def</span> <span class="nf">youtube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: id_artiste</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: </span>
+<span class="sd">                </span>
+<span class="sd">         </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom_piste</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">YS</span><span class="o">.</span><span class="n">yt_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">artiste</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nom_piste</span><span class="p">)</span></div>
+    
+     
+    <span class="k">def</span> <span class="nf">action_openfolder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">startfile</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function open forder </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">startfile</span><span class="p">(</span><span class="s1">&#39;..\Onzzer\Icones&#39;</span><span class="p">)</span>
+        
+        
+<div class="viewcode-block" id="Fenetre_principale.action_clear"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.action_clear">[docs]</a>    <span class="k">def</span> <span class="nf">action_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function clear th line edith</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">                </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Fenetre_principale.action_a_propos"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.action_a_propos">[docs]</a>    <span class="k">def</span> <span class="nf">action_a_propos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This fonction give informations about programmer&#39;s application </span>
+<span class="sd">        </span>
+<span class="sd">           </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;Onzzer Application de Recherche Musicale&quot;</span><span class="p">,</span> <span class="s2">&quot;Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet&quot;</span><span class="p">)</span></div>
+        
+        
+<div class="viewcode-block" id="Fenetre_principale.action_upload"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.action_upload">[docs]</a>    <span class="k">def</span> <span class="nf">action_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titres</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function allow save all tracks from an album in file .txt </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: titre</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: file .txt</span>
+<span class="sd">                </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">nom_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nom_album</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; - &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">artiste</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+
+        
+        <span class="n">options</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+        <span class="n">options</span> <span class="o">|=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">DontUseNativeDialog</span>
+        <span class="n">file_path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;QFileDialog.getSaveFileName()&quot;</span><span class="p">,</span><span class="n">nom_base</span><span class="p">,</span><span class="s2">&quot;All Files (*);;Text Files (*.txt)&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+        
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fichier</span><span class="p">:</span>
+            
+                <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Liste de chansons de l&#39;album &quot;</span><span class="p">)</span>
+                <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom_album</span><span class="p">)</span>
+                <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; de l&#39;artiste &quot;</span><span class="p">)</span>
+                <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artiste</span><span class="p">)</span>
+                <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+                
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">titres</span><span class="p">:</span>
+                    <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">-&gt;&quot;</span><span class="p">)</span>
+                    <span class="n">fichier</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                      
+                    
+                    
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">QFileInfo</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">fileName</span><span class="p">()</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;Et voilà&quot;</span><span class="p">,</span> <span class="s2">&quot;Fichier écrit avec le nom &quot;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span></div>
+
+     
+
+    
+<div class="viewcode-block" id="Fenetre_principale.center"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.center">[docs]</a>    <span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">                </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">qr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameGeometry</span><span class="p">()</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="n">QDesktopWidget</span><span class="p">()</span><span class="o">.</span><span class="n">availableGeometry</span><span class="p">()</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+        <span class="n">qr</span><span class="o">.</span><span class="n">moveCenter</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">qr</span><span class="o">.</span><span class="n">topLeft</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Fenetre_principale.resource_path"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.resource_path">[docs]</a>    <span class="k">def</span> <span class="nf">resource_path</span><span class="p">(</span><span class="n">relative_path</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Get absolute path to resource, works for dev and for PyInstaller </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># PyInstaller creates a temp folder and stores path in _MEIPASS</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_MEIPASS</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">application</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">fenetre</span> <span class="o">=</span> <span class="n">Fenetre_principale</span><span class="p">()</span>
+    <span class="n">fenetre</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">application</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span>
+        
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Tim.M, Baptiste.T, Matthieu.B, Eliot.M.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

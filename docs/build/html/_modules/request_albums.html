@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>request_albums &mdash; Onzzer 0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Onzzer
+          
+
+          
+            
+            <img src="../_static/logo_long.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cahier_des_charges.html">Project specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc_classe.html">Onzzer’s documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Onzzer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>request_albums</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for request_albums</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: request_albums</span>
+<span class="sd">    :platform: Unix, Windows</span>
+<span class="sd">    :synopsis: request_albums recherche album</span>
+
+<span class="sd">.. moduleauthor:: Matthieu Brissonnet &lt;matthieu.brissonnet@etu.univ-poitiers.fr&gt;, Tim Mazzoloni &lt;tim.mazzolini@etu.univ-poitiers.fr&gt;, Baptiste Tarte &lt;baptiste.tarte@etu.univ-poitiers.fr&gt;, Eliot Monneau &lt;elio.moneau@etu.univ-poitiers.fr&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<div class="viewcode-block" id="get_dic_album_id"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_dic_album_id">[docs]</a><span class="k">def</span> <span class="nf">get_dic_album_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album_recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Cette fonction fait quelque chose.</span>
+
+<span class="sd">        :param param1: album_recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: dictionary album with ID </span>
+<span class="sd">        :rtype: ?</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">album_recherche</span><span class="p">)</span>
+        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+        <span class="n">replace</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">replace</span> <span class="o">+</span> <span class="n">url_fin</span>
+        
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        
+        <span class="n">dic_album_id</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;release-groups&quot;</span><span class="p">]:</span>
+                                
+                <span class="n">auteur</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;artist-credit&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">id_album</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;releases&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+                <span class="n">dic_album_id</span><span class="p">[</span><span class="n">auteur</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_album</span>
+        
+        <span class="k">return</span> <span class="n">dic_album_id</span></div>
+     
+        
+     
+
+
+<div class="viewcode-block" id="get_dic_album_id_artiste"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_dic_album_id_artiste">[docs]</a><span class="k">def</span> <span class="nf">get_dic_album_id_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album_recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; create a dictionary album / Artist </span>
+<span class="sd">        :param param1: album_recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: description de la variable retournée.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">album_recherche</span><span class="p">)</span>
+        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+        <span class="n">replace</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">replace</span> <span class="o">+</span> <span class="n">url_fin</span>
+        
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        
+        <span class="n">dic_album_artiste</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;release-groups&quot;</span><span class="p">]:</span>
+                                
+                <span class="n">auteur</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;artist-credit&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">id_album</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;releases&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+
+                <span class="n">dic_album_artiste</span><span class="p">[</span><span class="n">auteur</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_album</span>        
+        <span class="k">return</span> <span class="n">dic_album_artiste</span></div>
+
+
+<span class="c1"># def get_album_id(self, album_recherche, artiste):</span>
+
+<span class="c1">#         recherche = str(album_recherche)</span>
+<span class="c1">#         traitement1 = recherche.strip()</span>
+<span class="c1">#         replace = traitement1.replace(&quot; &quot;, &quot;%20in%20&quot;)</span>
+        
+        
+<span class="c1">#         url_base = &quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+<span class="c1">#         url_fin = &quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+<span class="c1">#         url_complet = url_base + replace + url_fin</span>
+        
+        
+<span class="c1">#         reponse = requests.get(url_complet)</span>
+<span class="c1">#         contenu = reponse.json()</span>
+        
+        
+<span class="c1">#         for i in contenu [&quot;release-groups&quot;]:</span>
+                
+<span class="c1">#                 #print(i[&quot;releases&quot;][0][&#39;title&#39;])</span>
+                
+<span class="c1">#                 auteur = i[&#39;artist-credit&#39;][0][&#39;name&#39;]</span>
+<span class="c1">#                 id_album = i[&#39;releases&#39;][0][&#39;id&#39;]</span>
+
+<span class="c1">#                 dic_album_id = {}</span>
+<span class="c1">#                 dic_album_id[auteur] = id_album</span>
+        
+<span class="c1">#         return id_album</span>
+    
+    
+    
+    
+
+<div class="viewcode-block" id="get_album_id"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_album_id">[docs]</a><span class="k">def</span> <span class="nf">get_album_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album_recherche</span><span class="p">,</span> <span class="n">artiste</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Returne a ID for album </span>
+
+<span class="sd">        :param param1: album_recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :param param2: artiste</span>
+<span class="sd">        :type param2: str</span>
+<span class="sd">        :returns: album id</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">album_recherche</span><span class="p">)</span>
+        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+        <span class="n">replace</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">replace</span> <span class="o">+</span> <span class="n">url_fin</span>
+        <span class="c1">#print(url_complet)</span>
+        
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        
+        <span class="n">album_id</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+        
+        <span class="c1"># print(artiste)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;release-groups&quot;</span><span class="p">]:</span>
+                
+                <span class="n">auteur</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;artist-credit&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">id_album</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;releases&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">auteur</span> <span class="o">==</span> <span class="n">artiste</span><span class="p">:</span>
+                
+                    <span class="n">album_id</span> <span class="o">=</span> <span class="n">id_album</span>
+                <span class="k">else</span> <span class="p">:</span>
+                    <span class="k">pass</span>
+                    
+        <span class="k">return</span> <span class="n">album_id</span></div>
+
+
+
+         
+<div class="viewcode-block" id="get_nom_album"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_nom_album">[docs]</a><span class="k">def</span> <span class="nf">get_nom_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album_recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        This function intterogates API withe name enter in Line Edith</span>
+
+<span class="sd">        :param param1: album_recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: album name </span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">album_recherche</span><span class="p">)</span>
+        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+        <span class="n">replace</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">replace</span> <span class="o">+</span> <span class="n">url_fin</span>
+        <span class="c1">#print(url_complet)</span>
+        
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        
+        <span class="n">liste_albums</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;release-groups&quot;</span><span class="p">]:</span>
+    
+                <span class="n">nom_album</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;releases&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+                <span class="n">liste_albums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nom_album</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">liste_albums</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="get_nom_artiste"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_nom_artiste">[docs]</a><span class="k">def</span> <span class="nf">get_nom_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album_recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        This function research all singer&#39;s music album in API</span>
+
+<span class="sd">        :param param1: album_recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: author name </span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">album_recherche</span><span class="p">)</span>
+        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+        <span class="n">replace</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">replace</span> <span class="o">+</span> <span class="n">url_fin</span>
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+              
+        <span class="n">liste_auteurs</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;release-groups&quot;</span><span class="p">]:</span>
+                                
+                <span class="n">nom_auteur</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;artist-credit&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;artist&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">liste_auteurs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nom_auteur</span><span class="p">)</span>
+                
+        <span class="k">return</span> <span class="n">nom_auteur</span></div>
+
+
+
+<div class="viewcode-block" id="get_liste_artiste"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_liste_artiste">[docs]</a><span class="k">def</span> <span class="nf">get_liste_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album_recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: album_recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: author name </span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">album_recherche</span><span class="p">)</span>
+        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+        <span class="n">replace</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">replace</span> <span class="o">+</span> <span class="n">url_fin</span>
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+              
+        <span class="n">liste_auteurs</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;release-groups&quot;</span><span class="p">]:</span>
+                                
+                <span class="n">nom_auteur</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;artist-credit&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;artist&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="n">liste_auteurs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nom_auteur</span><span class="p">)</span>
+                
+        <span class="k">return</span> <span class="n">liste_auteurs</span></div>
+
+
+
+<div class="viewcode-block" id="get_discographie"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_discographie">[docs]</a><span class="k">def</span> <span class="nf">get_discographie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_artiste</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        This fonction list all singer&#39;s album </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: id_artiste</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns:  list all singer&#39;s album</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/artist/&quot;</span>
+        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;?inc=releases&amp;fmt=json&quot;</span>
+        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">id_artiste</span> <span class="o">+</span> <span class="n">url_fin</span>
+        
+        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        
+        
+        <span class="n">liste_albums</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s2">&quot;releases&quot;</span><span class="p">]:</span>
+                                
+                <span class="n">nom_album</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+                <span class="n">id_album</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                
+                <span class="n">liste_albums</span><span class="p">[</span><span class="n">nom_album</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_album</span>
+                
+        <span class="k">return</span> <span class="n">liste_albums</span></div>
+
+
+<span class="c1"># def get_dic_album_id(self, album_recherche):</span>
+
+<span class="c1">#         recherche = str(album_recherche)</span>
+<span class="c1">#         traitement1 = recherche.strip()</span>
+<span class="c1">#         replace = traitement1.replace(&quot; &quot;, &quot;%20in%20&quot;)</span>
+        
+        
+<span class="c1">#         url_base = &quot;https://musicbrainz.org/ws/2/release-group/?query=release-group:&quot;</span>
+<span class="c1">#         url_fin = &quot;%20AND%20type:album&amp;fmt=json&quot;</span>
+<span class="c1">#         url_complet = url_base + replace + url_fin</span>
+<span class="c1">#         #print(url_complet)</span>
+        
+        
+<span class="c1">#         reponse = requests.get(url_complet)</span>
+<span class="c1">#         contenu = reponse.json()</span>
+        
+        
+<span class="c1">#         for i in contenu [&quot;release-groups&quot;]:</span>
+                
+<span class="c1">#                 #print(i[&quot;releases&quot;][0][&#39;title&#39;])</span>
+                
+<span class="c1">#                 auteur = i[&#39;artist-credit&#39;][0][&#39;name&#39;]</span>
+<span class="c1">#                 id_album = i[&#39;releases&#39;][0][&#39;id&#39;]</span>
+<span class="c1">#                 id_auteur = i[&#39;artist-credit&#39;][0][&#39;artist&#39;][&#39;id&#39;]</span>
+<span class="c1">#                 nom_auteur = i[&#39;artist-credit&#39;][0][&#39;artist&#39;][&#39;name&#39;]</span>
+                
+<span class="c1">#                 nom_album = i[&#39;releases&#39;][0][&#39;title&#39;]</span>
+
+<span class="c1">#                 dic_album_id = {}</span>
+<span class="c1">#                 dic_album_id[auteur] = id_album</span>
+        
+<span class="c1">#                 print(dic_album_id)</span>
+<span class="c1">#                 print(id_auteur)</span>
+<span class="c1">#                 print(nom_auteur)</span>
+        
+<span class="c1">#         return dic_album_id</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Tim.M, Baptiste.T, Matthieu.B, Eliot.M.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
