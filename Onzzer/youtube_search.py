@@ -3,7 +3,8 @@
     :platform: Unix, Windows
     :synopsis: permet d'ecouter un titre gratuitement suite à notre recherche sur Youtube 
 
-.. moduleauthor:: Matt Briss <matt.b@orange.fr>
+.. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
+
 
 """
 
@@ -13,17 +14,26 @@ import json
 import webbrowser
 
 def yt_search(self, artiste, titre):
-    """ Cette fonction fait quelque chose.
+    """ This function buil query to lisen a tracks in Youtube (use trask title and singer name )
 
-        :param param1: premier paramètre.
+        :param param1: artiste
         :type param1: str
-        :param param2: deuxième paramètre.
-        :type param2: bool
-        :returns: description de la variable retournée.
-        :rtype: int
+        :param param2: titre
+        :type param2: str
+        :returns: build a html link 
+        :rtype: str
         :raises: TypeError
-        
-        
+        :example:
+
+        .. code-block:: python
+
+         def yt_search(self, celine Dion, Grand maman):
+
+         url_base = "https://www.youtube.com/results?search_query="
+         url_complet = url_base + celine dion + "+" +  Grand maman
+
+         
+         
         
 
     """

@@ -3,7 +3,7 @@
     :platform: Unix, Windows
     :synopsis: request_albums recherche album
 
-.. moduleauthor:: Matt Briss <matt.b@orange.fr>
+.. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
 
 """
 
@@ -13,6 +13,18 @@ import request_albums
 
 
 def get_album_pays(album_id):
+    """
+        
+        
+        :param param1: album_id
+        :type param1: str
+        :returns: liste list
+        
+        :rtype:  
+        :raises: TypeError
+        
+        """
+        
 
     recherche = str(album_id)
     traitement1 = recherche.strip()
@@ -41,6 +53,17 @@ def get_album_pays(album_id):
 
 
 def get_pistes_album(album_id):
+    """
+        
+        
+        :param param1: album_id
+        :type param1: str
+        :returns: liste list
+        
+        :rtype:  
+        :raises: TypeError
+        
+        """
 
     recherche = str(album_id)
     traitement1 = recherche.strip()

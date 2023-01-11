@@ -1,6 +1,8 @@
 Onzzer's documentation
 ***********************
 
+All functions are here!!
+
 .. automodule:: Onzzer
 
 Onzzer 
@@ -14,6 +16,11 @@ Onzzer
 Request_albums
 ========================
 .. automodule:: request_albums
+    :members: 
+
+Request_Artistes
+========================
+.. automodule:: request_artistes
     :members: 
 
 Request_pistes
