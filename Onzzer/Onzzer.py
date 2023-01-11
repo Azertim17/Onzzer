@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import QLabel, QLineEdit, QPlainTextEdit, QTableView, QAbst
 from PyQt5.QtWidgets import QMessageBox, QTableWidget, QTableWidgetItem, QHeaderView, QHBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap, QPixmap, QPalette, QColor
 from PyQt5.QtCore import Qt, QFileInfo
+from PyQt5 import sip
 import request_albums
 import request_pistes
 import request_artistes
