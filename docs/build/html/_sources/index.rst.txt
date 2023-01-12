@@ -15,7 +15,7 @@ A recording function is available. This function saves the list of titles in tex
    Find our github in this `link <https://github.com/Azertim17/Onzzer>`_
 
 .. NOTE::
-   `Dowload our app  <https://github.com/Azertim17/Onzzer/blob/419e8a142e1035793a09baf90f62e757edb6de83/Onzzer/Onzzer.exe>`_
+   `Dowload our app  <https://github.com/Azertim17/Onzzer/blob/d42bbebc4185eda69a233057e4145c27f9f57f66/Onzzer/Onzzer_setup.exe>`_
 .. toctree::
    :maxdepth: 3
    :caption: sommaire:

@@ -155,7 +155,7 @@
   <h1>Source code for Onzzer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">.. module:: Onzzer</span>
-<span class="sd">    :platform: Unix, Windows</span>
+<span class="sd">    :platform: Windows</span>
 <span class="sd">    :synopsis: Onzzer module principale du projet</span>
 
 <span class="sd">.. moduleauthor:: Matthieu Brissonnet &lt;matthieu.brissonnet@etu.univ-poitiers.fr&gt;, Tim Mazzoloni &lt;tim.mazzolini@etu.univ-poitiers.fr&gt;, Baptiste Tarte &lt;baptiste.tarte@etu.univ-poitiers.fr&gt;, Eliot Monneau &lt;elio.moneau@etu.univ-poitiers.fr&gt;</span>
@@ -182,14 +182,13 @@
 <span class="sd">    this is Onzzer&#39;s window</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>   
-
+    <span class="c1">#Creation of the path used to find the pictures in directory &#39;Icones&#39;</span>
     <span class="c1">#Path of the current file</span>
     <span class="n">absolutepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
     <span class="n">fileDirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">absolutepath</span><span class="p">)</span>
 
-    <span class="c1">#Navigate to Icones directory</span>
+    <span class="c1">#Navigate to &#39;Icones&#39; directory</span>
     <span class="n">newPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fileDirectory</span><span class="p">,</span> <span class="s1">&#39;Icones&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">newPath</span><span class="p">)</span> 
 
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -202,6 +201,8 @@
 <span class="sd">        </span>
 <span class="sd">        :returns: contruit les fenêtres de l&#39;application </span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Defining the main settings of the application window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Onzzer&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo.png&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">800</span><span class="p">)</span>
@@ -209,15 +210,28 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
 
+        <span class="c1"># Call the connect function that test the internet connexion, if no connection, display a information message </span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">():</span>
             <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s2">&quot;Pas d&#39;accès internet&quot;</span><span class="p">,</span> <span class="s2">&quot;Vous devez être connecté à internet pour utiliser l&#39;application&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Fenetre_principale.connect"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        verify the connexion with Internet if true: notink if falsh: he has got a message box with this message :</span>
+
+<span class="sd">        :example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">         &quot;Pas d&#39;accès internet&quot;, &quot;Vous devez être connecté à internet pour utiliser l&#39;application&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="c1"># function that test the internet connection with google website </span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://google.com&quot;</span><span class="p">)</span> 
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
 
         
 <div class="viewcode-block" id="Fenetre_principale.menu"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.menu">[docs]</a>    <span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -228,13 +242,17 @@
 <span class="sd">        :returns: menu and toolbar</span>
 <span class="sd">        :rtype: app</span>
 <span class="sd">        :raises: TypeError</span>
-<span class="sd">        :exemple:</span>
+<span class="sd">        :example:</span>
 
 <span class="sd">        .. code-block:: python</span>
 
-<span class="sd">        app = menu(self)</span>
+<span class="sd">         app = menu(self)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Fonction who generate the menu (menu bar and toolbar) with shortcuts and informations </span>
+
+        <span class="c1"># Creation of diffents buttons with picture, shortcut and name </span>
         <span class="n">eraseButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\edit-undo.png&quot;</span><span class="p">),</span> <span class="s1">&#39;Effacer&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="n">eraseButton</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;Ctrl+N&#39;</span><span class="p">)</span>
         <span class="n">openButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\mail-send.png&quot;</span><span class="p">),</span> <span class="s2">&quot;Ouvrir l&#39;emplacement d&#39;enregistrement&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
@@ -244,11 +262,13 @@
         <span class="n">manButton</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="s1">&#39;A Propos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="n">manButton</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="s1">&#39;F1&#39;</span><span class="p">)</span>
 
+        <span class="c1"># Defines the actions associated with the different buttons, calls the corresponding function onclick</span>
         <span class="n">eraseButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_clear</span><span class="p">)</span>
         <span class="n">exitButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">)</span>
         <span class="n">openButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_openfolder</span><span class="p">)</span>
         <span class="n">manButton</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_a_propos</span><span class="p">)</span>
 
+        <span class="c1"># Added menus to the menu bar: File and Help</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuBar</span><span class="p">()</span>
         <span class="n">menufichier</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Fichier&quot;</span><span class="p">)</span>
         <span class="n">menufichier</span><span class="o">.</span><span class="n">addActions</span><span class="p">([</span><span class="n">eraseButton</span><span class="p">,</span> <span class="n">openButton</span><span class="p">,</span> <span class="n">exitButton</span><span class="p">])</span>
@@ -256,10 +276,12 @@
         <span class="n">menuAide</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Aide&quot;</span><span class="p">)</span>
         <span class="n">menuAide</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">manButton</span><span class="p">)</span>
 
+        <span class="c1"># Added shortcut to the toolbar </span>
         <span class="n">toolbar</span> <span class="o">=</span> <span class="n">QToolBar</span><span class="p">(</span><span class="s2">&quot;Ma barre d&#39;outils&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="n">toolbar</span><span class="p">)</span>
         <span class="n">toolbar</span><span class="o">.</span><span class="n">addActions</span><span class="p">([</span><span class="n">eraseButton</span><span class="p">,</span> <span class="n">exitButton</span><span class="p">])</span>
 
+        <span class="c1"># Set the styleSheet of the menu (the blue background-color)</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #3655B2&quot;</span><span class="p">)</span>
         <span class="n">toolbar</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #3655B2&quot;</span><span class="p">)</span></div>
         
@@ -267,104 +289,153 @@
 
 <div class="viewcode-block" id="Fenetre_principale.accueil"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.accueil">[docs]</a>    <span class="k">def</span> <span class="nf">accueil</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This fonction create the first page. Include Style </span>
+<span class="sd">        This function creates the first page and includes styles.</span>
+<span class="sd">        It retrieves the inscription in &quot;LINEedit&quot; and calls the &quot;categorie&quot; function.</span>
 <span class="sd">        </span>
-<span class="sd">        She recuvers the inscription in &quot;LINEedit&quot;. </span>
-<span class="sd">        </span>
-
-
-<span class="sd">        </span>
-<span class="sd">        :returns: She call the &quot;categorie&quot;&#39;s fonction</span>
-<span class="sd">         </span>
+<span class="sd">        :returns: It calls the &quot;categorie&quot; function.</span>
 <span class="sd">        :raises: TypeError</span>
-<span class="sd">        :exemple:</span>
+<span class="sd">        :example:</span>
+<span class="sd">            self.searchButton.clicked.connect(self.categorie) </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This is the main page of our application, the one allowing to search for an album or an artist</span>
 
-<span class="sd">        .. code-block:: python</span>
-
-<span class="sd">          self.searchButton.clicked.connect(self.categorie) </span>
-
-<span class="sd">        &quot;&quot;&quot;</span>     
-
-
+        <span class="c1"># Create the various widgets for the home page: the edit line, the drop-down list, the search button, the Onzzer logo,</span>
+        <span class="c1"># and other invisible but useful widgets for the layout of the interface</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="s2">&quot;Album&quot;</span> <span class="p">,</span> <span class="s2">&quot;Artiste&quot;</span><span class="p">])</span>
-
+        <span class="c1"># This line set the style of the dropdown list view of the combobox to white.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QListView {background-color : white; }&quot;</span><span class="p">)</span>
-        
-                                    
         <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Recherche&quot;</span><span class="p">)</span> 
-        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>         
+        <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorie</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="c1"># This line set the background color of the main widget to dark gray</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
 
+        <span class="c1"># Use a vertical layout for the main widget</span>
         <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="n">wid_grid</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
         <span class="n">grid</span> <span class="o">=</span> <span class="n">QGridLayout</span><span class="p">()</span>
         <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">wid_onzzer</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
         <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
         <span class="n">box_image</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
-        
+        <span class="c1"># add widget to the grid layout</span>
         <span class="n">grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">wid_grid</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
-        
-        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span><span class="p">)</span>
+        <span class="c1"># add image to the main layout</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignBottom</span><span class="p">)</span>
+
         <span class="n">vbox</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+        <span class="c1"># add grid layout to the main layout</span>
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_grid</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
 
+        <span class="c1"># Set styles for various widgets</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; height: 20px;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorie</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: white; border-style: outset; height: 22px;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: white;&quot;</span><span class="p">)</span>
 
+        <span class="c1"># set the fixed width for widgets</span>
         <span class="n">wid_grid</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
-        <span class="n">box_image</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: white;&quot;</span><span class="p">)</span></div>
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setFixedWidth</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Fenetre_principale.categorie"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.categorie">[docs]</a>    <span class="k">def</span> <span class="nf">categorie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        </span>
-<span class="sd">        This fonction call the different fonction between 2 categories.</span>
+<span class="sd">        This function calls different functions based on the selection in the drop-down list.</span>
 
-
-<span class="sd">        :returns: If select = Album then &quot;recherche_album&quot; is call, </span>
-<span class="sd">         If select = Artiste then &quot;recherche_artiste&quot; is call </span>
-<span class="sd">        :rtype: </span>
+<span class="sd">        :returns: If the selection is &quot;Album&quot;, it calls the &quot;recherche_album&quot; function with the text from the line edit widget.</span>
+<span class="sd">                If the selection is &quot;Artiste&quot;, it calls the &quot;recherche_artiste&quot; function with the text from the line edit widget.</span>
 <span class="sd">        :raises: TypeError</span>
-
-<span class="sd">        :exemple:</span>
-
-<span class="sd">        .. code-block:: python</span>
-
+<span class="sd">        :example:</span>
 <span class="sd">            select = self.catcombo.currentText()</span>
-<span class="sd">            </span>
 <span class="sd">            if select == &quot;Album&quot;:</span>
 <span class="sd">                self.recherche_album(self.line.text())</span>
-
 <span class="sd">            elif select == &quot;Artiste&quot; :</span>
 <span class="sd">                self.recherche_artiste(self.line.text())</span>
-<span class="sd">            </span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
-        
         <span class="k">if</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Album&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-
         <span class="k">elif</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Artiste&quot;</span> <span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div>
-            
     
-    
-    
+
+
+
+<div class="viewcode-block" id="Fenetre_principale.recherche_album"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.recherche_album">[docs]</a>    <span class="k">def</span> <span class="nf">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: id_artiste</span>
+<span class="sd">        </span>
+<span class="sd">        :param param1: recherche</span>
+<span class="sd">        :type param1: str</span>
+<span class="sd">        :returns: list all album with the same </span>
+<span class="sd">                </span>
+<span class="sd">        :rtype: </span>
+<span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># retrieve the albums and artistes data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_nom_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_liste_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
+        
+        <span class="c1"># create the image for the logo</span>
+        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
+        
+        <span class="c1"># create the new search button</span>
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
+        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
+        
+        <span class="c1"># Create the main widget, table widget and its layout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
+        <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="p">)</span>
+        
+        <span class="c1"># Set image for the logo</span>
+        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
+
+        <span class="c1"># Set the main layout of the application</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span> <span class="c1"># Set the layout of the table widget to be a vertical box layout</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span> <span class="c1"># Add the table widget to the layout</span>
+        
+        <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span> <span class="c1"># Set the layout of the button widget</span>
+        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span> <span class="c1"># Add the search button to the button layout and align it to the left</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span> <span class="c1"># Add the button widget to the main layout and align it to the left</span>
+        
+        <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Nom Artiste&quot;</span><span class="p">,</span><span class="s2">&quot;Titre Album&quot;</span><span class="p">,</span><span class="s2">&quot;Voir les Pistes&quot;</span><span class="p">]</span> <span class="c1"># Define the header labels for the table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span> <span class="c1"># Set the header labels for the table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span> <span class="c1"># Set the table header to resize to the contents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span> <span class="c1"># Set the table to not be editable</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span><span class="p">)):</span> <span class="c1"># Iterate through the list of artists and albums</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="c1"># Add the artist to the first column of the table</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="c1"># Add the album to the second column of the table</span>
+            <span class="n">selectButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;voir&quot;</span><span class="p">)</span> <span class="c1"># Create a &#39;voir&#39; button</span>
+            <span class="n">selectButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\go-last.png&quot;</span><span class="p">))</span> <span class="c1"># Set an icon for the button</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">selectButton</span><span class="p">)</span> <span class="c1"># Add the button to the third column of the table</span>
+            <span class="n">selectButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_album</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">recherche</span><span class="p">))</span> <span class="c1"># Connect the button to the &#39;id_album&#39; function and pass in the row number and the &#39;recherche&#39; variable when clicked</span></div>
+        
+
+
+
 <div class="viewcode-block" id="Fenetre_principale.recherche_artiste"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.recherche_artiste">[docs]</a>    <span class="k">def</span> <span class="nf">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Code of the table grouping the artists bearing the name sought</span>
@@ -588,82 +659,7 @@
 
 
         
-<div class="viewcode-block" id="Fenetre_principale.recherche_album"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.recherche_album">[docs]</a>    <span class="k">def</span> <span class="nf">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        </span>
-<span class="sd">        :param param1: id_artiste</span>
-<span class="sd">        </span>
-<span class="sd">        :param param1: recherche</span>
-<span class="sd">        :type param1: str</span>
-<span class="sd">        :returns: list all album with the same </span>
-<span class="sd">                </span>
-<span class="sd">        :rtype: </span>
-<span class="sd">        :raises: TypeError</span>
-<span class="sd">        </span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_nom_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span> <span class="o">=</span> <span class="n">request_albums</span><span class="o">.</span><span class="n">get_liste_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">)</span>
     
-        <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span> 
-        <span class="n">image</span> <span class="o">=</span> <span class="n">image1</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">68</span><span class="p">)</span>
-        <span class="n">searchButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Nouvelle recherche&quot;</span><span class="p">)</span>
-        <span class="n">searchButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;&quot;</span><span class="p">)</span>
-        <span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accueil</span><span class="p">)</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
-
-        <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
-        <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
-        <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
-        <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="p">)</span>
-        
-        <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
-  
-        <span class="bp">self</span><span class="o">.</span><span class="n">wid_table</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
-        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
-
-        <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span>
-        
-        <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
-        
-        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
-        
-        <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Nom Artiste&quot;</span><span class="p">,</span><span class="s2">&quot;Titre Album&quot;</span><span class="p">,</span><span class="s2">&quot;Voir les Pistes&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span>
-        
-        <span class="n">header</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
-        <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>  
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span>
-        
-        
-        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">liste_artistes</span><span class="p">:</span>
-            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-
-        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>  
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">liste_albums</span><span class="p">:</span>             
-            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-                      
-        <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">25</span><span class="p">):</span>             
-            <span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
-            
-            <span class="n">selectButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;voir&quot;</span><span class="p">)</span>
-            <span class="n">selectButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\go-last.png&quot;</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">selectButton</span><span class="p">)</span>
-            <span class="n">selectButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_album</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">recherche</span><span class="p">))</span> </div>
 
         
         
@@ -888,6 +884,8 @@
 
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span></div></div>
 
+        
+        
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">application</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
