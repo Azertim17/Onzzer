@@ -12,8 +12,8 @@ import requests
 
 
 
-def get_id_type(self, artiste_recherche):
-        """
+def get_artist_id_type(artist_name):
+    """
         this fonction recuvers type of artiste and give a ID 
         
         :param artiste_recherche: info entrée dans la lineedith
@@ -24,39 +24,20 @@ def get_id_type(self, artiste_recherche):
         :rtype:  
         :raises: TypeError
         
-        """
-
-        recherche = str(artiste_recherche)
-        traitement1 = recherche.strip()
-        traitement1 = traitement1.replace(" ", "%20in%20")
-        traitement1 = traitement1.replace("'", "%27")
-
-        
-        url_base = "https://musicbrainz.org/ws/2/artist/?query=artist:"
-        url_fin = "&type:artist&fmt=json"
-        url_complet = url_base + traitement1 + url_fin
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-        
-        dic_artiste_id = {}
-        
-        for i in contenu ['artists']:
-            try:
-                type_artiste = i['disambiguation']
-            except KeyError:
-                    pass
-            try:    
-                id_artiste = i['id']
-                dic_artiste_id[id_artiste] = type_artiste
-                
-            except UnboundLocalError:
-                dic_artiste_id[id_artiste] = ""
-                
-        return dic_artiste_id
+    """
+    # Removes leading and trailing whitespace from the "artist_name" variable and replaces spaces and single quotes with the appropriate encoding
+    artist_name = artist_name.strip().replace(" ", "%20in%20").replace("'", "%27")
+    # Constructs the final search URL using f-strings
+    url = f"https://musicbrainz.org/ws/2/artist/?query=artist:{artist_name}&type:artist&fmt=json"
+    # Make a request to the MusicBrainz server using the constructed URL
+    response = requests.get(url)
+    # Get the response in json format
+    content = response.json()
+    # Extract the artist's id and artist's type using dictionary comprehension, store empty string if type is not found
+    return {i['id']: i.get('disambiguation','') for i in content['artists']}
 
 
-def get_artiste_name(self, artiste_recherche):
+def get_artist_name(artiste_recherche):
         """
         this fonction recuvers name of artiste and give a ID 
         
@@ -106,7 +87,7 @@ def get_artiste_name(self, artiste_recherche):
         return dic_artiste_name
 
 
-def get_artiste_id(self, artiste_recherche):
+def get_artist_id(artiste_recherche):
 
         """
         this fonction recuvers artiste and give a ID 
@@ -156,21 +137,6 @@ def get_artiste_id(self, artiste_recherche):
         
         # return the dictionary
         return dic_artiste_id
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     

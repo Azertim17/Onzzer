@@ -13,7 +13,7 @@ import requests
 import json
 import webbrowser
 
-def yt_search(self, artiste, titre):
+def yt_search(artiste, titre):
     """ This function buil query to lisen a tracks in Youtube (use trask title and singer name )
 
         :param param1: artiste
@@ -37,16 +37,30 @@ def yt_search(self, artiste, titre):
         
 
     """
+    # This function takes in two variables, "artiste" and "titre", and uses them to search for 
+    # a music video on YouTube by opening the constructed search URL in the default web browser 
+    # after cleaning and formatting the input.
     
+
+    # Removes leading and trailing whitespace from the "artiste" variable
     artiste.strip()
+
+    # Replaces spaces with + in the "artiste" variable
     artiste.replace(" ", "+")
-    
+
+    # Removes leading and trailing whitespace from the "titre" variable
     titre.strip()
+
+    # Replaces single quotes with escaped single quotes in the "titre" variable
     titre.replace("'", "\'")
-    
-    
+
+
+    # Constant string representing the base of the YouTube search URL
     url_base = "https://www.youtube.com/results?search_query="
+
+    # Constructs the final search URL by concatenating the "url_base", "artiste", and "titre" variables
     url_complet = url_base + artiste + "+" + titre
-    
+
+    # Opens the constructed URL in the default web browser
     webbrowser.open(url_complet)
     

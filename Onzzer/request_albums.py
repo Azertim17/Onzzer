@@ -9,401 +9,235 @@
 import json
 import requests
 
-def get_dic_album_id(self, album_recherche):
-        """ Cette fonction fait quelque chose.
+# def get_dic_album_id(album_recherche):
+#         """ Cette fonction fait quelque chose.
 
-        :param param1: album_recherche
-        :type param1: str
+#         :param param1: album_recherche
+#         :type param1: str
         
-        :returns: dictionary album with ID 
-        :rtype: ?
-        :raises: TypeError
-        
-        
-        
-
-        """
-        # Store the user's search for an album as a string
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        # Replace any spaces in the user's input with "%20in%" for use in the MusicBrainz API URL
-        replace = traitement1.replace(" ", "%20in%20")
-        # Escape any apostrophes in the user's input for use in the MusicBrainz API URL
-        replace.replace("'", "\'")
-        
-        # Define the base URL for the MusicBrainz API
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        # Define the end of the URL for the MusicBrainz API
-        url_fin = "%20AND%20type:album&fmt=json"
-        # Combine the base and end of the URL with the user's input to create the complete API URL
-        url_complet = url_base + replace + url_fin
-        
-        # Send a GET request to the MusicBrainz API with the complete URL
-        reponse = requests.get(url_complet)
-        # Retrieve the JSON content of the API response
-        contenu = reponse.json()
-        
-        # Create an empty dictionary to store album IDs
-        dic_album_id = {}
-
-        # Iterate through the release groups in the API response
-        for i in contenu ["release-groups"]:
-                
-                # Store the name of the artist credit of the current release group
-                auteur = i['artist-credit'][0]['name']
-                # Store the ID of the first release associated with the current release group
-                id_album = i['releases'][0]['id']
-                # Add the artist credit and album ID to the dictionary as a key-value pair
-                dic_album_id[auteur] = id_album
-        # Return the dictionary of album IDs
-        return dic_album_id
-     
-        
-     
-
-
-def get_dic_album_id_artiste(self, album_recherche):
-        """ create a dictionary album / Artist 
-        :param param1: album_recherche
-        :type param1: str
-        :returns: description de la variable retournée.
-        :rtype: int
-        :raises: TypeError
+#         :returns: dictionary album with ID 
+#         :rtype: ?
+#         :raises: TypeError
         
         
         
 
-        """
-
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "\'")
-
-        
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        url_fin = "%20AND%20type:album&fmt=json"
-        url_complet = url_base + replace + url_fin
-        
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-        
-        dic_album_artiste = {}
-
-        for i in contenu ["release-groups"]:
-                                
-                auteur = i['artist-credit'][0]['name']
-                id_album = i['releases'][0]['id']
-
-
-                dic_album_artiste[auteur] = id_album        
-        return dic_album_artiste
-
-
-# def get_album_id(self, album_recherche, artiste):
-
+#         """
+#         # Store the user's search for an album as a string
 #         recherche = str(album_recherche)
 #         traitement1 = recherche.strip()
+#         # Replace any spaces in the user's input with "%20in%" for use in the MusicBrainz API URL
 #         replace = traitement1.replace(" ", "%20in%20")
+#         # Escape any apostrophes in the user's input for use in the MusicBrainz API URL
+#         replace.replace("'", "\'")
         
-        
+#         # Define the base URL for the MusicBrainz API
 #         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+#         # Define the end of the URL for the MusicBrainz API
 #         url_fin = "%20AND%20type:album&fmt=json"
+#         # Combine the base and end of the URL with the user's input to create the complete API URL
 #         url_complet = url_base + replace + url_fin
         
-        
+#         # Send a GET request to the MusicBrainz API with the complete URL
 #         reponse = requests.get(url_complet)
+#         # Retrieve the JSON content of the API response
 #         contenu = reponse.json()
         
-        
+#         # Create an empty dictionary to store album IDs
+#         dic_album_id = {}
+
+#         # Iterate through the release groups in the API response
 #         for i in contenu ["release-groups"]:
                 
-#                 #print(i["releases"][0]['title'])
-                
+#                 # Store the name of the artist credit of the current release group
 #                 auteur = i['artist-credit'][0]['name']
+#                 # Store the ID of the first release associated with the current release group
 #                 id_album = i['releases'][0]['id']
-
-#                 dic_album_id = {}
+#                 # Add the artist credit and album ID to the dictionary as a key-value pair
 #                 dic_album_id[auteur] = id_album
+#         # Return the dictionary of album IDs
+#         return dic_album_id
+     
         
-#         return id_album
+     
+
+
+def get_album_artist_dic(album_name):
+    """
+    This function receives an album name as input, and returns a dictionary containing the album name as key and the artist name as value.
     
+    :param album_name: The name of the album to search for.
+    :type album_name: str
+    :return: A dictionary with album name as key and artist name as value.
+    :rtype: dict
+    """
+    # Removes leading and trailing whitespace from the "album_name" variable and replaces spaces and single quotes with the appropriate encoding
+    album_name = album_name.strip().replace(" ", "%20in%20").replace("'", "%27")
+    # Constructs the final search URL using f-strings
+    url = f"https://musicbrainz.org/ws/2/release-group/?query=release-group:{album_name} AND type:album&fmt=json"
+    # Make a request to the MusicBrainz server using the constructed URL
+    response = requests.get(url)
+    # Get the response in json format
+    content = response.json()
+    # Extract the album's id and album's artist using dictionary comprehension
+    return {i['artist-credit'][0]['name']:i['releases'][0]['id'] for i in content["release-groups"]}
     
-    
-    
 
-def get_album_id(self, album_recherche, artiste):
-
-        """ 
-        Returne a ID for album 
-
-        :param param1: album_recherche
-        :type param1: str
-        :param param2: artiste
-        :type param2: str
-        :returns: album id
-        :rtype: int
-        :raises: TypeError
-        
-        
-        
-
-        """
-
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "\'")
-
-        
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        url_fin = "%20AND%20type:album&fmt=json"
-        url_complet = url_base + replace + url_fin
-        #print(url_complet)
-        
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-        
-        album_id = "0"
-        
-        # print(artiste)
-        for i in contenu ["release-groups"]:
-                
-                auteur = i['artist-credit'][0]['name']
-                id_album = i['releases'][0]['id']
-                if auteur == artiste:
-                
-                    album_id = id_album
-                else :
-                    pass
-                    
-        return album_id
+# def get_album_id(album_name,artist_name):
+#     """
+#     This function receives an album name and artist name as input, and returns the album id.
+#     :param album_name: The name of the album to search for.
+#     :type album_name: str
+#     :param artist_name: The name of the artist.
+#     :type artist_name: str
+#     :return: The album id.
+#     :rtype: int
+#     """
+#     # Removes leading and trailing whitespace from the "album_name" variable and replaces spaces and single quotes with the appropriate encoding
+#     album_name = album_name.strip().replace(" ", "%20in%20").replace("'", "%27")
+#     # Constructs the final search URL using f-strings
+#     url = f"https://musicbrainz.org/ws/2/release-group/?query=release-group:{album_name} AND type:album&fmt=json"
+#     # Make a request to the MusicBrainz server using the constructed URL
+#     response = requests.get(url)
+#     # Get the response in json format
+#     content = response.json()
+#     #Initialize album_id with 0
+#     album_id = "0"
+#     #iterate over the albums in the json response
+#     for i in content["release-groups"]:
+#         #check if the artist name matches the artist name in the album
+#         if i['artist-credit'][0]['name'] == artist_name:
+#             #if matches set the album_id to the id of the album
+#             album_id = i['releases'][0]['id']
+#     #return the album id
+#     return album_id
 
 
 
          
-def get_nom_album(self, album_recherche):
-        """ 
-        This function intterogates API withe name enter in Line Edith
-
-        :param param1: album_recherche
-        :type param1: str
-        :returns: album name 
-        :rtype: str
-        :raises: TypeError
-        
-        
-        
-
-        """
-
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "\'")
-
-        
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        url_fin = "%20AND%20type:album&fmt=json"
-        url_complet = url_base + replace + url_fin
-        #print(url_complet)
-        
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-        
-        liste_albums = []
-        
-        for i in contenu ["release-groups"]:
-    
-                nom_album = i['releases'][0]['title']
-                liste_albums.append(nom_album)
-        return liste_albums
+def get_album_name(album_name):
+    """
+    This function receives an album name as input and returns the album name from MusicBrainz.
+    :param album_name: The name of the album to search for.
+    :type album_name: str
+    :return: The album name.
+    :rtype: str
+    """
+    # Removes leading and trailing whitespace from the "album_name" variable and replaces spaces and single quotes with the appropriate encoding
+    album_name = album_name.strip().replace(" ", "%20in%20").replace("'", "%27")
+    # Constructs the final search URL using f-strings
+    url = f"https://musicbrainz.org/ws/2/release-group/?query=release-group:{album_name} AND type:album&fmt=json"
+    # Make a request to the MusicBrainz server using the constructed URL
+    response = requests.get(url)
+    # Get the response in json format
+    content = response.json()
+    # Initialize an empty list
+    list_albums = []
+    #iterate over the albums in the json response
+    for i in content["release-groups"]:
+        #append the album name to the list
+        list_albums.append(i['releases'][0]['title'])
+    #return the list of album names
+    return list_albums
 
 
 
 
 
-def get_nom_artiste(self, album_recherche):
-        """ 
-        This function research all singer's music album in API
+# def get_artist_name(self, album_recherche):
+#         """ 
+#         This function research all singer's music album in API
 
-        :param param1: album_recherche
-        :type param1: str
-        :returns: author name 
-        :rtype: str
-        :raises: TypeError
-        
-        
-        
-
-        """
-
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "\'")
-
-        
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        url_fin = "%20AND%20type:album&fmt=json"
-        url_complet = url_base + replace + url_fin
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-              
-        liste_auteurs = []
-        
-        for i in contenu ["release-groups"]:
-                                
-                nom_auteur = i['artist-credit'][0]['artist']['name']
-                liste_auteurs.append(nom_auteur)
-                
-        return nom_auteur
-
-
-
-def get_liste_artiste(self, album_recherche):
-        """ 
-        
-        
-        :param param1: album_recherche
-        :type param1: str
-        :returns: author name 
-        :rtype: str
-        :raises: TypeError
+#         :param param1: album_recherche
+#         :type param1: str
+#         :returns: author name 
+#         :rtype: str
+#         :raises: TypeError
         
         
         
 
-        """
-
-        recherche = str(album_recherche)
-        traitement1 = recherche.strip()
-        replace = traitement1.replace(" ", "%20in%20")
-        replace.replace("'", "\'")
-
-        
-        url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
-        url_fin = "%20AND%20type:album&fmt=json"
-        url_complet = url_base + replace + url_fin
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-              
-        liste_auteurs = []
-        
-        for i in contenu ["release-groups"]:
-                                
-                nom_auteur = i['artist-credit'][0]['artist']['name']
-                liste_auteurs.append(nom_auteur)
-                
-        return liste_auteurs
-
-
-
-def get_discographie(self, id_artiste):
-
-        """ 
-        This fonction list all singer's album 
-        
-        
-        :param param1: id_artiste
-        :type param1: str
-        :returns:  list all singer's album
-        :rtype: str
-        :raises: TypeError
-        
-        
-        
-
-        """
-    
-        url_base = "https://musicbrainz.org/ws/2/artist/"
-        url_fin = "?inc=releases&fmt=json"
-        url_complet = url_base + id_artiste + url_fin
-        
-        reponse = requests.get(url_complet)
-        contenu = reponse.json()
-        
-        
-        liste_albums = {}
-        
-        for i in contenu ["releases"]:
-                                
-                nom_album = i['title']
-                id_album = i['id']
-                
-                liste_albums[nom_album] = id_album
-                
-        return liste_albums
-
-
-# def get_dic_album_id(self, album_recherche):
+#         """
 
 #         recherche = str(album_recherche)
 #         traitement1 = recherche.strip()
 #         replace = traitement1.replace(" ", "%20in%20")
-        
+#         replace.replace("'", "\'")
+
         
 #         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
 #         url_fin = "%20AND%20type:album&fmt=json"
 #         url_complet = url_base + replace + url_fin
-#         #print(url_complet)
-        
         
 #         reponse = requests.get(url_complet)
 #         contenu = reponse.json()
-        
+              
+#         liste_auteurs = []
         
 #         for i in contenu ["release-groups"]:
-                
-#                 #print(i["releases"][0]['title'])
-                
-#                 auteur = i['artist-credit'][0]['name']
-#                 id_album = i['releases'][0]['id']
-#                 id_auteur = i['artist-credit'][0]['artist']['id']
+                                
 #                 nom_auteur = i['artist-credit'][0]['artist']['name']
+#                 liste_auteurs.append(nom_auteur)
                 
-#                 nom_album = i['releases'][0]['title']
+#         return nom_auteur
 
-#                 dic_album_id = {}
-#                 dic_album_id[auteur] = id_album
+
+
+def get_artist_list(album_name):
+    """
+    This function receives an album name as input and returns a list of the artist name(s) associated with that album from MusicBrainz.
+    :param album_name: The name of the album to search for.
+    :type album_name: str
+    :return: List of artist names.
+    :rtype: list
+    """
+    # Removes leading and trailing whitespace from the "album_name" variable and replaces spaces and single quotes with the appropriate encoding
+    album_name = album_name.strip().replace(" ", "%20in%20").replace("'", "%27")
+    # Constructs the final search URL using f-strings
+    url = f"https://musicbrainz.org/ws/2/release-group/?query=release-group:{album_name} AND type:album&fmt=json"
+    # Make a request to the MusicBrainz server using the constructed URL
+    response = requests.get(url)
+    # Get the response in json format
+    content = response.json()
+    # Initialize an empty list
+    artist_list = []
+    #iterate over the albums in the json response
+    for i in content["release-groups"]:
+        #append the artist name to the list
+        artist_list.append(i['artist-credit'][0]['artist']['name'])
+    #return the list of artist names
+    return artist_list
+
+
+
+def get_discographie(id_artiste):
+        """
+        This function lists all the albums of a singer using their MusicBrainz ID.
+        :param id_artiste: MusicBrainz ID of the artist
+        :type id_artiste: str
+        :returns: list of all singer's albums
+        :rtype: dict
+        """
+        url_base = "https://musicbrainz.org/ws/2/artist/"
+        url_fin = "?inc=releases&fmt=json"
+        url_complet = url_base + id_artiste + url_fin
         
-#                 print(dic_album_id)
-#                 print(id_auteur)
-#                 print(nom_auteur)
-        
-#         return dic_album_id
+        # Send a GET request to the MusicBrainz API using the complete URL
+        response = requests.get(url_complet)
+        # Parse the JSON response
+        content = response.json()
 
+        # Initialize an empty dictionary to store the album name and its MusicBrainz ID
+        album_list = {}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        # Iterate over the list of releases in the response
+        for release in content["releases"]:
+        # Get the title of the release (i.e. the album name)
+                album_name = release['title']
+                # Get the MusicBrainz ID of the release (i.e. the album)
+                album_id = release['id']
+                # Add the album name and its ID to the dictionary
+                album_list[album_name] = album_id
+        # Return the dictionary
+        return album_list
 

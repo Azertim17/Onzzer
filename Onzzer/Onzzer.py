@@ -226,8 +226,8 @@ class Fenetre_principale(QMainWindow):
         
         """
         # retrieve the albums and artistes data
-        self.liste_albums = request_albums.get_nom_album(self, recherche)
-        self.liste_artistes = request_albums.get_liste_artiste(self, recherche)
+        self.liste_albums = request_albums.get_album_name(recherche)
+        self.liste_artistes = request_albums.get_artist_list(recherche)
         
         # create the image for the logo
         image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
@@ -306,8 +306,8 @@ class Fenetre_principale(QMainWindow):
 
 
         """        
-        self.dic_type = request_artistes.get_id_type(self, recherche)
-        self.dic_name = request_artistes.get_artiste_name(self, recherche)
+        self.dic_type = request_artistes.get_artist_id_type(recherche)
+        self.dic_name = request_artistes.get_artist_name(recherche)
         
         image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
         image = image1.scaled(255, 68)
@@ -392,7 +392,7 @@ class Fenetre_principale(QMainWindow):
         self.artiste = self.table.item(row-1, 0).text()        
         
         # Retrieve the dictionary of artist IDs from the request_artistes module using the user's input
-        dic = request_artistes.get_artiste_id(self, recherche)
+        dic = request_artistes.get_artist_id(recherche)
 
         # Retrieve the artist ID for the current row from the dictionary
         id = dic[row]
@@ -428,7 +428,7 @@ class Fenetre_principale(QMainWindow):
         self.wid_discographie.setStyleSheet("background-color: #202124")
         
         # Retrieve the list of albums for the current artist from the request_albums module
-        self.liste_albums = request_albums.get_discographie(self, id_artiste)
+        self.liste_albums = request_albums.get_discographie(id_artiste)
 
         image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
         image = image1.scaled(255, 68)
@@ -505,10 +505,10 @@ class Fenetre_principale(QMainWindow):
         
         """
         
-        dic_album_id = request_albums.get_discographie(self, id_artiste)
+        dic_album_id = request_albums.get_discographie(id_artiste)
         self.nom_album = self.table.item(row-1, 0).text()
         album_id = dic_album_id[self.nom_album]
-        titres = request_pistes.get_pistes_album(album_id)
+        titres = request_pistes.get_album_titles(album_id)
         self.pistes(titres, id_artiste)
         
 
@@ -617,9 +617,9 @@ class Fenetre_principale(QMainWindow):
         
         self.nom_album = self.table.item(row-1, 1).text()
         self.artiste = self.table.item(row-1, 0).text()
-        dic = request_albums.get_dic_album_id_artiste(self, recherche)
+        dic = request_albums.get_album_artist_dic(recherche)
         id = dic[self.artiste]
-        titres = request_pistes.get_pistes_album(id)
+        titres = request_pistes.get_album_titles(id)
         self.pistes(titres, recherche)
         
         
@@ -638,7 +638,7 @@ class Fenetre_principale(QMainWindow):
         """
         
         self.nom_piste = self.table.item(row-1, 0).text()
-        YS.yt_search(self, self.artiste, self.nom_piste)
+        YS.yt_search(self.artiste, self.nom_piste)
     
      
     def action_openfolder(self) :
@@ -663,90 +663,82 @@ class Fenetre_principale(QMainWindow):
 
     def action_a_propos(self):
         """
-        This fonction give informations about programmer's application 
-        
-           
+        Display information about the application and its developers.
+
         """
-        QMessageBox.information(self,"Onzzer Application de Recherche Musicale", "Onzzer par Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
-        
-        
+        QMessageBox.information(self, "Onzzer Music Search Application", "Onzzer by Baptiste Tarte, Tim Mazzolini, Eliot Monneau, Matthieu Brissonnet")
+            
+
+
     def action_upload(self, titres):
         """
-        This function allow save all tracks from an album in file .txt 
+        This function saves all tracks from an album in a .txt file.
         
-        :param param1: titre
-        :type param1: str
-        :returns: file .txt
-                
-        
-        
+        :param titres: A list of track names
+        :type titres: list
+        :returns: A .txt file containing the track names
         """
         
+        # create the file name
         nom_base = self.nom_album + (" - ") + self.artiste + (".txt")
 
-        
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        file_path, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",nom_base,"All Files (*);;Text Files (*.txt)", options=options)
-        
-        
+        # open a file dialog to choose where to save the file
+        file_path, _ = QFileDialog.getSaveFileName(self, "Save File", nom_base, "Text Files (*.txt)")
+
+        # write the track list to the file
         with open(file_path, "w") as fichier:
-            
-                fichier.write("Liste de chansons de l'album ")
-                fichier.write(self.nom_album)
-                fichier.write(" de l'artiste ")
-                fichier.write(self.artiste)
-                fichier.write("\n ")
-                
-                for i in titres:
-                    fichier.write("\n->")
-                    fichier.write(i)
-                      
-                    
-                    
+            fichier.write("Liste de chansons de l'album " + self.nom_album + " de l'artiste " + self.artiste + "\n")
+            for i in titres:
+                fichier.write("\n->" + i)
+
+        # get the file name and show a message box with the file name
         filename = QFileInfo(file_path).fileName()
-        QMessageBox.information(self,"Et voilà", "Fichier écrit avec le nom " + filename)
+        QMessageBox.information(self, "Et voilà", "Fichier écrit avec le nom " + filename)
 
      
 
     
     def center(self):
         """
+        Center the window on the screen
         
-        
-        
-        
-                
-        
-        
+        :param self: The current instance of the class
+        :type self: object
         """
+        # get the rectangle of the main window
         qr = self.frameGeometry()
+        # get the center point of the screen
         cp = QDesktopWidget().availableGeometry().center()
+        # move the rectangle's center point to the screen's center point
         qr.moveCenter(cp)
+        # move the main window to the top left point of the rectangle
         self.move(qr.topLeft())
 
-    def resource_path(relative_path):
+    # def resource_path(relative_path):
 
-        """ 
-        Get absolute path to resource, works for dev and for PyInstaller 
+    #     """ 
+    #     Get absolute path to resource, works for dev and for PyInstaller 
         
-        """
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
+    #     """
+    #     try:
+    #         base_path = sys._MEIPASS
+    #     except Exception:
+    #         base_path = os.path.abspath(".")
 
-        return os.path.join(base_path, relative_path)
+    #     return os.path.join(base_path, relative_path)
 
         
         
 
 def main():
+    # Create an instance of QApplication, which manages the GUI application's control flow and main settings
     application = QApplication(sys.argv)
+    # Create an instance of Fenetre_principale, which is the main window of the application
     fenetre = Fenetre_principale()
+    # Show the main window
     fenetre.show()
-    sys.exit(application.exec())
+    # Exit the application and return the specified exit code
+    sys.exit(application.exec_())
         
 if __name__ == '__main__':
     main()
