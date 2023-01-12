@@ -642,22 +642,17 @@ class Fenetre_principale(QMainWindow):
     
      
     def action_openfolder(self) :
-        os.startfile("")
         """
         This function open forder 
         
         """
-        os.startfile('..\Onzzer\Icones')
+        os.startfile("")
+
         
         
     def action_clear(self):
         """
         This function clear th line edith
-        
-        
-                
-        
-        
         """
         self.line.clear()
 
