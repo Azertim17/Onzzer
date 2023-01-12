@@ -16,8 +16,9 @@ def get_id_type(self, artiste_recherche):
         """
         this fonction recuvers type of artiste and give a ID 
         
-        :param param1: artiste_recherche
+        :param artiste_recherche: info entrée dans la lineedith
         :type param1: str
+
         :returns: dictionnary
         
         :rtype:  
