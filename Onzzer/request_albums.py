@@ -23,29 +23,39 @@ def get_dic_album_id(self, album_recherche):
         
 
         """
+        # Store the user's search for an album as a string
         recherche = str(album_recherche)
         traitement1 = recherche.strip()
+        # Replace any spaces in the user's input with "%20in%" for use in the MusicBrainz API URL
         replace = traitement1.replace(" ", "%20in%20")
+        # Escape any apostrophes in the user's input for use in the MusicBrainz API URL
         replace.replace("'", "\'")
         
-        
+        # Define the base URL for the MusicBrainz API
         url_base = "https://musicbrainz.org/ws/2/release-group/?query=release-group:"
+        # Define the end of the URL for the MusicBrainz API
         url_fin = "%20AND%20type:album&fmt=json"
+        # Combine the base and end of the URL with the user's input to create the complete API URL
         url_complet = url_base + replace + url_fin
         
-        
+        # Send a GET request to the MusicBrainz API with the complete URL
         reponse = requests.get(url_complet)
+        # Retrieve the JSON content of the API response
         contenu = reponse.json()
         
+        # Create an empty dictionary to store album IDs
         dic_album_id = {}
 
+        # Iterate through the release groups in the API response
         for i in contenu ["release-groups"]:
-                                
+                
+                # Store the name of the artist credit of the current release group
                 auteur = i['artist-credit'][0]['name']
+                # Store the ID of the first release associated with the current release group
                 id_album = i['releases'][0]['id']
-
+                # Add the artist credit and album ID to the dictionary as a key-value pair
                 dic_album_id[auteur] = id_album
-        
+        # Return the dictionary of album IDs
         return dic_album_id
      
         
