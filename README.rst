@@ -11,8 +11,8 @@ SAE 302 Onzzer
 Description
 ===========
 
-   - Application__ graphique d’interrogation d’une Base de données de musique.
-   - Base de données MusicBrainz__ 
+   - Application__ graphique open source pour faire vos recherches musicales !
+   - Utilise la base de données MusicBrainz__ 
    
    __ https://updago.univ-poitiers.fr/pluginfile.php/4706186/mod_resource/content/1/build/index.html
    __ https://musicbrainz.org/doc/MusicBrainz_API
@@ -34,39 +34,46 @@ Arborescence du projet
 ::
 
    Onzzer
-      ├── .git/
       ├── data/
-      │   └── rapport_intermédiaire.txt
-      │   └── test_requete.txt
+      │     ├── database/
+      │             └── ...
+      │     ├── rapport_intermédiaire.txt
+      │     └── test_requete.txt
       ├── docs/
       │     ├── build/
-      │     │    └── html/
+      │     │     ├── doctrees/     
+      │     │     └── html/
       │     └── source/
-      │          ├── index.rst
-      │          ├── conf.py
-      │          ├── content/
-      │          ├── _static/
-      │          └── _templates/
+      │            ├── index.rst
+      │            ├── conf.py
+      │            ├── content/
+      │            ├── _static/
+      │            └── _templates/
       ├── html/
-      │   └── ...
-      ├── __init__.py
+      │     └── ...
       ├── onzzer/
-      │     └── onzzer.py
-      │     └── request_albums.py
-      │     └── request_pistes.py
-      │     └── youtube_search.py
-      |     └── Icones/
+      │      ├── __init__.py
+      │      ├── onzzer.exe
+      │      ├── onzzer_setup.exe
+      │      ├── onzzer.py
+      │      ├── request_albums.py
+      │      ├── request_pistes.py
+      │      ├── youtube_search.py
+      |      ├── Icones/
+      |      ├── dist/
+      |      ├── build/Onzzer/
+      │      └── __pycache__/
       ├── tests/
-      │   ├── __init__.py
-      │   └── onzzer_copy.py
+      │     ├── __init__.py
+      │     └── onzzer_copy.py
+      ├── venv/
       ├── .gitignore
       ├── AUTHORS
-      │
-      └── requirements.txt
+      └── README.rst
       
 ####
 
-Database
+Database MUSICBRAINZ
 ======================      
       
 .. image:: https://wiki.musicbrainz.org/images/5/52/ngs.png
