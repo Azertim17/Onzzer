@@ -58,7 +58,7 @@ class Fenetre_principale(QMainWindow):
         # Call the connect function that test the internet connexion, if no connection, display a information message 
         if not self.connect():
             QMessageBox.information(self,"Pas d'accès internet", "Vous devez être connecté à internet pour utiliser l'application")
-
+    
     def connect(self):
 
 
@@ -247,29 +247,28 @@ class Fenetre_principale(QMainWindow):
         # Set image for the logo
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-
-        # Set the main layout of the application
-        self.wid_table.setLayout(vbox) # Set the layout of the table widget to be a vertical box layout
-        vbox.addWidget(self.table) # Add the table widget to the layout
         
-        wid_bouttons.setLayout(bouttonshbox) # Set the layout of the button widget
-        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft) # Add the search button to the button layout and align it to the left
-        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft) # Add the button widget to the main layout and align it to the left
+        # Set main layout
+        self.wid_table.setLayout(vbox)
+        vbox.addWidget(self.table)
+        wid_bouttons.setLayout(bouttonshbox)
+        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
+        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
         
-        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"] # Define the header labels for the table
-        self.table.setHorizontalHeaderLabels(headerH) # Set the header labels for the table
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents) # Set the table header to resize to the contents
-        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers) # Set the table to not be editable
+        # Set table properties
+        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"] 
+        self.table.setHorizontalHeaderLabels(headerH)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-        for i in range(len(self.liste_artistes)): # Iterate through the list of artists and albums
-            self.table.setItem(i, 0, QTableWidgetItem(self.liste_artistes[i])) # Add the artist to the first column of the table
-            self.table.setItem(i, 1, QTableWidgetItem(self.liste_albums[i])) # Add the album to the second column of the table
-            selectButton = QPushButton("voir") # Create a 'voir' button
-            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png")) # Set an icon for the button
-            self.table.setCellWidget(i, 2, selectButton) # Add the button to the third column of the table
-            selectButton.clicked.connect(lambda _, r=i+1, c=3: self.id_album(r, recherche)) # Connect the button to the 'id_album' function and pass in the row number and the 'recherche' variable when clicked
-        
-
+        # Add data to table and create 'voir' button
+        for i in range(len(self.liste_artistes)):
+            self.table.setItem(i, 0, QTableWidgetItem(self.liste_artistes[i]))
+            self.table.setItem(i, 1, QTableWidgetItem(self.liste_albums[i]))
+            selectButton = QPushButton("voir")
+            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
+            self.table.setCellWidget(i, 2, selectButton)
+            selectButton.clicked.connect(lambda _, r=i+1, c=3: self.id_album(r, recherche))
 
 
     def recherche_artiste(self, recherche):
@@ -344,22 +343,21 @@ class Fenetre_principale(QMainWindow):
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         
         
-        
+        #set the value of each key in the dic_name dictionary as the item in the first column of the table
         row = 0
         for i in self.dic_name:
             row += 1
             self.table.setItem(row-1,0, QTableWidgetItem(self.dic_name[i]))
-
+        #set the value of each key in the dic_type dictionary as the item in the second column of the table
         row = 0  
         for i in self.dic_type:             
             row += 1
             self.table.setItem(row-1,1, QTableWidgetItem(self.dic_type[i]))
-                      
+        #create a "voir" button for each row and set it as the widget in the third column
+        #connect the button to the id_artiste function with the current row, column, and recherche as arguments              
         row = 0
         for i in range(0,25):             
-        
             row += 1
-            
             selectButton = QPushButton("voir")
             selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
             self.table.setCellWidget(row-1,2,selectButton)
@@ -382,10 +380,16 @@ class Fenetre_principale(QMainWindow):
         :rtype: listing about singer with same name 
         :raises: TypeError
         """
+        # Store the text of the item in the first column of the table at the current row
         self.artiste = self.table.item(row-1, 0).text()        
         
+        # Retrieve the dictionary of artist IDs from the request_artistes module using the user's input
         dic = request_artistes.get_artiste_id(self, recherche)
+
+        # Retrieve the artist ID for the current row from the dictionary
         id = dic[row]
+
+        # Call the discographie function with the current artist ID
         self.discographie(id)
         
     
@@ -402,16 +406,20 @@ class Fenetre_principale(QMainWindow):
         :raises: TypeError
         
         """
+        # Create an image object from an image file and scale it to a specific size
         image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
         image = image1.scaled(255, 68)
+
+        # Create a button with the text "Nouvelle recherche" and set its style and connect it to the accueil method
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         searchButton.clicked.connect(self.accueil)
-         
+        
+        # Create a widget and set its background color
         self.wid_discographie = QWidget()
         self.wid_discographie.setStyleSheet("background-color: #202124")
         
-        
+        # Retrieve the list of albums for the current artist from the request_albums module
         self.liste_albums = request_albums.get_discographie(self, id_artiste)
 
         image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
@@ -423,11 +431,14 @@ class Fenetre_principale(QMainWindow):
         self.wid_discographie = QWidget()
         self.wid_discographie.setStyleSheet("background-color: #202124")
 
+        # Create a widget, layout and table to display the list of albums
         wid_bouttons = QWidget()
         vbox = QVBoxLayout()
         bouttonshbox = QHBoxLayout()
         box_image = QLabel()
         self.table = QTableWidget()
+
+        # Set the number of rows in the table to the number of albums in the list
         row = len(self.liste_albums)
         self.table.setRowCount(row)
         self.table.setColumnCount(2)
