@@ -196,7 +196,6 @@ class Fenetre_principale(QMainWindow):
                 self.recherche_artiste(self.line.text())
         """
         select = self.catcombo.currentText()
-        # use `if-elif` construct instead of the `if-if` to avoid checking the second condition if the first condition is true
         if select == "Album":
             self.recherche_album(self.line.text())
         elif select == "Artiste" :
@@ -249,29 +248,27 @@ class Fenetre_principale(QMainWindow):
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
 
-        # Set the main layout
-        self.wid_table.setLayout(vbox)
-        vbox.addWidget(self.table)
-
-        wid_bouttons.setLayout(bouttonshbox)
+        # Set the main layout of the application
+        self.wid_table.setLayout(vbox) # Set the layout of the table widget to be a vertical box layout
+        vbox.addWidget(self.table) # Add the table widget to the layout
         
-        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
-    
-        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
+        wid_bouttons.setLayout(bouttonshbox) # Set the layout of the button widget
+        bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft) # Add the search button to the button layout and align it to the left
+        vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft) # Add the button widget to the main layout and align it to the left
         
-        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"]
-        self.table.setHorizontalHeaderLabels(headerH)
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        headerH = ["Nom Artiste","Titre Album","Voir les Pistes"] # Define the header labels for the table
+        self.table.setHorizontalHeaderLabels(headerH) # Set the header labels for the table
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents) # Set the table header to resize to the contents
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers) # Set the table to not be editable
 
-        for i in range(len(self.liste_artistes)):
-            self.table.setItem(i, 0, QTableWidgetItem(self.liste_artistes[i]))
-            self.table.setItem(i, 1, QTableWidgetItem(self.liste_albums[i]))
-            selectButton = QPushButton("voir")
-            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
-            self.table.setCellWidget(i, 2, selectButton)
-            selectButton.clicked.connect(lambda _, r=i+1, c=3: self.id_album(r, recherche))
-    
+        for i in range(len(self.liste_artistes)): # Iterate through the list of artists and albums
+            self.table.setItem(i, 0, QTableWidgetItem(self.liste_artistes[i])) # Add the artist to the first column of the table
+            self.table.setItem(i, 1, QTableWidgetItem(self.liste_albums[i])) # Add the album to the second column of the table
+            selectButton = QPushButton("voir") # Create a 'voir' button
+            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png")) # Set an icon for the button
+            self.table.setCellWidget(i, 2, selectButton) # Add the button to the third column of the table
+            selectButton.clicked.connect(lambda _, r=i+1, c=3: self.id_album(r, recherche)) # Connect the button to the 'id_album' function and pass in the row number and the 'recherche' variable when clicked
+        
 
 
 
