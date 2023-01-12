@@ -170,25 +170,23 @@
 <span class="target" id="module-2"></span><dl class="py class">
 <dt id="Onzzer.Fenetre_principale">
 <em class="property">class </em><code class="sig-prename descclassname">Onzzer.</code><code class="sig-name descname">Fenetre_principale</code><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale" title="Permalink to this definition">¶</a></dt>
-<dd><p>this is Onzzer’s window</p>
+<dd><p>This is Onzzer’s window</p>
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.accueil">
 <code class="sig-name descname">accueil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale.accueil"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale.accueil" title="Permalink to this definition">¶</a></dt>
-<dd><p>This fonction create the first page. Include Style</p>
-<p>She recuvers the inscription in “LINEedit”.</p>
+<dd><p>This function creates the first page and includes styles.
+It retrieves the inscription in “LINEedit” and calls the “categorie” function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>She call the “categorie“‘s fonction</p>
+<dd class="field-odd"><p>It calls the “categorie” function.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p>TypeError</p>
 </dd>
-<dt class="field-odd">Exemple</dt>
-<dd class="field-odd"><p></p></dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>self.searchButton.clicked.connect(self.categorie)</p>
+</dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">searchButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorie</span><span class="p">)</span> 
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py method">
@@ -220,36 +218,44 @@
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.categorie">
 <code class="sig-name descname">categorie</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale.categorie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale.categorie" title="Permalink to this definition">¶</a></dt>
-<dd><p>This fonction call the different fonction between 2 categories.</p>
-<dl class="field-list simple">
+<dd><p>This function calls different functions based on the selection in the drop-down list.</p>
+<dl class="field-list">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>If select = Album then “recherche_album” is call, 
-If select = Artiste then “recherche_artiste” is call</p>
+<dd class="field-odd"><p>If the selection is “Album”, it calls the “recherche_album” function with the text from the line edit widget.
+If the selection is “Artiste”, it calls the “recherche_artiste” function with the text from the line edit widget.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p></p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>TypeError</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>TypeError</p>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>select = self.catcombo.currentText()
+if select == “Album”:</p>
+<blockquote>
+<div><p>self.recherche_album(self.line.text())</p>
+</div></blockquote>
+<dl class="simple">
+<dt>elif select == “Artiste” :</dt><dd><p>self.recherche_artiste(self.line.text())</p>
 </dd>
-<dt class="field-even">Exemple</dt>
-<dd class="field-even"><p></p></dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catcombo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Album&quot;</span><span class="p">:</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-
-<span class="k">elif</span> <span class="n">select</span> <span class="o">==</span> <span class="s2">&quot;Artiste&quot;</span> <span class="p">:</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
-</pre></div>
-</div>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.center">
 <code class="sig-name descname">center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale.center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale.center" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt id="Onzzer.Fenetre_principale.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>verify the connexion with Internet if true: notink if falsh: he has got a message box with this message :</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>Pas d’accès internet, “Vous devez être connecté à internet pour utiliser l’application”</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.discographie">
@@ -364,13 +370,12 @@ If select = Artiste then “recherche_artiste” is call</p>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p>TypeError</p>
 </dd>
-<dt class="field-even">Exemple</dt>
+<dt class="field-even">Example</dt>
 <dd class="field-even"><p></p></dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>app = menu(self)</p>
 </dd></dl>
 
 <dl class="py method">

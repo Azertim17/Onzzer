@@ -1,6 +1,6 @@
 """
 .. module:: Onzzer
-    :platform: Unix, Windows
+    :platform: Windows, Unix
     :synopsis: Onzzer module principale du projet
 
 .. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
@@ -24,7 +24,7 @@ import youtube_search as YS
 
 class Fenetre_principale(QMainWindow):
     """
-    this is Onzzer's window
+    This is Onzzer's window
 
     """   
     #Creation of the path used to find the pictures in directory 'Icones'
@@ -37,7 +37,7 @@ class Fenetre_principale(QMainWindow):
 
 
     def __init__(self):
-    
+        
         """The constructor."""
         super().__init__()
         """the super constructor"""
@@ -60,6 +60,14 @@ class Fenetre_principale(QMainWindow):
             QMessageBox.information(self,"Pas d'accès internet", "Vous devez être connecté à internet pour utiliser l'application")
     
     def connect(self):
+        """
+        verify the connexion with Internet if true: notink if falsh: he has got a message box with this message :
+
+        :example:
+
+         Pas d'accès internet, "Vous devez être connecté à internet pour utiliser l'application"
+
+        """
 
 
         # function that test the internet connection with google website 
@@ -78,11 +86,11 @@ class Fenetre_principale(QMainWindow):
         :returns: menu and toolbar
         :rtype: app
         :raises: TypeError
-        :exemple:
+        :example:
 
         .. code-block:: python
 
-        app = menu(self)
+         app = menu(self)
 
         """
 

@@ -36,7 +36,8 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
-
+# todo permet la prise en charge des éléments todo 
+# ifconfig permet la prise en charge des éléments dans la configuration 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
