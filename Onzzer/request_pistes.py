@@ -1,6 +1,6 @@
 """
 .. module:: request_pistes
-    :platform: Windows
+    :platform: Windows, Unix
     :synopsis: request_albums recherche album
 
 .. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>

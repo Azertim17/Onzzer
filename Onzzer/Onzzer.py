@@ -1,6 +1,6 @@
 """
 .. module:: Onzzer
-    :platform: Windows
+    :platform: Windows, Unix
     :synopsis: Onzzer module principale du projet
 
 .. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
@@ -24,7 +24,7 @@ import youtube_search as YS
 
 class Fenetre_principale(QMainWindow):
     """
-    this is Onzzer's window
+    This is Onzzer's window
 
     """   
     #Creation of the path used to find the pictures in directory 'Icones'
@@ -37,7 +37,7 @@ class Fenetre_principale(QMainWindow):
 
 
     def __init__(self):
-    
+        
         """The constructor."""
         super().__init__()
         """the super constructor"""
@@ -65,8 +65,7 @@ class Fenetre_principale(QMainWindow):
 
         :example:
 
-        .. code-block:: python
-         "Pas d'accès internet", "Vous devez être connecté à internet pour utiliser l'application"
+         Pas d'accès internet, "Vous devez être connecté à internet pour utiliser l'application"
 
         """
 

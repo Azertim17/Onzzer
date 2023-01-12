@@ -155,7 +155,7 @@
   <h1>Source code for Onzzer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">.. module:: Onzzer</span>
-<span class="sd">    :platform: Windows</span>
+<span class="sd">    :platform: Windows, Unix</span>
 <span class="sd">    :synopsis: Onzzer module principale du projet</span>
 
 <span class="sd">.. moduleauthor:: Matthieu Brissonnet &lt;matthieu.brissonnet@etu.univ-poitiers.fr&gt;, Tim Mazzoloni &lt;tim.mazzolini@etu.univ-poitiers.fr&gt;, Baptiste Tarte &lt;baptiste.tarte@etu.univ-poitiers.fr&gt;, Eliot Monneau &lt;elio.moneau@etu.univ-poitiers.fr&gt;</span>
@@ -179,7 +179,7 @@
 
 <div class="viewcode-block" id="Fenetre_principale"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale">[docs]</a><span class="k">class</span> <span class="nc">Fenetre_principale</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    this is Onzzer&#39;s window</span>
+<span class="sd">    This is Onzzer&#39;s window</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>   
     <span class="c1">#Creation of the path used to find the pictures in directory &#39;Icones&#39;</span>
@@ -192,7 +192,7 @@
 
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    
+        
         <span class="sd">&quot;&quot;&quot;The constructor.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="sd">&quot;&quot;&quot;the super constructor&quot;&quot;&quot;</span>
@@ -220,8 +220,7 @@
 
 <span class="sd">        :example:</span>
 
-<span class="sd">        .. code-block:: python</span>
-<span class="sd">         &quot;Pas d&#39;accès internet&quot;, &quot;Vous devez être connecté à internet pour utiliser l&#39;application&quot;</span>
+<span class="sd">         Pas d&#39;accès internet, &quot;Vous devez être connecté à internet pour utiliser l&#39;application&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 

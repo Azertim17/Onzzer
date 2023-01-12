@@ -1,6 +1,6 @@
 """
 .. module:: youtube_search
-    :platform: Windows
+    :platform: Windows, Unix
     :synopsis: permet d'ecouter un titre gratuitement suite à notre recherche sur Youtube 
 
 .. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
