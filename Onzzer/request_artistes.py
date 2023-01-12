@@ -67,30 +67,41 @@ def get_artiste_name(self, artiste_recherche):
         :raises: TypeError
         
         """
-
+        # convert the input to a string
         recherche = str(artiste_recherche)
+        # remove any leading or trailing whitespace from the string
         traitement1 = recherche.strip()
+        # replace spaces with "%20in%20"
         traitement1 = traitement1.replace(" ", "%20in%20")
+        # replace apostrophes with "%27"
         traitement1 = traitement1.replace("'", "%27")
 
-        
+
+        # create the base url
         url_base = "https://musicbrainz.org/ws/2/artist/?query=artist:"
+        # create the end of the url
         url_fin = "&type:artist&fmt=json"
+        # concatenate the base url, the modified search term and the end of the url
         url_complet = url_base + traitement1 + url_fin
         
+        # make a GET request to the url
         reponse = requests.get(url_complet)
+        # parse the response as json
         contenu = reponse.json()
-                
+             
+        # create an empty dictionary
         dic_artiste_name = {}
         
+        # iterate over the artists in the json response
         for i in contenu ['artists']:
-                
-                nom_artiste = i['name']
-                id_artiste = i['id']
-                
-                dic_artiste_name[id_artiste] = nom_artiste
-            
-            
+            # get the name of the artist
+            nom_artiste = i['name']
+            # get the id of the artist
+            id_artiste = i['id']
+            # add the artist's id and name to the dictionary
+            dic_artiste_name[id_artiste] = nom_artiste
+        
+        # return the dictionary
         return dic_artiste_name
 
 
@@ -108,29 +119,41 @@ def get_artiste_id(self, artiste_recherche):
         
         """
 
+        # convert the input to a string
         recherche = str(artiste_recherche)
+        # remove any leading or trailing whitespace from the string
         traitement1 = recherche.strip()
+        # replace spaces with "%20in%20"
         traitement1 = traitement1.replace(" ", "%20in%20")
+        # replace apostrophes with "%27"
         traitement1 = traitement1.replace("'", "%27")
 
         
+        # create the base url
         url_base = "https://musicbrainz.org/ws/2/artist/?query=artist:"
+        # create the end of the url
         url_fin = "&type:artist&fmt=json"
+        # concatenate the base url, the modified search term and the end of the url
         url_complet = url_base + traitement1 + url_fin
         
+        # make a GET request to the url
         reponse = requests.get(url_complet)
+        # parse the response as json
         contenu = reponse.json()
                 
         dic_artiste_id = {}
         id = 0
         
+        # iterate over the artists in the json response
         for i in contenu ['artists']:
                 
                 id += 1
+                # get the id of the artist
                 id_artiste = i['id']
+                # add the artist's id and name to the dictionary
                 dic_artiste_id[id] = id_artiste
         
-
+        # return the dictionary
         return dic_artiste_id
     
     
