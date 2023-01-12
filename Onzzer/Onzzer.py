@@ -601,43 +601,47 @@ class Fenetre_principale(QMainWindow):
     
     def id_album(self, row, recherche):
         """
+        This function retrieves the album id based on the selected row and search query.
         
-        
-        :param param1: row
-        :type param1: int
-        :returns: number of row
-        :param param2: recherche
-        :type param2: str
-        :returns: listing about singer with same name 
-                
-        :rtype: 
+        :param row: The selected row in the table
+        :type row: int
+        :param recherche: The search query entered by the user
+        :type recherche: str
+        :returns: The album id
+        :rtype: int
         :raises: TypeError
-        
         """
-        
-        self.nom_album = self.table.item(row-1, 1).text()
-        self.artiste = self.table.item(row-1, 0).text()
-        dic = request_albums.get_album_artist_dic(recherche)
-        id = dic[self.artiste]
+        # Get the album name from the table
+        self.nom_album = self.table.item(row-1, 1).text() 
+        # Get the artist name from the table
+        self.artiste = self.table.item(row-1, 0).text() 
+        # Get a dictionary of album/artist based on the search query
+        dic = request_albums.get_album_artist_dic(recherche) 
+        # Get the album id from the dictionary using the artist name
+        id = dic[self.artiste] 
+        # Get a list of track titles for the album
         titres = request_pistes.get_album_titles(id)
-        self.pistes(titres, recherche)
+        # Pass the track titles and search query to the pistes function
+        self.pistes(titres, recherche) 
         
         
-        
+            
     def youtube(self, row, col, recherche):
         """
+        This function searches for a song on YouTube
         
-        
-        :param param1: id_artiste
-        :type param1: str
-        :returns: 
-                
-         
-        :raises: TypeError
-        
+        :param row: the row of the selected song in the table
+        :type row: int
+        :param col: the col of the selected song in the table
+        :type col: int
+        :param recherche: the search term used to find the song
+        :type recherche: str
+        :returns: None
         """
         
+        # get the name of the selected song from the table
         self.nom_piste = self.table.item(row-1, 0).text()
+        # call the YouTube search function with the artist name and song name as the search term
         YS.yt_search(self.artiste, self.nom_piste)
     
      
