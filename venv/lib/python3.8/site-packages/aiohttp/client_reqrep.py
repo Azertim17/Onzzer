@@ -327,8 +327,7 @@ class ClientRequest:
 
     @property
     def connection_key(self) -> ConnectionKey:
-        proxy_headers = self.proxy_headers
-        if proxy_headers:
+        if proxy_headers := self.proxy_headers:
             h: Optional[int] = hash(tuple((k, v) for k, v in proxy_headers.items()))
         else:
             h = None
@@ -392,7 +391,7 @@ class ClientRequest:
         if helpers.is_ipv6_address(netloc):
             netloc = f"[{netloc}]"
         if self.url.port is not None and not self.url.is_default_port():
-            netloc += ":" + str(self.url.port)
+            netloc += f":{str(self.url.port)}"
         self.headers[hdrs.HOST] = netloc
 
         if headers:
@@ -430,10 +429,7 @@ class ClientRequest:
             c.load(self.headers.get(hdrs.COOKIE, ""))
             del self.headers[hdrs.COOKIE]
 
-        if isinstance(cookies, Mapping):
-            iter_cookies = cookies.items()
-        else:
-            iter_cookies = cookies  # type: ignore[assignment]
+        iter_cookies = cookies.items() if isinstance(cookies, Mapping) else cookies
         for name, value in iter_cookies:
             if isinstance(value, Morsel):
                 # Preserve coded_value
@@ -450,8 +446,7 @@ class ClientRequest:
         if data is None:
             return
 
-        enc = self.headers.get(hdrs.CONTENT_ENCODING, "").lower()
-        if enc:
+        if enc := self.headers.get(hdrs.CONTENT_ENCODING, "").lower():
             if self.compress:
                 raise ValueError(
                     "compress can not be set " "if Content-Encoding header is set"
@@ -479,10 +474,10 @@ class ClientRequest:
                     "chunked can not be set " "if Content-Length header is set"
                 )
 
-            self.headers[hdrs.TRANSFER_ENCODING] = "chunked"
-        else:
-            if hdrs.CONTENT_LENGTH not in self.headers:
-                self.headers[hdrs.CONTENT_LENGTH] = str(len(self.body))
+            else:
+                self.headers[hdrs.TRANSFER_ENCODING] = "chunked"
+        elif hdrs.CONTENT_LENGTH not in self.headers:
+            self.headers[hdrs.CONTENT_LENGTH] = str(len(self.body))
 
     def update_auth(self, auth: Optional[BasicAuth]) -> None:
         """Set basic auth."""
@@ -512,14 +507,12 @@ class ClientRequest:
         self.body = body
 
         # enable chunked encoding if needed
-        if not self.chunked:
-            if hdrs.CONTENT_LENGTH not in self.headers:
-                size = body.size
-                if size is None:
-                    self.chunked = True
-                else:
-                    if hdrs.CONTENT_LENGTH not in self.headers:
-                        self.headers[hdrs.CONTENT_LENGTH] = str(size)
+        if not self.chunked and hdrs.CONTENT_LENGTH not in self.headers:
+            size = body.size
+            if size is None:
+                self.chunked = True
+            else:
+                self.headers[hdrs.CONTENT_LENGTH] = str(size)
 
         # copy payload headers
         assert body.headers
@@ -556,10 +549,7 @@ class ClientRequest:
             # keep alive not supported at all
             return False
         if self.version == HttpVersion10:
-            if self.headers.get(hdrs.CONNECTION) == "keep-alive":
-                return True
-            else:  # no headers means we close for Http 1.0
-                return False
+            return self.headers.get(hdrs.CONNECTION) == "keep-alive"
         elif self.headers.get(hdrs.CONNECTION) == "close":
             return False
 
@@ -592,7 +582,7 @@ class ClientRequest:
                 protocol.set_exception(exc)
             else:
                 new_exc = ClientOSError(
-                    exc.errno, "Can not write request body for %s" % self.url
+                    exc.errno, f"Can not write request body for {self.url}"
                 )
                 new_exc.__context__ = exc
                 new_exc.__cause__ = exc
@@ -621,7 +611,7 @@ class ClientRequest:
         else:
             path = self.url.raw_path
             if self.url.raw_query_string:
-                path += "?" + self.url.raw_query_string
+                path += f"?{self.url.raw_query_string}"
 
         protocol = conn.protocol
         assert protocol is not None
@@ -656,9 +646,8 @@ class ClientRequest:
             if self.keep_alive():
                 if self.version == HttpVersion10:
                     connection = "keep-alive"
-            else:
-                if self.version == HttpVersion11:
-                    connection = "close"
+            elif self.version == HttpVersion11:
+                connection = "close"
 
         if connection is not None:
             self.headers[hdrs.CONNECTION] = connection
@@ -812,10 +801,7 @@ class ClientResponse(HeadersMixin):
             self._cleanup_writer()
 
             if self._loop.get_debug():
-                if PY_36:
-                    kwargs = {"source": self}
-                else:
-                    kwargs = {}
+                kwargs = {"source": self} if PY_36 else {}
                 _warnings.warn(f"Unclosed response {self!r}", ResourceWarning, **kwargs)
                 context = {"client_response": self, "message": "Unclosed response"}
                 if self._source_traceback:
@@ -832,9 +818,7 @@ class ClientResponse(HeadersMixin):
         else:
             ascii_encodable_reason = self.reason
         print(
-            "<ClientResponse({}) [{} {}]>".format(
-                ascii_encodable_url, self.status, ascii_encodable_reason
-            ),
+            f"<ClientResponse({ascii_encodable_url}) [{self.status} {ascii_encodable_reason}]>",
             file=out,
         )
         print(self.headers, file=out)
@@ -995,7 +979,7 @@ class ClientResponse(HeadersMixin):
         This is **not** a check for ``200 OK`` but a check that the response
         status is under 400.
         """
-        return 400 > self.status
+        return self.status < 400
 
     def raise_for_status(self) -> None:
         if not self.ok:
@@ -1058,9 +1042,10 @@ class ClientResponse(HeadersMixin):
             except LookupError:
                 encoding = None
         if not encoding:
-            if mimetype.type == "application" and (
-                mimetype.subtype == "json" or mimetype.subtype == "rdap"
-            ):
+            if mimetype.type == "application" and mimetype.subtype in [
+                "json",
+                "rdap",
+            ]:
                 # RFC 7159 states that the default encoding is UTF-8.
                 # RFC 7483 defines application/rdap+json
                 encoding = "utf-8"
@@ -1104,9 +1089,7 @@ class ClientResponse(HeadersMixin):
                 raise ContentTypeError(
                     self.request_info,
                     self.history,
-                    message=(
-                        "Attempt to decode JSON with " "unexpected mimetype: %s" % ctype
-                    ),
+                    message=f"Attempt to decode JSON with unexpected mimetype: {ctype}",
                     headers=self.headers,
                 )
 

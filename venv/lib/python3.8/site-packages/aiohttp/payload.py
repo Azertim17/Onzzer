@@ -179,9 +179,9 @@ class Payload(ABC):
     @property
     def _binary_headers(self) -> bytes:
         return (
-            "".join([k + ": " + v + "\r\n" for k, v in self.headers.items()]).encode(
-                "utf-8"
-            )
+            "".join(
+                [f"{k}: {v}" + "\r\n" for k, v in self.headers.items()]
+            ).encode("utf-8")
             + b"\r\n"
         )
 
@@ -225,16 +225,9 @@ class BytesPayload(Payload):
 
         super().__init__(value, *args, **kwargs)
 
-        if isinstance(value, memoryview):
-            self._size = value.nbytes
-        else:
-            self._size = len(value)
-
+        self._size = value.nbytes if isinstance(value, memoryview) else len(value)
         if self._size > TOO_LARGE_BYTES_BODY:
-            if PY_36:
-                kwargs = {"source": self}
-            else:
-                kwargs = {}
+            kwargs = {"source": self} if PY_36 else {}
             warnings.warn(
                 "Sending a large body directly with raw bytes might"
                 " lock the event loop. You should probably pass an "
@@ -266,7 +259,7 @@ class StringPayload(BytesPayload):
                 real_encoding = mimetype.parameters.get("charset", "utf-8")
         else:
             if content_type is None:
-                content_type = "text/plain; charset=%s" % encoding
+                content_type = f"text/plain; charset={encoding}"
             real_encoding = encoding
 
         super().__init__(
@@ -294,9 +287,12 @@ class IOBasePayload(Payload):
 
         super().__init__(value, *args, **kwargs)
 
-        if self._filename is not None and disposition is not None:
-            if hdrs.CONTENT_DISPOSITION not in self.headers:
-                self.set_content_disposition(disposition, filename=self._filename)
+        if (
+            self._filename is not None
+            and disposition is not None
+            and hdrs.CONTENT_DISPOSITION not in self.headers
+        ):
+            self.set_content_disposition(disposition, filename=self._filename)
 
     async def write(self, writer: AbstractStreamWriter) -> None:
         loop = asyncio.get_event_loop()
@@ -328,9 +324,8 @@ class TextIOPayload(IOBasePayload):
             else:
                 mimetype = parse_mimetype(content_type)
                 encoding = mimetype.parameters.get("charset", "utf-8")
-        else:
-            if content_type is None:
-                content_type = "text/plain; charset=%s" % encoding
+        elif content_type is None:
+            content_type = f"text/plain; charset={encoding}"
 
         super().__init__(
             value,

@@ -120,21 +120,19 @@ class Connection:
         return f"Connection<{self._key}>"
 
     def __del__(self, _warnings: Any = warnings) -> None:
-        if self._protocol is not None:
-            if PY_36:
-                kwargs = {"source": self}
-            else:
-                kwargs = {}
-            _warnings.warn(f"Unclosed connection {self!r}", ResourceWarning, **kwargs)
-            if self._loop.is_closed():
-                return
+        if self._protocol is None:
+            return
+        kwargs = {"source": self} if PY_36 else {}
+        _warnings.warn(f"Unclosed connection {self!r}", ResourceWarning, **kwargs)
+        if self._loop.is_closed():
+            return
 
-            self._connector._release(self._key, self._protocol, should_close=True)
+        self._connector._release(self._key, self._protocol, should_close=True)
 
-            context = {"client_connection": self, "message": "Unclosed connection"}
-            if self._source_traceback is not None:
-                context["source_traceback"] = self._source_traceback
-            self._loop.call_exception_handler(context)
+        context = {"client_connection": self, "message": "Unclosed connection"}
+        if self._source_traceback is not None:
+            context["source_traceback"] = self._source_traceback
+        self._loop.call_exception_handler(context)
 
     @property
     def loop(self) -> asyncio.AbstractEventLoop:
@@ -145,9 +143,7 @@ class Connection:
 
     @property
     def transport(self) -> Optional[asyncio.Transport]:
-        if self._protocol is None:
-            return None
-        return self._protocol.transport
+        return None if self._protocol is None else self._protocol.transport
 
     @property
     def protocol(self) -> Optional[ResponseHandler]:
@@ -227,9 +223,8 @@ class BaseConnector:
                 raise ValueError(
                     "keepalive_timeout cannot " "be set if force_close is True"
                 )
-        else:
-            if keepalive_timeout is sentinel:
-                keepalive_timeout = 15.0
+        elif keepalive_timeout is sentinel:
+            keepalive_timeout = 15.0
 
         loop = get_running_loop(loop)
 
@@ -274,10 +269,7 @@ class BaseConnector:
 
         self._close()
 
-        if PY_36:
-            kwargs = {"source": self}
-        else:
-            kwargs = {}
+        kwargs = {"source": self} if PY_36 else {}
         _warnings.warn(f"Unclosed connector {self!r}", ResourceWarning, **kwargs)
         context = {
             "connector": self,
@@ -512,11 +504,8 @@ class BaseConnector:
                 if key in self._waiters:
                     # remove a waiter even if it was cancelled, normally it's
                     #  removed when it's notified
-                    try:
+                    with suppress(ValueError):
                         self._waiters[key].remove(fut)
-                    except ValueError:  # fut may no longer be in list
-                        pass
-
                 raise e
             finally:
                 if key in self._waiters and not self._waiters[key]:
@@ -555,16 +544,15 @@ class BaseConnector:
             if traces:
                 for trace in traces:
                     await trace.send_connection_create_end()
-        else:
-            if traces:
-                # Acquire the connection to prevent race conditions with limits
-                placeholder = cast(ResponseHandler, _TransportPlaceholder())
-                self._acquired.add(placeholder)
-                self._acquired_per_host[key].add(placeholder)
-                for trace in traces:
-                    await trace.send_connection_reuseconn()
-                self._acquired.remove(placeholder)
-                self._drop_acquired_per_host(key, placeholder)
+        elif traces:
+            # Acquire the connection to prevent race conditions with limits
+            placeholder = cast(ResponseHandler, _TransportPlaceholder())
+            self._acquired.add(placeholder)
+            self._acquired_per_host[key].add(placeholder)
+            for trace in traces:
+                await trace.send_connection_reuseconn()
+            self._acquired.remove(placeholder)
+            self._drop_acquired_per_host(key, placeholder)
 
         self._acquired.add(proto)
         self._acquired_per_host[key].add(proto)
@@ -907,23 +895,22 @@ class TCPConnector(BaseConnector):
     def _make_ssl_context(verified: bool) -> SSLContext:
         if verified:
             return ssl.create_default_context()
-        else:
-            sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-            sslcontext.options |= ssl.OP_NO_SSLv2
-            sslcontext.options |= ssl.OP_NO_SSLv3
-            sslcontext.check_hostname = False
-            sslcontext.verify_mode = ssl.CERT_NONE
-            try:
-                sslcontext.options |= ssl.OP_NO_COMPRESSION
-            except AttributeError as attr_err:
-                warnings.warn(
-                    "{!s}: The Python interpreter is compiled "
-                    "against OpenSSL < 1.0.0. Ref: "
-                    "https://docs.python.org/3/library/ssl.html"
-                    "#ssl.OP_NO_COMPRESSION".format(attr_err),
-                )
-            sslcontext.set_default_verify_paths()
-            return sslcontext
+        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        sslcontext.options |= ssl.OP_NO_SSLv2
+        sslcontext.options |= ssl.OP_NO_SSLv3
+        sslcontext.check_hostname = False
+        sslcontext.verify_mode = ssl.CERT_NONE
+        try:
+            sslcontext.options |= ssl.OP_NO_COMPRESSION
+        except AttributeError as attr_err:
+            warnings.warn(
+                "{!s}: The Python interpreter is compiled "
+                "against OpenSSL < 1.0.0. Ref: "
+                "https://docs.python.org/3/library/ssl.html"
+                "#ssl.OP_NO_COMPRESSION".format(attr_err),
+            )
+        sslcontext.set_default_verify_paths()
+        return sslcontext
 
     def _get_ssl_context(self, req: "ClientRequest") -> Optional[SSLContext]:
         """Logic to get the correct SSL context
@@ -939,33 +926,30 @@ class TCPConnector(BaseConnector):
             3. if verify_ssl is False in req, generate a SSL context that
                won't verify
         """
-        if req.is_ssl():
-            if ssl is None:  # pragma: no cover
-                raise RuntimeError("SSL is not supported.")
-            sslcontext = req.ssl
-            if isinstance(sslcontext, ssl.SSLContext):
-                return sslcontext
-            if sslcontext is not None:
-                # not verified or fingerprinted
-                return self._make_ssl_context(False)
-            sslcontext = self._ssl
-            if isinstance(sslcontext, ssl.SSLContext):
-                return sslcontext
-            if sslcontext is not None:
-                # not verified or fingerprinted
-                return self._make_ssl_context(False)
-            return self._make_ssl_context(True)
-        else:
+        if not req.is_ssl():
             return None
+        if ssl is None:  # pragma: no cover
+            raise RuntimeError("SSL is not supported.")
+        sslcontext = req.ssl
+        if isinstance(sslcontext, ssl.SSLContext):
+            return sslcontext
+        if sslcontext is not None:
+            # not verified or fingerprinted
+            return self._make_ssl_context(False)
+        sslcontext = self._ssl
+        if isinstance(sslcontext, ssl.SSLContext):
+            return sslcontext
+        if sslcontext is not None:
+            # not verified or fingerprinted
+            return self._make_ssl_context(False)
+        return self._make_ssl_context(True)
 
     def _get_fingerprint(self, req: "ClientRequest") -> Optional["Fingerprint"]:
         ret = req.ssl
         if isinstance(ret, Fingerprint):
             return ret
         ret = self._ssl
-        if isinstance(ret, Fingerprint):
-            return ret
-        return None
+        return ret if isinstance(ret, Fingerprint) else None
 
     async def _wrap_create_connection(
         self,
@@ -1211,9 +1195,7 @@ class TCPConnector(BaseConnector):
         self._fail_on_no_start_tls(req)
         runtime_has_start_tls = self._loop_supports_start_tls()
 
-        headers: Dict[str, str] = {}
-        if req.proxy_headers is not None:
-            headers = req.proxy_headers  # type: ignore[assignment]
+        headers = req.proxy_headers if req.proxy_headers is not None else {}
         headers[hdrs.HOST] = req.headers[hdrs.HOST]
 
         url = req.proxy

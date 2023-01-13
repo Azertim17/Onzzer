@@ -30,7 +30,7 @@ def tcp_nodelay(transport: asyncio.Transport, value: bool) -> None:
     if sock.family not in (socket.AF_INET, socket.AF_INET6):
         return
 
-    value = bool(value)
+    value = value
 
     # socket may be closed already, on windows OSError get raised
     with suppress(OSError):

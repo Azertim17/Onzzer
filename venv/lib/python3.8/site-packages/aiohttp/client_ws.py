@@ -171,11 +171,30 @@ class ClientWebSocketResponse:
             self._reader.feed_data(WS_CLOSING_MESSAGE, 0)
             await self._waiting
 
-        if not self._closed:
-            self._cancel_heartbeat()
-            self._closed = True
+        if self._closed:
+            return False
+        self._cancel_heartbeat()
+        self._closed = True
+        try:
+            await self._writer.close(code, message)
+        except asyncio.CancelledError:
+            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+            self._response.close()
+            raise
+        except Exception as exc:
+            self._close_code = WSCloseCode.ABNORMAL_CLOSURE
+            self._exception = exc
+            self._response.close()
+            return True
+
+        if self._closing:
+            self._response.close()
+            return True
+
+        while True:
             try:
-                await self._writer.close(code, message)
+                async with async_timeout.timeout(self._timeout):
+                    msg = await self._reader.read()
             except asyncio.CancelledError:
                 self._close_code = WSCloseCode.ABNORMAL_CLOSURE
                 self._response.close()
@@ -186,30 +205,10 @@ class ClientWebSocketResponse:
                 self._response.close()
                 return True
 
-            if self._closing:
+            if msg.type == WSMsgType.CLOSE:
+                self._close_code = msg.data
                 self._response.close()
                 return True
-
-            while True:
-                try:
-                    async with async_timeout.timeout(self._timeout):
-                        msg = await self._reader.read()
-                except asyncio.CancelledError:
-                    self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-                    self._response.close()
-                    raise
-                except Exception as exc:
-                    self._close_code = WSCloseCode.ABNORMAL_CLOSURE
-                    self._exception = exc
-                    self._response.close()
-                    return True
-
-                if msg.type == WSMsgType.CLOSE:
-                    self._close_code = msg.data
-                    self._response.close()
-                    return True
-        else:
-            return False
 
     async def receive(self, timeout: Optional[float] = None) -> WSMessage:
         while True:
