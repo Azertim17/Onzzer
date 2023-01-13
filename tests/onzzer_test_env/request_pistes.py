@@ -1,28 +1,70 @@
+"""
+.. module:: request_pistes
+    :platform: Windows, Unix
+    :synopsis: request_albums recherche album
+
+.. moduleauthor:: Matthieu Brissonnet <matthieu.brissonnet@etu.univ-poitiers.fr>, Tim Mazzoloni <tim.mazzolini@etu.univ-poitiers.fr>, Baptiste Tarte <baptiste.tarte@etu.univ-poitiers.fr>, Eliot Monneau <elio.moneau@etu.univ-poitiers.fr>
+
+"""
+
 import json
 import requests
 import request_albums
 
 
-def get_pistes_album(album_id):
 
-    recherche = str(album_id)
-    traitement1 = recherche.strip()
-    traitement1 = traitement1.replace(" ", "%20in%20")
-    traitement1 = traitement1.replace("'", "%27")
-      
-    url_base = "https://musicbrainz.org/ws/2/release/"
-    url_fin = "?inc=artist-credits+labels+discids+recordings&fmt=json"
-    url_complet = url_base + traitement1 + url_fin
+def get_album_titles(album_id):
+    """
+        This code searches album by id and returns a list of song titles using MusicBrainz web service.
         
-    reponse = requests.get(url_complet)
-    contenu = reponse.json()
+        :param param1: album_id
+        :type param1: str
+        :returns: liste list
+        
+        :rtype:  
+        :raises: TypeError
+        
+     """
 
-    liste_titres = []
-    for i in contenu ['media'][0]['tracks'] :
+    # Removes leading and trailing whitespace from the "album_id" variable and replaces spaces and single quotes with the appropriate encoding
+    album_id = album_id.strip().replace(" ", "%20in%20").replace("'", "%27")
+    # Constructs the final search URL using f-strings
+    url = f"https://musicbrainz.org/ws/2/release/{album_id}?inc=artist-credits+labels+discids+recordings&fmt=json"
+    # Make a request to the MusicBrainz server using the constructed URL
+    response = requests.get(url)
+    # Get the response in json format
+    content = response.json()
+    # Extract the song title using list comprehension
+    return [i['title'] for i in content['media'][0]['tracks']]
+
+
+
+
+
+
+# def get_album_pays(album_id):
+#     """
         
         
-        titre = i['title']
-        liste_titres.append(titre)
+#         :param param1: album_id
+#         :type param1: str
+#         :returns: liste list
         
-    return liste_titres
+#         :rtype:  
+#         :raises: TypeError
+        
+#         """
+        
+#     album_id = album_id.strip().replace(" ", "%20in%20").replace("'", "\'")
+#     # Constructs the final search URL using f-strings
+#     url = f"https://musicbrainz.org/ws/2/release/{album_id}?inc=artist-credits+labels+discids+recordings&fmt=json"
+#     # Make a request to the MusicBrainz server using the constructed URL
+#     response = requests.get(url)
+#     # Get the response in json format
+#     content = response.json()
+#     # Extract the song title using list comprehension
+#     return [i['title'] for i in content['media'][0]['tracks']]
+
+
+
 

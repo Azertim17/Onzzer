@@ -203,10 +203,15 @@ class Fenetre_principale(QMainWindow):
             elif select == "Artiste" :
                 self.recherche_artiste(self.line.text())
         """
+        # Get the current selected text from the category combo box
         select = self.catcombo.currentText()
+        # Check if the selected text is "Album"
         if select == "Album":
+            # If so, call the recherche_album function with the text from the line edit widget
             self.recherche_album(self.line.text())
+        # Check if the selected text is "Artiste"
         elif select == "Artiste" :
+            # If so, call the recherche_artiste function with the text from the line edit widget
             self.recherche_artiste(self.line.text())
     
 
@@ -281,43 +286,39 @@ class Fenetre_principale(QMainWindow):
 
     def recherche_artiste(self, recherche):
         """
-        Code of the table grouping the artists bearing the name sought
+        This function searches for artists with the given name and displays the information in a table.
 
-        He has got a button to retourn in Acceuil and made a new research. 
-
-        She calls and recover the information returned by the request_artist function 
-        She builds with this informations the table.
-
-        :param param1: recherche
-        :type param1: str 
-        :returns: list all artist with same name and their type 
-        :rtype: tab
+        :param recherche: The name of the artist to search for
+        :type recherche: str
+        :returns: A table with the names and designations of all artists with the given name
+        :rtype: QTableWidget
         :raises: TypeError
-        :exemple:
+
         .. code-block:: python
 
-            recherche_artiste = recherche_artiste(self, "celine dion")
-        
+            recherche_artiste(self, "celine dion")
+    
         .. figure:: docs/source/_static/celine_dion.jpeg
             :scale: 200
-            
-            résultat de la receherche céline Dion
 
-
-
-        """        
+            The result of the search for artist "Celine Dion"
+        """      
         self.dic_type = request_artistes.get_artist_id_type(recherche)
         self.dic_name = request_artistes.get_artist_name(recherche)
-        
-        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
+
+        #create an image and scale it to a specific size
+        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" )
         image = image1.scaled(255, 68)
+        #create a button for new search
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         searchButton.clicked.connect(self.accueil)
-        
+
+        #create a widget for the artist
         self.wid_artiste = QWidget()
         self.wid_artiste.setStyleSheet("background-color: #202124")
 
+        #create a widget for buttons
         wid_bouttons = QWidget()
         vbox = QVBoxLayout()
         bouttonshbox = QHBoxLayout()
@@ -329,64 +330,58 @@ class Fenetre_principale(QMainWindow):
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_artiste)
-        
+
+        #set the image in the label
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-  
+
+        # set the layout of the artist widget
         self.wid_artiste.setLayout(vbox)
+        # add the table widget to the layout
         vbox.addWidget(self.table)
 
+        # set the layout of the button widget
         wid_bouttons.setLayout(bouttonshbox)
-        
+        # add the search button to the button layout
         bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
-        
+        # add the button widget to the main layout
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
-        
+
+        # set the headers for the table
         headerH = ["Nom Artiste","Désignation","Voir la discrographie"]
         self.table.setHorizontalHeaderLabels(headerH)
-        
+
+        # set the resize mode for the table headers
         header =self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)  
 
+        # prevent editing of the table cells
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
-        
-        #set the value of each key in the dic_name dictionary as the item in the first column of the table
-        row = 0
-        for i in self.dic_name:
-            row += 1
+
+        # populate the table with data from the dictionaries
+        for row, i in enumerate(self.dic_name, start=1):
             self.table.setItem(row-1,0, QTableWidgetItem(self.dic_name[i]))
-        #set the value of each key in the dic_type dictionary as the item in the second column of the table
-        row = 0  
-        for i in self.dic_type:             
-            row += 1
+        for row, i in enumerate(self.dic_type, start=1):         
             self.table.setItem(row-1,1, QTableWidgetItem(self.dic_type[i]))
-        #create a "voir" button for each row and set it as the widget in the third column
-        #connect the button to the id_artiste function with the current row, column, and recherche as arguments              
-        row = 0
-        for i in range(0,25):             
-            row += 1
+        # add a "voir" button to each row of the table
+        for row, _ in enumerate(range(25), start=1):
             selectButton = QPushButton("voir")
             selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
             self.table.setCellWidget(row-1,2,selectButton)
-            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_artiste(r, c, recherche)) 
+            selectButton.clicked.connect(lambda _, r=row, c=3: self.id_artiste(r, c, recherche))
     
     
     def id_artiste(self, row, column, recherche):
         """
-        Give the number of line if I click in the row. Get back the id_artist 
-
-        :param param1: recherche
-        :type param1: str 
-        :returns: list all artist with same name and their type
-        :param param2: row
-        :type param2: int
-        :returns: number of line if I click
-        :
-
-        
-        :rtype: listing about singer with same name 
-        :raises: TypeError
+        This function retrieves the number of the row when clicked, and retrieves the artist ID from the request_artistes module using the user's input.
+        :param recherche: The user's input string
+        :type recherche: str 
+        :returns: A list of all artists with the same name and their types
+        :param row: The number of the row that was clicked
+        :type row: int
+        :returns: The number of the row that was clicked
+        :rtype: listing of artists with the same name
+        :raises: TypeError if any input is of the wrong type
         """
         # Store the text of the item in the first column of the table at the current row
         self.artiste = self.table.item(row-1, 0).text()        
@@ -404,38 +399,37 @@ class Fenetre_principale(QMainWindow):
   
     def discographie(self, id_artiste):
         """
-        print discography corresponding at id_artiste
+        Display the discography corresponding to the given artist ID
         
-        :param param1: id_artiste
-        :type param1: str
-        :returns:  
-                
-        :rtype: 
-        :raises: TypeError
+        :param id_artiste: The ID of the artist whose discography should be displayed
+        :type id_artiste: str
+        :returns: None
+        :rtype: None
+        :raises: TypeError if id_artiste is not a string
         
         """
         # Create an image object from an image file and scale it to a specific size
-        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
+        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" )
         image = image1.scaled(255, 68)
 
         # Create a button with the text "Nouvelle recherche" and set its style and connect it to the accueil method
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         searchButton.clicked.connect(self.accueil)
-        
+
         # Create a widget and set its background color
         self.wid_discographie = QWidget()
         self.wid_discographie.setStyleSheet("background-color: #202124")
-        
+
         # Retrieve the list of albums for the current artist from the request_albums module
         self.liste_albums = request_albums.get_discographie(id_artiste)
 
-        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
+        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" )
         image = image1.scaled(255, 68)
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         searchButton.clicked.connect(self.accueil)
-         
+
         self.wid_discographie = QWidget()
         self.wid_discographie.setStyleSheet("background-color: #202124")
 
@@ -453,105 +447,105 @@ class Fenetre_principale(QMainWindow):
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_discographie)
-        
+
+        # Set the image to be displayed in the box_image QLabel using the image QPixmap object
         box_image.setPixmap(image)
+        # Add the box_image widget to the vbox layout with alignment set to the right
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-   
+
+        # Set the layout for the wid_discographie widget to be the vbox layout
         self.wid_discographie.setLayout(vbox)
+        # Add the table widget to the vbox layout
         vbox.addWidget(self.table)
 
+        # Set the layout for the wid_bouttons widget to be the bouttonshbox layout
         wid_bouttons.setLayout(bouttonshbox)
-         
+
+        # Add the searchButton widget to the bouttonshbox layout with alignment set to the left
         bouttonshbox.addWidget(searchButton, alignment=Qt.AlignLeft)
-         
+
+        # Add the wid_bouttons widget to the vbox layout with alignment set to the left
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
-         
+
+        # Set the horizontal header labels for the table to "Titre Album" and "Voir les Pistes"
         headerH = ["Titre Album","Voir les Pistes"]
         self.table.setHorizontalHeaderLabels(headerH)
+        # Get the horizontal header of the table and set its section resize mode to resize to contents
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        # Disable editing of the table items
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-         
-         
-        row = 0
-        for i in self.liste_albums:
-             row += 1
-             self.table.setItem(row-1,0, QTableWidgetItem(i))
-             
-       
-        row = 0
-        for i in range(0,25):             
-             row += 1
-             
-             selectButton = QPushButton("voir")
-             selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
-             self.table.setCellWidget(row-1,1,selectButton)
-             selectButton.clicked.connect(lambda _, r=row, c=3: self.get_pistes_by_album(r, c, id_artiste)) 
+
+
+        # Iterate through the list of albums and for each one, add a new row to the table and set the item in the first column to be the album title
+        for row, i in enumerate(self.liste_albums, start=1):
+            self.table.setItem(row-1,0, QTableWidgetItem(i))
+
+
+        # Iterate through 25 rows and for each one, add a "voir" button with an icon to the second column of the table
+        # Also connect the button to the get_pistes_by_album method, passing in the current row, column and id_artiste as arguments
+        for row, _ in enumerate(range(25), start=1):
+            selectButton = QPushButton("voir")
+            selectButton.setIcon(QIcon(Fenetre_principale.newPath + "\go-last.png"))
+            self.table.setCellWidget(row-1,1,selectButton)
+            selectButton.clicked.connect(lambda _, r=row, c=3: self.get_pistes_by_album(r, c, id_artiste)) 
     
     
     def get_pistes_by_album(self,row ,column, id_artiste):
         """
+        Retrieve the album tracks for the selected album and artist.
         
-        
-        :param param1: row
-        :type param1: str
-        :returns: 
-        :param param2: row
-        :type param2: str
-        :returns:
-                
-        :rtype: listing about singer with same name 
-        :raises: TypeError
-        
+        :param row: The row number of the selected album in the table.
+        :type row: int
+        :param column: The column number of the selected album in the table.
+        :type column: int
+        :param id_artiste: The ID of the selected artist.
+        :type id_artiste: str
+        :returns: None
+        :rtype: None
         """
-        
+        # Retrieve the dictionary of album IDs for the current artist from the request_albums module
         dic_album_id = request_albums.get_discographie(id_artiste)
+        # Store the text of the item in the first column of the table at the current row
         self.nom_album = self.table.item(row-1, 0).text()
+        # Retrieve the album ID for the current row from the dictionary
         album_id = dic_album_id[self.nom_album]
+        # Retrieve the list of album tracks for the current album from the request_pistes module
         titres = request_pistes.get_album_titles(album_id)
+        # Call the pistes function with the current album tracks
         self.pistes(titres, id_artiste)
-        
-
-
-        
-    
-
         
         
     def pistes(self, titres, recherche):
         """
-        
-        
-        :param param1: titres
-        :type param1: str
-        :returns: 
-        :param param2: recherche 
-        :type param2: str
-        :returns:       
-        :rtype: 
-        :raises: TypeError
+
         
         """
-        
-        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" ) 
+        # Create a QPixmap of the logo image and scale it to the desired size
+        image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" )
         image = image1.scaled(255, 68)
+        
+        # Create a "New Search" button that, when clicked, will call the accueil function
         searchButton = QPushButton("Nouvelle recherche")
         searchButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         searchButton.clicked.connect(self.accueil)
+        
+        # Create a "Return to List" button that, when clicked, will call either the discographie or recherche_album function
         returnButton = QPushButton("Retour liste")
         returnButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
-        
-        
+
+        # Check the length of the search string to determine which function to call
         if len(recherche) == 36:
             returnButton.clicked.connect(lambda : self.discographie(recherche))
         else :
             returnButton.clicked.connect(lambda : self.recherche_album(recherche))
-            
-            
+
+        # Create an "Upload" button that, when clicked, will call the action_upload function with the list of track titles as an argument
         uploadButton = QPushButton("Enregistrer")
         uploadButton.setStyleSheet("background-color: #E79E41; border-style: outset; border-width: 1px; width: 150px; height: 20px;")
         uploadButton.clicked.connect(lambda : self.action_upload(titres))
-        
+
+        # Create the main widget for the window and set its background color
         self.wid_pistes = QWidget()
         self.wid_pistes.setStyleSheet("background-color: #202124")
 
@@ -564,13 +558,13 @@ class Fenetre_principale(QMainWindow):
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_pistes)
-        
+
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
-  
+
         self.wid_pistes.setLayout(vbox)
         vbox.addWidget(self.table)
-        
+
         wid_bouttons.setLayout(bouttonshbox)
         bouttonshbox.addWidget(searchButton)
         bouttonshbox.addWidget(returnButton)
@@ -581,19 +575,17 @@ class Fenetre_principale(QMainWindow):
 
         headerH = ["Titres de l'Album","Ouvrir youtube"]
         self.table.setHorizontalHeaderLabels(headerH)
-        
+
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)  
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
+
         nb_rows = len(titres)
         self.table.setRowCount(nb_rows)
 
-        row = 0
-        for i in titres:
-            row += 1
+        for row, i in enumerate(titres, start=1):
             self.table.setItem(row-1,0, QTableWidgetItem(i))
-            
+
             ytButton = QPushButton(QIcon(Fenetre_principale.newPath + "\youtube.jpg"),"")
             self.table.setCellWidget(row-1, 1, ytButton)
             ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 
@@ -679,20 +671,25 @@ class Fenetre_principale(QMainWindow):
         """
         
         # create the file name
-        nom_base = self.nom_album + (" - ") + self.artiste + (".txt")
+        nom_base = f"{self.nom_album} - {self.artiste}.txt"
 
         # open a file dialog to choose where to save the file
         file_path, _ = QFileDialog.getSaveFileName(self, "Save File", nom_base, "Text Files (*.txt)")
 
         # write the track list to the file
         with open(file_path, "w") as fichier:
-            fichier.write("Liste de chansons de l'album " + self.nom_album + " de l'artiste " + self.artiste + "\n")
+            fichier.write(
+                f"Liste de chansons de l'album {self.nom_album} de l'artiste {self.artiste}"
+                + "\n"
+            )
             for i in titres:
                 fichier.write("\n->" + i)
 
         # get the file name and show a message box with the file name
         filename = QFileInfo(file_path).fileName()
-        QMessageBox.information(self, "Et voilà", "Fichier écrit avec le nom " + filename)
+        QMessageBox.information(
+            self, "Et voilà", f"Fichier écrit avec le nom {filename}"
+        )
 
      
 
