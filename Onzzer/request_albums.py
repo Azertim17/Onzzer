@@ -131,14 +131,7 @@ def get_album_name(album_name):
     response = requests.get(url)
     # Get the response in json format
     content = response.json()
-    # Initialize an empty list
-    list_albums = []
-    #iterate over the albums in the json response
-    for i in content["release-groups"]:
-        #append the album name to the list
-        list_albums.append(i['releases'][0]['title'])
-    #return the list of album names
-    return list_albums
+    return [i['releases'][0]['title'] for i in content["release-groups"]]
 
 
 
@@ -199,45 +192,28 @@ def get_artist_list(album_name):
     response = requests.get(url)
     # Get the response in json format
     content = response.json()
-    # Initialize an empty list
-    artist_list = []
-    #iterate over the albums in the json response
-    for i in content["release-groups"]:
-        #append the artist name to the list
-        artist_list.append(i['artist-credit'][0]['artist']['name'])
-    #return the list of artist names
-    return artist_list
+    return [
+        i['artist-credit'][0]['artist']['name']
+        for i in content["release-groups"]
+    ]
 
 
 
 def get_discographie(id_artiste):
-        """
+    """
         This function lists all the albums of a singer using their MusicBrainz ID.
         :param id_artiste: MusicBrainz ID of the artist
         :type id_artiste: str
         :returns: list of all singer's albums
         :rtype: dict
         """
-        url_base = "https://musicbrainz.org/ws/2/artist/"
-        url_fin = "?inc=releases&fmt=json"
-        url_complet = url_base + id_artiste + url_fin
-        
-        # Send a GET request to the MusicBrainz API using the complete URL
-        response = requests.get(url_complet)
-        # Parse the JSON response
-        content = response.json()
+    url_fin = "?inc=releases&fmt=json"
+    url_complet = f"https://musicbrainz.org/ws/2/artist/{id_artiste}{url_fin}"
 
-        # Initialize an empty dictionary to store the album name and its MusicBrainz ID
-        album_list = {}
+    # Send a GET request to the MusicBrainz API using the complete URL
+    response = requests.get(url_complet)
+    # Parse the JSON response
+    content = response.json()
 
-        # Iterate over the list of releases in the response
-        for release in content["releases"]:
-        # Get the title of the release (i.e. the album name)
-                album_name = release['title']
-                # Get the MusicBrainz ID of the release (i.e. the album)
-                album_id = release['id']
-                # Add the album name and its ID to the dictionary
-                album_list[album_name] = album_id
-        # Return the dictionary
-        return album_list
+    return {release['title']: release['id'] for release in content["releases"]}
 

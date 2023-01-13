@@ -154,9 +154,7 @@ class HeadersParser:
                 raise InvalidHeader(bname)
             if len(bname) > self.max_field_size:
                 raise LineTooLong(
-                    "request header name {}".format(
-                        bname.decode("utf8", "xmlcharrefreplace")
-                    ),
+                    f'request header name {bname.decode("utf8", "xmlcharrefreplace")}',
                     str(self.max_field_size),
                     str(len(bname)),
                 )
@@ -167,18 +165,13 @@ class HeadersParser:
             lines_idx += 1
             line = lines[lines_idx]
 
-            # consume continuation lines
-            continuation = line and line[0] in (32, 9)  # (' ', '\t')
-
-            if continuation:
+            if continuation := line and line[0] in (32, 9):
                 bvalue_lst = [bvalue]
                 while continuation:
                     header_length += len(line)
                     if header_length > self.max_field_size:
                         raise LineTooLong(
-                            "request header field {}".format(
-                                bname.decode("utf8", "xmlcharrefreplace")
-                            ),
+                            f'request header field {bname.decode("utf8", "xmlcharrefreplace")}',
                             str(self.max_field_size),
                             str(header_length),
                         )
@@ -194,15 +187,12 @@ class HeadersParser:
                         line = b""
                         break
                 bvalue = b"".join(bvalue_lst)
-            else:
-                if header_length > self.max_field_size:
-                    raise LineTooLong(
-                        "request header field {}".format(
-                            bname.decode("utf8", "xmlcharrefreplace")
-                        ),
-                        str(self.max_field_size),
-                        str(header_length),
-                    )
+            elif header_length > self.max_field_size:
+                raise LineTooLong(
+                    f'request header field {bname.decode("utf8", "xmlcharrefreplace")}',
+                    str(self.max_field_size),
+                    str(header_length),
+                )
 
             bvalue = bvalue.strip()
             name = bname.decode("utf-8", "surrogateescape")
@@ -447,11 +437,7 @@ class HttpParser(abc.ABC, Generic[_MsgT]):
             else:
                 break
 
-        if data and start_pos < data_len:
-            data = data[start_pos:]
-        else:
-            data = EMPTY
-
+        data = data[start_pos:] if data and start_pos < data_len else EMPTY
         return messages, self._upgraded, data
 
     def parse_headers(
@@ -470,9 +456,7 @@ class HttpParser(abc.ABC, Generic[_MsgT]):
         upgrade = False
         chunked = False
 
-        # keep-alive
-        conn = headers.get(hdrs.CONNECTION)
-        if conn:
+        if conn := headers.get(hdrs.CONNECTION):
             v = conn.lower()
             if v == "close":
                 close_conn = True
@@ -481,9 +465,7 @@ class HttpParser(abc.ABC, Generic[_MsgT]):
             elif v == "upgrade":
                 upgrade = True
 
-        # encoding
-        enc = headers.get(hdrs.CONTENT_ENCODING)
-        if enc:
+        if enc := headers.get(hdrs.CONTENT_ENCODING):
             enc = enc.lower()
             if enc in ("gzip", "deflate", "br"):
                 encoding = enc
@@ -491,7 +473,7 @@ class HttpParser(abc.ABC, Generic[_MsgT]):
         # chunking
         te = headers.get(hdrs.TRANSFER_ENCODING)
         if te is not None:
-            if "chunked" == te.lower():
+            if te.lower() == "chunked":
                 chunked = True
             else:
                 raise BadHttpMessage("Request has invalid `Transfer-Encoding`")
@@ -538,11 +520,10 @@ class HttpRequestParser(HttpParser[RawRequestMessage]):
 
         # version
         try:
-            if version.startswith("HTTP/"):
-                n1, n2 = version[5:].split(".", 1)
-                version_o = HttpVersion(int(n1), int(n2))
-            else:
+            if not version.startswith("HTTP/"):
                 raise BadStatusLine(version)
+            n1, n2 = version[5:].split(".", 1)
+            version_o = HttpVersion(int(n1), int(n2))
         except Exception:
             raise BadStatusLine(version)
 
@@ -582,11 +563,7 @@ class HttpRequestParser(HttpParser[RawRequestMessage]):
         ) = self.parse_headers(lines)
 
         if close is None:  # then the headers weren't set in the request
-            if version_o <= HttpVersion10:  # HTTP 1.0 must asks to not close
-                close = True
-            else:  # HTTP 1.1 must ask to close.
-                close = False
-
+            close = version_o <= HttpVersion10
         return RawRequestMessage(
             method,
             path,
@@ -710,16 +687,15 @@ class HttpPayloadParser:
             if self._length == 0:
                 real_payload.feed_eof()
                 self.done = True
-        else:
-            if readall and code != 204:
-                self._type = ParseState.PARSE_UNTIL_EOF
-            elif method in ("PUT", "POST"):
-                internal_logger.warning(  # pragma: no cover
-                    "Content-Length or Transfer-Encoding header is required"
-                )
-                self._type = ParseState.PARSE_NONE
-                real_payload.feed_eof()
-                self.done = True
+        elif readall and code != 204:
+            self._type = ParseState.PARSE_UNTIL_EOF
+        elif method in ("PUT", "POST"):
+            internal_logger.warning(  # pragma: no cover
+                "Content-Length or Transfer-Encoding header is required"
+            )
+            self._type = ParseState.PARSE_NONE
+            real_payload.feed_eof()
+            self.done = True
 
         self.payload = real_payload
 
@@ -755,7 +731,6 @@ class HttpPayloadParser:
                 self.payload.feed_eof()
                 return True, chunk[required:]
 
-        # Chunked transfer encoding parser
         elif self._type == ParseState.PARSE_CHUNKED:
             if self._chunk_tail:
                 chunk = self._chunk_tail + chunk
@@ -768,11 +743,7 @@ class HttpPayloadParser:
                     pos = chunk.find(SEP)
                     if pos >= 0:
                         i = chunk.find(CHUNK_EXT, 0, pos)
-                        if i >= 0:
-                            size_b = chunk[:i]  # strip chunk-extensions
-                        else:
-                            size_b = chunk[:pos]
-
+                        size_b = chunk[:i] if i >= 0 else chunk[:pos]
                         try:
                             size = int(bytes(size_b), 16)
                         except ValueError:
@@ -809,7 +780,6 @@ class HttpPayloadParser:
                         self._chunk = ChunkState.PARSE_CHUNKED_CHUNK_EOF
                         self.payload.end_http_chunk_receiving()
 
-                # toss the CRLF at the end of the chunk
                 if self._chunk == ChunkState.PARSE_CHUNKED_CHUNK_EOF:
                     if chunk[:2] == SEP:
                         chunk = chunk[2:]
@@ -850,7 +820,6 @@ class HttpPayloadParser:
                         self._chunk_tail = chunk
                         return False, b""
 
-        # Read all bytes until eof
         elif self._type == ParseState.PARSE_UNTIL_EOF:
             self.payload.feed_data(chunk, len(chunk))
 
@@ -875,6 +844,8 @@ class DeflateBuffer:
                     "Please install `Brotli`"
                 )
 
+
+
             class BrotliDecoder:
                 # Supports both 'brotlipy' and 'Brotli' packages
                 # since they share an import name. The top branches
@@ -888,9 +859,8 @@ class DeflateBuffer:
                     return cast(bytes, self._obj.process(data))
 
                 def flush(self) -> bytes:
-                    if hasattr(self._obj, "flush"):
-                        return cast(bytes, self._obj.flush())
-                    return b""
+                    return cast(bytes, self._obj.flush()) if hasattr(self._obj, "flush") else b""
+
 
             self.decompressor = BrotliDecoder()
         else:
@@ -921,9 +891,7 @@ class DeflateBuffer:
         try:
             chunk = self.decompressor.decompress(chunk)
         except Exception:
-            raise ContentEncodingError(
-                "Can not decode content-encoding: %s" % self.encoding
-            )
+            raise ContentEncodingError(f"Can not decode content-encoding: {self.encoding}")
 
         self._started_decoding = True
 
@@ -952,7 +920,7 @@ HttpResponseParserPy = HttpResponseParser
 RawRequestMessagePy = RawRequestMessage
 RawResponseMessagePy = RawResponseMessage
 
-try:
+with suppress(ImportError):
     if not NO_EXTENSIONS:
         from ._http_parser import (  # type: ignore[import,no-redef]
             HttpRequestParser,
@@ -965,5 +933,3 @@ try:
         HttpResponseParserC = HttpResponseParser
         RawRequestMessageC = RawRequestMessage
         RawResponseMessageC = RawResponseMessage
-except ImportError:  # pragma: no cover
-    pass

@@ -192,7 +192,7 @@ class RequestHandler(BaseProtocol):
         self._keepalive_time = 0.0
         self._keepalive_handle: Optional[asyncio.Handle] = None
         self._keepalive_timeout = keepalive_timeout
-        self._lingering_time = float(lingering_time)
+        self._lingering_time = lingering_time
 
         self._messages: Deque[_MsgType] = deque()
         self._message_tail = b""
@@ -227,10 +227,7 @@ class RequestHandler(BaseProtocol):
         self._force_close = False
 
     def __repr__(self) -> str:
-        return "<{} {}>".format(
-            self.__class__.__name__,
-            "connected" if self.transport is not None else "disconnected",
-        )
+        return f'<{self.__class__.__name__} {"connected" if self.transport is not None else "disconnected"}>'
 
     @property
     def keepalive_timeout(self) -> float:
@@ -350,11 +347,9 @@ class RequestHandler(BaseProtocol):
             if upgraded and tail:
                 self._message_tail = tail
 
-        # no parser, just store
-        elif self._payload_parser is None and self._upgrade and data:
+        elif self._payload_parser is None and data:
             self._message_tail += data
 
-        # feed payload
         elif data:
             eof, tail = self._payload_parser.feed_data(data)
             if eof:
@@ -409,10 +404,9 @@ class RequestHandler(BaseProtocol):
         next = self._keepalive_time + self._keepalive_timeout
 
         # handler in idle state
-        if self._waiter:
-            if self._loop.time() > next:
-                self.force_close()
-                return
+        if self._waiter and self._loop.time() > next:
+            self.force_close()
+            return
 
         # not all request handlers are done,
         # reschedule itself to next second
@@ -562,18 +556,17 @@ class RequestHandler(BaseProtocol):
                 if self.transport is None and resp is not None:
                     self.log_debug("Ignored premature client disconnection.")
                 elif not self._force_close:
-                    if self._keepalive and not self._close:
-                        # start keep-alive timer
-                        if keepalive_timeout is not None:
-                            now = self._loop.time()
-                            self._keepalive_time = now
-                            if self._keepalive_handle is None:
-                                self._keepalive_handle = loop.call_at(
-                                    now + keepalive_timeout, self._process_keepalive
-                                )
-                    else:
+                    if not self._keepalive or self._close:
                         break
 
+                    # start keep-alive timer
+                    if keepalive_timeout is not None:
+                        now = self._loop.time()
+                        self._keepalive_time = now
+                        if self._keepalive_handle is None:
+                            self._keepalive_handle = loop.call_at(
+                                now + keepalive_timeout, self._process_keepalive
+                            )
         # remove handler, close transport if no handlers left
         if not self._force_close:
             self._task_handler = None

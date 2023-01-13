@@ -311,8 +311,7 @@ class HTTPRequestEntityTooLarge(HTTPClientError):
     def __init__(self, max_size: float, actual_size: float, **kwargs: Any) -> None:
         kwargs.setdefault(
             "text",
-            "Maximum request body size {} exceeded, "
-            "actual body size {}".format(max_size, actual_size),
+            f"Maximum request body size {max_size} exceeded, actual body size {actual_size}",
         )
         super().__init__(**kwargs)
 
@@ -381,7 +380,7 @@ class HTTPUnavailableForLegalReasons(HTTPClientError):
             text=text,
             content_type=content_type,
         )
-        self.headers["Link"] = '<%s>; rel="blocked-by"' % link
+        self.headers["Link"] = f'<{link}>; rel="blocked-by"'
         self.link = link
 
 

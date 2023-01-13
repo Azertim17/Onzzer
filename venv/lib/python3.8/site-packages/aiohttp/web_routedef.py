@@ -63,21 +63,18 @@ class RouteDef(AbstractRouteDef):
     kwargs: Dict[str, Any]
 
     def __repr__(self) -> str:
-        info = []
-        for name, value in sorted(self.kwargs.items()):
-            info.append(f", {name}={value!r}")
+        info = [f", {name}={value!r}" for name, value in sorted(self.kwargs.items())]
         return "<RouteDef {method} {path} -> {handler.__name__!r}" "{info}>".format(
             method=self.method, path=self.path, handler=self.handler, info="".join(info)
         )
 
     def register(self, router: UrlDispatcher) -> List[AbstractRoute]:
-        if self.method in hdrs.METH_ALL:
-            reg = getattr(router, "add_" + self.method.lower())
-            return [reg(self.path, self.handler, **self.kwargs)]
-        else:
+        if self.method not in hdrs.METH_ALL:
             return [
                 router.add_route(self.method, self.path, self.handler, **self.kwargs)
             ]
+        reg = getattr(router, f"add_{self.method.lower()}")
+        return [reg(self.path, self.handler, **self.kwargs)]
 
 
 @attr.s(auto_attribs=True, frozen=True, repr=False, slots=True)
@@ -87,9 +84,7 @@ class StaticDef(AbstractRouteDef):
     kwargs: Dict[str, Any]
 
     def __repr__(self) -> str:
-        info = []
-        for name, value in sorted(self.kwargs.items()):
-            info.append(f", {name}={value!r}")
+        info = [f", {name}={value!r}" for name, value in sorted(self.kwargs.items())]
         return "<StaticDef {prefix} -> {path}" "{info}>".format(
             prefix=self.prefix, path=self.path, info="".join(info)
         )

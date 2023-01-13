@@ -97,11 +97,7 @@ class StreamResponse(BaseClass, HeadersMixin):
         self._body_length = 0
         self._state: Dict[str, Any] = {}
 
-        if headers is not None:
-            self._headers: CIMultiDict[str] = CIMultiDict(headers)
-        else:
-            self._headers = CIMultiDict()
-
+        self._headers = CIMultiDict(headers) if headers is not None else CIMultiDict()
         self.set_status(status, reason)
 
     @property
@@ -110,10 +106,7 @@ class StreamResponse(BaseClass, HeadersMixin):
 
     @property
     def task(self) -> "Optional[asyncio.Task[None]]":
-        if self._req:
-            return self._req.task
-        else:
-            return None
+        return self._req.task if self._req else None
 
     @property
     def status(self) -> int:
@@ -140,7 +133,7 @@ class StreamResponse(BaseClass, HeadersMixin):
         assert not self.prepared, (
             "Cannot change the response status code after " "the headers have been sent"
         )
-        self._status = int(status)
+        self._status = status
         if reason is None:
             try:
                 reason = _RESPONSES[self._status][0]
@@ -278,15 +271,16 @@ class StreamResponse(BaseClass, HeadersMixin):
 
     @content_length.setter
     def content_length(self, value: Optional[int]) -> None:
-        if value is not None:
-            value = int(value)
-            if self._chunked:
-                raise RuntimeError(
-                    "You can't set content length when " "chunked encoding is enable"
-                )
-            self._headers[hdrs.CONTENT_LENGTH] = str(value)
-        else:
+        if value is None:
             self._headers.pop(hdrs.CONTENT_LENGTH, None)
+
+        elif self._chunked:
+            raise RuntimeError(
+                "You can't set content length when " "chunked encoding is enable"
+            )
+        else:
+            value = int(value)
+            self._headers[hdrs.CONTENT_LENGTH] = str(value)
 
     @property
     def content_type(self) -> str:
@@ -296,7 +290,7 @@ class StreamResponse(BaseClass, HeadersMixin):
     @content_type.setter
     def content_type(self, value: str) -> None:
         self.content_type  # read header values if needed
-        self._content_type = str(value)
+        self._content_type = value
         self._generate_content_type_header()
 
     @property
@@ -386,9 +380,8 @@ class StreamResponse(BaseClass, HeadersMixin):
     ) -> None:
         assert self._content_dict is not None
         assert self._content_type is not None
-        params = "; ".join(f"{k}={v}" for k, v in self._content_dict.items())
-        if params:
-            ctype = self._content_type + "; " + params
+        if params := "; ".join(f"{k}={v}" for k, v in self._content_dict.items()):
+            ctype = f"{self._content_type}; {params}"
         else:
             ctype = self._content_type
         self._headers[CONTENT_TYPE] = ctype
@@ -480,14 +473,12 @@ class StreamResponse(BaseClass, HeadersMixin):
         headers.setdefault(hdrs.DATE, rfc822_formatted_time())
         headers.setdefault(hdrs.SERVER, SERVER_SOFTWARE)
 
-        # connection header
         if hdrs.CONNECTION not in headers:
             if keep_alive:
                 if version == HttpVersion10:
                     headers[hdrs.CONNECTION] = "keep-alive"
-            else:
-                if version == HttpVersion11:
-                    headers[hdrs.CONNECTION] = "close"
+            elif version == HttpVersion11:
+                headers[hdrs.CONNECTION] = "close"
 
     async def _write_headers(self) -> None:
         request = self._req
@@ -496,9 +487,7 @@ class StreamResponse(BaseClass, HeadersMixin):
         assert writer is not None
         # status line
         version = request.version
-        status_line = "HTTP/{}.{} {} {}".format(
-            version[0], version[1], self._status, self._reason
-        )
+        status_line = f"HTTP/{version[0]}.{version[1]} {self._status} {self._reason}"
         await writer.write_headers(status_line, self._headers)
 
     async def write(self, data: bytes) -> None:
@@ -598,38 +587,43 @@ class Response(StreamResponse):
         if content_type is not None and "charset" in content_type:
             raise ValueError("charset must not be in content_type " "argument")
 
-        if text is not None:
-            if hdrs.CONTENT_TYPE in real_headers:
-                if content_type or charset:
-                    raise ValueError(
-                        "passing both Content-Type header and "
-                        "content_type or charset params "
-                        "is forbidden"
-                    )
-            else:
-                # fast path for filling headers
-                if not isinstance(text, str):
-                    raise TypeError("text argument must be str (%r)" % type(text))
-                if content_type is None:
-                    content_type = "text/plain"
-                if charset is None:
-                    charset = "utf-8"
-                real_headers[hdrs.CONTENT_TYPE] = content_type + "; charset=" + charset
-                body = text.encode(charset)
-                text = None
+        if (
+            text is not None
+            and hdrs.CONTENT_TYPE in real_headers
+            and (content_type or charset)
+            or text is None
+            and hdrs.CONTENT_TYPE in real_headers
+            and (content_type is not None or charset is not None)
+        ):
+            raise ValueError(
+                "passing both Content-Type header and "
+                "content_type or charset params "
+                "is forbidden"
+            )
+        elif (
+            text is not None
+            and hdrs.CONTENT_TYPE in real_headers
+            or text is None
+            and hdrs.CONTENT_TYPE in real_headers
+            or text is None
+            and content_type is None
+        ):
+            pass
+        elif text is not None:
+            # fast path for filling headers
+            if not isinstance(text, str):
+                raise TypeError("text argument must be str (%r)" % type(text))
+            if content_type is None:
+                content_type = "text/plain"
+            if charset is None:
+                charset = "utf-8"
+            real_headers[hdrs.CONTENT_TYPE] = f"{content_type}; charset={charset}"
+            body = text.encode(charset)
+            text = None
         else:
-            if hdrs.CONTENT_TYPE in real_headers:
-                if content_type is not None or charset is not None:
-                    raise ValueError(
-                        "passing both Content-Type header and "
-                        "content_type or charset params "
-                        "is forbidden"
-                    )
-            else:
-                if content_type is not None:
-                    if charset is not None:
-                        content_type += "; charset=" + charset
-                    real_headers[hdrs.CONTENT_TYPE] = content_type
+            if charset is not None:
+                content_type += f"; charset={charset}"
+            real_headers[hdrs.CONTENT_TYPE] = content_type
 
         super().__init__(status=status, reason=reason, headers=real_headers)
 
@@ -734,32 +728,32 @@ class Response(StreamResponse):
     async def write_eof(self, data: bytes = b"") -> None:
         if self._eof_sent:
             return
-        if self._compressed_body is None:
-            body: Optional[Union[bytes, Payload]] = self._body
-        else:
-            body = self._compressed_body
+        body = self._body if self._compressed_body is None else self._compressed_body
         assert not data, f"data arg is not supported, got {data!r}"
         assert self._req is not None
         assert self._payload_writer is not None
-        if body is not None:
-            if self._req._method == hdrs.METH_HEAD or self._status in [204, 304]:
-                await super().write_eof()
-            elif self._body_payload:
-                payload = cast(Payload, body)
-                await payload.write(self._payload_writer)
-                await super().write_eof()
-            else:
-                await super().write_eof(cast(bytes, body))
-        else:
+        if body is None:
             await super().write_eof()
 
+        elif self._req._method == hdrs.METH_HEAD or self._status in [204, 304]:
+            await super().write_eof()
+        elif self._body_payload:
+            payload = cast(Payload, body)
+            await payload.write(self._payload_writer)
+            await super().write_eof()
+        else:
+            await super().write_eof(cast(bytes, body))
+
     async def _start(self, request: "BaseRequest") -> AbstractStreamWriter:
-        if not self._chunked and hdrs.CONTENT_LENGTH not in self._headers:
-            if not self._body_payload:
-                if self._body is not None:
-                    self._headers[hdrs.CONTENT_LENGTH] = str(len(self._body))
-                else:
-                    self._headers[hdrs.CONTENT_LENGTH] = "0"
+        if (
+            not self._chunked
+            and hdrs.CONTENT_LENGTH not in self._headers
+            and not self._body_payload
+        ):
+            if self._body is not None:
+                self._headers[hdrs.CONTENT_LENGTH] = str(len(self._body))
+            else:
+                self._headers[hdrs.CONTENT_LENGTH] = "0"
 
         return await super()._start(request)
 

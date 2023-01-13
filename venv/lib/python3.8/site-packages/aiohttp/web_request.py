@@ -79,9 +79,9 @@ _TCHAR: Final[str] = string.digits + string.ascii_letters + r"!#$%&'*+.^_`|~-"
 
 _TOKEN: Final[str] = rf"[{_TCHAR}]+"
 
-_QDTEXT: Final[str] = r"[{}]".format(
-    r"".join(chr(c) for c in (0x09, 0x20, 0x21) + tuple(range(0x23, 0x7F)))
-)
+_QDTEXT: Final[
+    str
+] = f'[{"".join(chr(c) for c in (9, 32, 33) + tuple(range(35, 127)))}]'
 # qdtext includes 0x5C to escape 0x5D ('\]')
 # qdtext excludes obs-text (because obsoleted, and encoding not specified)
 
@@ -261,9 +261,7 @@ class BaseRequest(MutableMapping[str, Any], HeadersMixin):
 
     @property
     def transport(self) -> Optional[asyncio.Transport]:
-        if self._protocol is None:
-            return None
-        return self._protocol.transport
+        return None if self._protocol is None else self._protocol.transport
 
     @property
     def writer(self) -> AbstractStreamWriter:
@@ -381,10 +379,7 @@ class BaseRequest(MutableMapping[str, Any], HeadersMixin):
 
         'http' or 'https'.
         """
-        if self._transport_sslcontext:
-            return "https"
-        else:
-            return "http"
+        return "https" if self._transport_sslcontext else "http"
 
     @reify
     def method(self) -> str:
@@ -413,9 +408,7 @@ class BaseRequest(MutableMapping[str, Any], HeadersMixin):
         - socket.getfqdn() value
         """
         host = self._message.headers.get(hdrs.HOST)
-        if host is not None:
-            return host
-        return socket.getfqdn()
+        return host if host is not None else socket.getfqdn()
 
     @reify
     def remote(self) -> Optional[str]:
@@ -527,10 +520,7 @@ class BaseRequest(MutableMapping[str, Any], HeadersMixin):
     def _if_match_or_none_impl(
         cls, header_value: Optional[str]
     ) -> Optional[Tuple[ETag, ...]]:
-        if not header_value:
-            return None
-
-        return tuple(cls._etag_values(header_value))
+        return tuple(cls._etag_values(header_value)) if header_value else None
 
     @reify
     def if_match(self) -> Optional[Tuple[ETag, ...]]:
@@ -699,61 +689,60 @@ class BaseRequest(MutableMapping[str, Any], HeadersMixin):
 
             field = await multipart.next()
             while field is not None:
-                size = 0
                 field_ct = field.headers.get(hdrs.CONTENT_TYPE)
 
-                if isinstance(field, BodyPartReader):
-                    assert field.name is not None
-
-                    # Note that according to RFC 7578, the Content-Type header
-                    # is optional, even for files, so we can't assume it's
-                    # present.
-                    # https://tools.ietf.org/html/rfc7578#section-4.4
-                    if field.filename:
-                        # store file in temp file
-                        tmp = tempfile.TemporaryFile()
-                        chunk = await field.read_chunk(size=2**16)
-                        while chunk:
-                            chunk = field.decode(chunk)
-                            tmp.write(chunk)
-                            size += len(chunk)
-                            if 0 < max_size < size:
-                                tmp.close()
-                                raise HTTPRequestEntityTooLarge(
-                                    max_size=max_size, actual_size=size
-                                )
-                            chunk = await field.read_chunk(size=2**16)
-                        tmp.seek(0)
-
-                        if field_ct is None:
-                            field_ct = "application/octet-stream"
-
-                        ff = FileField(
-                            field.name,
-                            field.filename,
-                            cast(io.BufferedReader, tmp),
-                            field_ct,
-                            field.headers,
-                        )
-                        out.add(field.name, ff)
-                    else:
-                        # deal with ordinary data
-                        value = await field.read(decode=True)
-                        if field_ct is None or field_ct.startswith("text/"):
-                            charset = field.get_charset(default="utf-8")
-                            out.add(field.name, value.decode(charset))
-                        else:
-                            out.add(field.name, value)
-                        size += len(value)
-                        if 0 < max_size < size:
-                            raise HTTPRequestEntityTooLarge(
-                                max_size=max_size, actual_size=size
-                            )
-                else:
+                if not isinstance(field, BodyPartReader):
                     raise ValueError(
                         "To decode nested multipart you need " "to use custom reader",
                     )
 
+                assert field.name is not None
+
+                size = 0
+                # Note that according to RFC 7578, the Content-Type header
+                # is optional, even for files, so we can't assume it's
+                # present.
+                # https://tools.ietf.org/html/rfc7578#section-4.4
+                if field.filename:
+                    # store file in temp file
+                    tmp = tempfile.TemporaryFile()
+                    chunk = await field.read_chunk(size=2**16)
+                    while chunk:
+                        chunk = field.decode(chunk)
+                        tmp.write(chunk)
+                        size += len(chunk)
+                        if 0 < max_size < size:
+                            tmp.close()
+                            raise HTTPRequestEntityTooLarge(
+                                max_size=max_size, actual_size=size
+                            )
+                        chunk = await field.read_chunk(size=2**16)
+                    tmp.seek(0)
+
+                    if field_ct is None:
+                        field_ct = "application/octet-stream"
+
+                    ff = FileField(
+                        field.name,
+                        field.filename,
+                        cast(io.BufferedReader, tmp),
+                        field_ct,
+                        field.headers,
+                    )
+                    out.add(field.name, ff)
+                else:
+                    # deal with ordinary data
+                    value = await field.read(decode=True)
+                    if field_ct is None or field_ct.startswith("text/"):
+                        charset = field.get_charset(default="utf-8")
+                        out.add(field.name, value.decode(charset))
+                    else:
+                        out.add(field.name, value)
+                    size += len(value)
+                    if 0 < max_size < size:
+                        raise HTTPRequestEntityTooLarge(
+                            max_size=max_size, actual_size=size
+                        )
                 field = await multipart.next()
         else:
             data = await self.read()
@@ -786,9 +775,7 @@ class BaseRequest(MutableMapping[str, Any], HeadersMixin):
         ascii_encodable_path = self.path.encode("ascii", "backslashreplace").decode(
             "ascii"
         )
-        return "<{} {} {} >".format(
-            self.__class__.__name__, self._method, ascii_encodable_path
-        )
+        return f"<{self.__class__.__name__} {self._method} {ascii_encodable_path} >"
 
     def __eq__(self, other: object) -> bool:
         return id(self) == id(other)
@@ -821,8 +808,7 @@ class Request(BaseRequest):
         def __setattr__(self, name: str, val: Any) -> None:
             if name not in self.ATTRS:
                 warnings.warn(
-                    "Setting custom {}.{} attribute "
-                    "is discouraged".format(self.__class__.__name__, name),
+                    f"Setting custom {self.__class__.__name__}.{name} attribute is discouraged",
                     DeprecationWarning,
                     stacklevel=2,
                 )

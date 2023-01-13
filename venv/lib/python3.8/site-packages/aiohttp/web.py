@@ -340,19 +340,19 @@ async def _run_app(
                     )
                 )
             else:
-                for h in host:
-                    sites.append(
-                        TCPSite(
-                            runner,
-                            h,
-                            port,
-                            shutdown_timeout=shutdown_timeout,
-                            ssl_context=ssl_context,
-                            backlog=backlog,
-                            reuse_address=reuse_address,
-                            reuse_port=reuse_port,
-                        )
+                sites.extend(
+                    TCPSite(
+                        runner,
+                        h,
+                        port,
+                        shutdown_timeout=shutdown_timeout,
+                        ssl_context=ssl_context,
+                        backlog=backlog,
+                        reuse_address=reuse_address,
+                        reuse_port=reuse_port,
                     )
+                    for h in host
+                )
         elif path is None and sock is None or port is not None:
             sites.append(
                 TCPSite(
@@ -378,17 +378,16 @@ async def _run_app(
                     )
                 )
             else:
-                for p in path:
-                    sites.append(
-                        UnixSite(
-                            runner,
-                            p,
-                            shutdown_timeout=shutdown_timeout,
-                            ssl_context=ssl_context,
-                            backlog=backlog,
-                        )
+                sites.extend(
+                    UnixSite(
+                        runner,
+                        p,
+                        shutdown_timeout=shutdown_timeout,
+                        ssl_context=ssl_context,
+                        backlog=backlog,
                     )
-
+                    for p in path
+                )
         if sock is not None:
             if not isinstance(sock, Iterable):
                 sites.append(
@@ -401,34 +400,29 @@ async def _run_app(
                     )
                 )
             else:
-                for s in sock:
-                    sites.append(
-                        SockSite(
-                            runner,
-                            s,
-                            shutdown_timeout=shutdown_timeout,
-                            ssl_context=ssl_context,
-                            backlog=backlog,
-                        )
+                sites.extend(
+                    SockSite(
+                        runner,
+                        s,
+                        shutdown_timeout=shutdown_timeout,
+                        ssl_context=ssl_context,
+                        backlog=backlog,
                     )
+                    for s in sock
+                )
         for site in sites:
             await site.start()
 
         if print:  # pragma: no branch
             names = sorted(str(s.name) for s in runner.sites)
             print(
-                "======== Running on {} ========\n"
-                "(Press CTRL+C to quit)".format(", ".join(names))
+                f'======== Running on {", ".join(names)} ========\n(Press CTRL+C to quit)'
             )
 
         # sleep forever by 1 hour intervals,
         # on Windows before Python 3.8 wake up every 1 second to handle
         # Ctrl+C smoothly
-        if sys.platform == "win32" and sys.version_info < (3, 8):
-            delay = 1
-        else:
-            delay = 3600
-
+        delay = 1 if sys.platform == "win32" and sys.version_info < (3, 8) else 3600
         while True:
             await asyncio.sleep(delay)
     finally:
