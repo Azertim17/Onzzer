@@ -91,9 +91,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#framework-and-general-objective">Framework and general objective</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#development-environment-and-git-repository">Development environment and GIT repository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scripting-programming-languages">Scripting/programming languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#project-tree">Project tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doc_classe.html">Onzzer’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manuel_d_utilisation.html">Installation tutorial</a></li>
 </ul>
 
             
@@ -165,10 +169,13 @@
 <h1>Project specifications<a class="headerlink" href="#project-specifications" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="framework-and-general-objective">
 <h2>Framework and general objective<a class="headerlink" href="#framework-and-general-objective" title="Permalink to this headline">¶</a></h2>
-<p>The project aims to develop a graphical interface in PyQt that will allow to query the MusicBrainz API in order to list and save in a text file all the tracks of a searched album.The main steps of the project are to:
-* understanding how the MusicBrainz API works;
-* designing, drawing and developing the graphical interface;
-* using the MVC_help Model View Controller (MVC) model to structure the application code</p>
+<p>The project aims to develop a graphical interface in PyQt that will allow to query the MusicBrainz API in order to list and save in a text file all the tracks of a searched album.</p>
+<p>The main steps of the project are to:</p>
+<ul class="simple">
+<li><p>understanding how the MusicBrainz API works;</p></li>
+<li><p>designing, drawing and developing the graphical interface;</p></li>
+<li><p>using the MVC_help Model View Controller (MVC) model to structure the application code</p></li>
+</ul>
 </div>
 <div class="section" id="development-environment-and-git-repository">
 <h2>Development environment and GIT repository<a class="headerlink" href="#development-environment-and-git-repository" title="Permalink to this headline">¶</a></h2>
@@ -198,12 +205,42 @@
 PHP/MySQL for web application projects
 and/or the bash scripting language for scripts allowing the automation of certain processes and the publication of results (seen in R108-Basic operating systems)</p>
 </div></blockquote>
-<p>Project tree</p>
+</div>
+<div class="section" id="project-tree">
+<h2>Project tree<a class="headerlink" href="#project-tree" title="Permalink to this headline">¶</a></h2>
 <p>Your project must :</p>
 <blockquote>
-<div><p>be executed by means of a script project_name.py. This script will follow the classic program structure seen in R1.07-Programming basics and described in the Python form. It will take any parameters in arguments specified below.</p>
-<p>respect the following tree structure (PROJECTGitHUB designates the directory to which your project is attached and constitutes the base of the local Git repository) :</p>
+<div><ul class="simple">
+<li><p>be executed by means of a script project_name.py. This script will follow the classic program structure seen in R1.07-Programming basics and described in the Python form. It will take any parameters in arguments specified below.</p></li>
+<li><p>respect the following tree structure (PROJECTGitHUB designates the directory to which your project is attached and constitutes the base of the local Git repository) :</p></li>
+</ul>
 </div></blockquote>
+<div class="figure align-center" id="id1">
+<img alt="_images/arborescence.png" src="_images/arborescence.png" />
+<p class="caption"><span class="caption-text">tree structure of our project</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The general project documentation should be written in restructuredText format. You can do this using the Sphinx software;</p></li>
+<li><p>You should add doctrinal comments at the start of the function in order to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Specify what the function does,</p></li>
+<li><p>To indicate its author, its dates of creation and last modification,</p></li>
+<li><p>Describe its parameters and, where applicable, their types,</p></li>
+<li><p>describe the limits for using parameters for proper operation of the function and exceptions that are likely to be raised,</p></li>
+<li><p>what it returns</p></li>
+<li><p>give an example of use</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="unit-tests">
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
+<p>Drawing inspiration from the lab on functions in the resource R1.07-Fundamentals of programming, you will have to write test code for each function developed in the project. This will be placed in a Python program in the tests directory.</p>
 </div>
 </div>
 

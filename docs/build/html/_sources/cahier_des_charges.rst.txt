@@ -3,8 +3,11 @@ Project specifications
 
 Framework and general objective
 _______________________________
+
 The project aims to develop a graphical interface in PyQt that will allow to query the MusicBrainz API in order to list and save in a text file all the tracks of a searched album.\
+
 The main steps of the project are to:
+
 * understanding how the MusicBrainz API works;
 * designing, drawing and developing the graphical interface;
 * using the MVC_help Model View Controller (MVC) model to structure the application code
@@ -39,9 +42,31 @@ The project must use :
     and/or the bash scripting language for scripts allowing the automation of certain processes and the publication of results (seen in R108-Basic operating systems)
 
 Project tree
+_____________
 
 Your project must :
 
-    be executed by means of a script project_name.py. This script will follow the classic program structure seen in R1.07-Programming basics and described in the Python form. It will take any parameters in arguments specified below.
+    * be executed by means of a script project_name.py. This script will follow the classic program structure seen in R1.07-Programming basics and described in the Python form. It will take any parameters in arguments specified below.
 
-    respect the following tree structure (PROJECTGitHUB designates the directory to which your project is attached and constitutes the base of the local Git repository) :
+    * respect the following tree structure (PROJECTGitHUB designates the directory to which your project is attached and constitutes the base of the local Git repository) :
+.. figure:: _static/arborescence.png
+        :align: center
+
+        tree structure of our project
+
+Documentation
+______________
+* The general project documentation should be written in restructuredText format. You can do this using the Sphinx software;
+
+* You should add doctrinal comments at the start of the function in order to:
+
+    #. Specify what the function does,
+    #. To indicate its author, its dates of creation and last modification,
+    #. Describe its parameters and, where applicable, their types,
+    #. describe the limits for using parameters for proper operation of the function and exceptions that are likely to be raised,
+    #. what it returns
+    #. give an example of use
+
+Unit tests
+___________
+Drawing inspiration from the lab on functions in the resource R1.07-Fundamentals of programming, you will have to write test code for each function developed in the project. This will be placed in a Python program in the tests directory.

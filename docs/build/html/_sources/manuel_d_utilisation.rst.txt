@@ -33,6 +33,7 @@ To update the application, nothing could be simpler!
 3. Once the update is complete, the program will close automatically, you will then only have to restart your Onzzer application!
  
 To uninstall the app:
+~~~~~~~~~~~~~~~~~~~~~~
 1. Go to your installation directory, by default it is on the disk where Windows is installed: C:\Program Files (x86)\Onzzer
 2. Launch the program called "TIM"
 3. There you go! You have just uninstalled the Onzzer application and its directory.

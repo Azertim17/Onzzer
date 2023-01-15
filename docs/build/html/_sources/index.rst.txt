@@ -3,6 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. figure:: _static/logo_long.png
+   :align: center
+   
 Welcome to Onzzer's documentation!
 ==================================
 **Onzzer** is a Python program. It use PyQt5 library to work. 
@@ -11,18 +14,21 @@ It allows to retrieve the titles of an album from its name.
 A recording function is available. This function saves the list of titles in text format.\
 
 
+
 .. NOTE::
    Find our github in this `link <https://github.com/Azertim17/Onzzer>`_
 
 .. NOTE::
-   `Dowload our app  <https://github.com/Azertim17/Onzzer/blob/d42bbebc4185eda69a233057e4145c27f9f57f66/Onzzer/Onzzer_setup.exe>`_
+   `Dowload our app (Windows)  <https://github.com/Azertim17/Onzzer/raw/main/Onzzer/Onzzer_setup.exe>`_
+
 .. toctree::
    :maxdepth: 3
-   :caption: sommaire:
+   :caption: content:
 
+   ./manuel_d_utilisation.rst
    ./cahier_des_charges.rst
    ./doc_classe.rst
-   ./manuel_d_utilisation.rst
+   
 
 
 
