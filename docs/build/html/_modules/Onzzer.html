@@ -157,7 +157,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">.. module:: Onzzer</span>
 <span class="sd">    :platform: Windows, Unix</span>
-<span class="sd">    :synopsis: Onzzer module principale du projet</span>
+<span class="sd">    :synopsis: Onzzer: main project module</span>
 
 <span class="sd">.. moduleauthor:: Matthieu Brissonnet &lt;matthieu.brissonnet@etu.univ-poitiers.fr&gt;, Tim Mazzoloni &lt;tim.mazzolini@etu.univ-poitiers.fr&gt;, Baptiste Tarte &lt;baptiste.tarte@etu.univ-poitiers.fr&gt;, Eliot Monneau &lt;elio.moneau@etu.univ-poitiers.fr&gt;</span>
 
@@ -379,7 +379,7 @@
         <span class="sd">&quot;&quot;&quot;        </span>
 <span class="sd">        :param recherche: The user&#39;s input string</span>
 <span class="sd">        :type recehrche: str</span>
-<span class="sd">        :returns:  A table with the names and designations of all album with the given name</span>
+<span class="sd">        :returns: A table with the names and designations of all album with the given name</span>
 <span class="sd">                </span>
 <span class="sd">        :rtype: QTableWidget</span>
 <span class="sd">        :raises: TypeError</span>
@@ -685,7 +685,6 @@
 <span class="sd">        :returns: None</span>
 <span class="sd">        :rtype: None</span>
 <span class="sd">        </span>
-<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create a QPixmap of the logo image and scale it to the desired size</span>
         <span class="n">image1</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\logo_long_blanc.png&quot;</span> <span class="p">)</span>
@@ -715,43 +714,63 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #202124&quot;</span><span class="p">)</span>
 
+        <span class="c1"># Create a vertical layout to hold the widgets</span>
         <span class="n">vbox</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+
+        <span class="c1"># Create a widget to hold the buttons and set its layout</span>
         <span class="n">wid_bouttons</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
         <span class="n">bouttonshbox</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+
+        <span class="c1"># Create a label to hold the album cover image</span>
         <span class="n">box_image</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">()</span>
+
+        <span class="c1"># Create a table widget to display the track titles and set its properties</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setContentsMargins</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QTableWidget::item {color: white;}&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span><span class="p">)</span>
 
+        <span class="c1"># Set the album cover image to the label and add it to the layout</span>
         <span class="n">box_image</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">box_image</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignRight</span><span class="p">)</span>
 
+        <span class="c1"># Set the layout of the main widget and add the table widget to the layout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wid_pistes</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
 
+        <span class="c1"># Add the buttons to the button widget&#39;s layout</span>
         <span class="n">wid_bouttons</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">bouttonshbox</span><span class="p">)</span>
         <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">searchButton</span><span class="p">)</span>
         <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">returnButton</span><span class="p">)</span>
         <span class="n">bouttonshbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">uploadButton</span><span class="p">)</span>
 
+        <span class="c1"># Add the button widget to the main layout and align it to the left</span>
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">wid_bouttons</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">AlignLeft</span><span class="p">)</span>
+
+        <span class="c1"># Set the alignment of the main layout to the top</span>
         <span class="n">vbox</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignTop</span><span class="p">)</span>
 
+        <span class="c1"># Set the horizontal headers for the table widget</span>
         <span class="n">headerH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Titres de l&#39;Album&quot;</span><span class="p">,</span><span class="s2">&quot;Ouvrir youtube&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">(</span><span class="n">headerH</span><span class="p">)</span>
 
+        <span class="c1"># Set the table widget&#39;s horizontal header&#39;s resize mode</span>
         <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span>
         <span class="n">header</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">ResizeToContents</span><span class="p">)</span>
+
+        <span class="c1"># Disable editing on the table widget</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setEditTriggers</span><span class="p">(</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoEditTriggers</span><span class="p">)</span>
 
+        <span class="c1"># Set the number of rows in the table widget to the number of track titles</span>
         <span class="n">nb_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">titres</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="n">nb_rows</span><span class="p">)</span>
 
+        <span class="c1"># Iterate through the track titles and add them to the table widget</span>
         <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">titres</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
+            <span class="c1"># Create a button for each track title and add it to the table widget</span>
             <span class="n">ytButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">Fenetre_principale</span><span class="o">.</span><span class="n">newPath</span> <span class="o">+</span> <span class="s2">&quot;\youtube.jpg&quot;</span><span class="p">),</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">setCellWidget</span><span class="p">(</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ytButton</span><span class="p">)</span>
             <span class="n">ytButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">youtube</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">recherche</span><span class="p">))</span> </div>
