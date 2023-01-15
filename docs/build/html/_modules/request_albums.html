@@ -273,11 +273,13 @@
          
 <div class="viewcode-block" id="get_album_name"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_album_name">[docs]</a><span class="k">def</span> <span class="nf">get_album_name</span><span class="p">(</span><span class="n">album_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function receives an album name as input and returns the album name from MusicBrainz.</span>
-<span class="sd">    :param album_name: The name of the album to search for.</span>
-<span class="sd">    :type album_name: str</span>
-<span class="sd">    :return: The album name.</span>
-<span class="sd">    :rtype: str</span>
+
+<span class="sd">     This function receives an album name as input and returns the album name from MusicBrainz.</span>
+
+<span class="sd">      :param album_name: The name of the album to search for.</span>
+<span class="sd">      :type album_name: str</span>
+<span class="sd">      :return: The album name.</span>
+<span class="sd">      :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Removes leading and trailing whitespace from the &quot;album_name&quot; variable and replaces spaces and single quotes with the appropriate encoding</span>
     <span class="n">album_name</span> <span class="o">=</span> <span class="n">album_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
@@ -335,10 +337,12 @@
 <div class="viewcode-block" id="get_artist_list"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_artist_list">[docs]</a><span class="k">def</span> <span class="nf">get_artist_list</span><span class="p">(</span><span class="n">album_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function receives an album name as input and returns a list of the artist name(s) associated with that album from MusicBrainz.</span>
+
 <span class="sd">    :param album_name: The name of the album to search for.</span>
 <span class="sd">    :type album_name: str</span>
 <span class="sd">    :return: List of artist names.</span>
 <span class="sd">    :rtype: list</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Removes leading and trailing whitespace from the &quot;album_name&quot; variable and replaces spaces and single quotes with the appropriate encoding</span>
     <span class="n">album_name</span> <span class="o">=</span> <span class="n">album_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
@@ -357,12 +361,13 @@
 
 <div class="viewcode-block" id="get_discographie"><a class="viewcode-back" href="../doc_classe.html#request_albums.get_discographie">[docs]</a><span class="k">def</span> <span class="nf">get_discographie</span><span class="p">(</span><span class="n">id_artiste</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This function lists all the albums of a singer using their MusicBrainz ID.</span>
-<span class="sd">        :param id_artiste: MusicBrainz ID of the artist</span>
-<span class="sd">        :type id_artiste: str</span>
-<span class="sd">        :returns: list of all singer&#39;s albums</span>
-<span class="sd">        :rtype: dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    This function lists all the albums of a singer using their MusicBrainz ID.</span>
+<span class="sd">    </span>
+<span class="sd">     :param id_artiste: MusicBrainz ID of the artist</span>
+<span class="sd">     :type id_artiste: str</span>
+<span class="sd">     :returns: list of all singer&#39;s albums</span>
+<span class="sd">     :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;?inc=releases&amp;fmt=json&quot;</span>
     <span class="n">url_complet</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://musicbrainz.org/ws/2/artist/</span><span class="si">{</span><span class="n">id_artiste</span><span class="si">}{</span><span class="n">url_fin</span><span class="si">}</span><span class="s2">&quot;</span>
 

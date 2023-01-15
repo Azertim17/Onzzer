@@ -17,11 +17,9 @@ def get_album_titles(album_id):
     """
         This code searches album by id and returns a list of song titles using MusicBrainz web service.
         
-        :param param1: album_id
-        :type param1: str
-        :returns: liste list
-        
-        :rtype:  
+        :param album_id: album_id
+        :type album_id: str
+        :returns: list 
         :raises: TypeError
         
      """
@@ -46,7 +44,7 @@ def get_album_titles(album_id):
 #     """
         
         
-#         :param param1: album_id
+#         :param album_id: album_id
 #         :type param1: str
 #         :returns: liste list
         

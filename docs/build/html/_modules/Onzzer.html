@@ -242,11 +242,7 @@
 <span class="sd">        :returns: menu and toolbar</span>
 <span class="sd">        :rtype: app</span>
 <span class="sd">        :raises: TypeError</span>
-<span class="sd">        :example:</span>
-
-<span class="sd">        .. code-block:: python</span>
-
-<span class="sd">         app = menu(self)</span>
+<span class="sd">               </span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -296,6 +292,12 @@
 <span class="sd">        :raises: TypeError</span>
 <span class="sd">        :example:</span>
 <span class="sd">            self.searchButton.clicked.connect(self.categorie) </span>
+<span class="sd">        </span>
+<span class="sd">        .. figure:: _static/menu.png </span>
+<span class="sd">            :alt: example illustrate</span>
+<span class="sd">             </span>
+
+<span class="sd">            The first page.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># This is the main page of our application, the one allowing to search for an album or an artist</span>
 
@@ -374,11 +376,7 @@
 
 
 <div class="viewcode-block" id="Fenetre_principale.recherche_album"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.recherche_album">[docs]</a>    <span class="k">def</span> <span class="nf">recherche_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        </span>
-<span class="sd">        :param recherche: </span>
-<span class="sd">        </span>
+        <span class="sd">&quot;&quot;&quot;        </span>
 <span class="sd">        :param recherche: The user&#39;s input string</span>
 <span class="sd">        :type recehrche: str</span>
 <span class="sd">        :returns:  A table with the names and designations of all album with the given name</span>
@@ -451,13 +449,15 @@
 <span class="sd">        :returns: A table with the names and designations of all artists with the given name</span>
 <span class="sd">        :rtype: QTableWidget</span>
 <span class="sd">        :raises: TypeError</span>
+<span class="sd">        </span>
 
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            recherche_artiste(self, &quot;celine dion&quot;)</span>
 <span class="sd">    </span>
-<span class="sd">        .. figure:: docs/source/_static/celine_dion.png</span>
-<span class="sd">            :scale: 200</span>
+<span class="sd">        .. figure:: _static/celine_dion.png </span>
+<span class="sd">            :alt: example illustrate</span>
+<span class="sd">             </span>
 
 <span class="sd">            The result of the search for artist &quot;Celine Dion&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>      
@@ -532,6 +532,7 @@
 <div class="viewcode-block" id="Fenetre_principale.id_artiste"><a class="viewcode-back" href="../doc_classe.html#Onzzer.Fenetre_principale.id_artiste">[docs]</a>    <span class="k">def</span> <span class="nf">id_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">recherche</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function retrieves the number of the row when clicked, and retrieves the artist ID from the request_artistes module using the user&#39;s input.</span>
+
 <span class="sd">        :param recherche: The user&#39;s input string</span>
 <span class="sd">        :type recherche: str </span>
 <span class="sd">        :returns: A list of all artists with the same name and their types</span>

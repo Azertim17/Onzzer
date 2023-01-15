@@ -189,6 +189,10 @@ It retrieves the inscription in “LINEedit” and calls the “categorie” fun
 <dd class="field-odd"><p>self.searchButton.clicked.connect(self.categorie)</p>
 </dd>
 </dl>
+<div class="figure align-default" id="id1">
+<img alt="example illustrate" src="_images/menu.png" />
+<p class="caption"><span class="caption-text">The first page.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -338,15 +342,27 @@ if select == “Album”:</p>
 <dl class="py method">
 <dt id="Onzzer.Fenetre_principale.id_artiste">
 <code class="sig-name descname">id_artiste</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em>, <em class="sig-param"><span class="n">column</span></em>, <em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale.id_artiste"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale.id_artiste" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves the number of the row when clicked, and retrieves the artist ID from the request_artistes module using the user’s input.
-:param recherche: The user’s input string
-:type recherche: str 
-:returns: A list of all artists with the same name and their types
-:param row: The number of the row that was clicked
-:type row: int
-:returns: The number of the row that was clicked
-:rtype: listing of artists with the same name
-:raises: TypeError if any input is of the wrong type</p>
+<dd><p>This function retrieves the number of the row when clicked, and retrieves the artist ID from the request_artistes module using the user’s input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recherche</strong> (<em>str</em>) – The user’s input string</p></li>
+<li><p><strong>row</strong> (<em>int</em>) – The number of the row that was clicked</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of all artists with the same name and their types</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of the row that was clicked</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>listing of artists with the same name</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>TypeError if any input is of the wrong type</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -363,12 +379,7 @@ if select == “Album”:</p>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p>TypeError</p>
 </dd>
-<dt class="field-even">Example</dt>
-<dd class="field-even"><p></p></dd>
 </dl>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py method">
@@ -388,10 +399,7 @@ if select == “Album”:</p>
 <code class="sig-name descname">recherche_album</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recherche</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Onzzer.html#Fenetre_principale.recherche_album"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Onzzer.Fenetre_principale.recherche_album" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>recherche</strong> – </p></li>
-<li><p><strong>recherche</strong> – The user’s input string</p></li>
-</ul>
+<dd class="field-odd"><p><strong>recherche</strong> – The user’s input string</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A table with the names and designations of all album with the given name</p>
@@ -426,9 +434,9 @@ if select == “Album”:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recherche_artiste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;celine dion&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-default" id="id1">
-<a class="reference internal image-reference" href="docs/source/_static/celine_dion.png"><img alt="docs/source/_static/celine_dion.png" src="docs/source/_static/celine_dion.png" /></a>
-<p class="caption"><span class="caption-text">The result of the search for artist “Celine Dion”</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<div class="figure align-default" id="id2">
+<img alt="example illustrate" src="_images/celine_dion.png" />
+<p class="caption"><span class="caption-text">The result of the search for artist “Celine Dion”</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 </dd></dl>
 
@@ -475,31 +483,62 @@ if select == “Album”:</p>
 <dl class="py function">
 <dt id="request_albums.get_album_name">
 <code class="sig-prename descclassname">request_albums.</code><code class="sig-name descname">get_album_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/request_albums.html#get_album_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#request_albums.get_album_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function receives an album name as input and returns the album name from MusicBrainz.
-:param album_name: The name of the album to search for.
-:type album_name: str
-:return: The album name.
-:rtype: str</p>
+<dd><p>This function receives an album name as input and returns the album name from MusicBrainz.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param album_name</dt>
+<dd class="field-odd"><p>The name of the album to search for.</p>
+</dd>
+<dt class="field-even">type album_name</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>The album name.</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py function">
 <dt id="request_albums.get_artist_list">
 <code class="sig-prename descclassname">request_albums.</code><code class="sig-name descname">get_artist_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/request_albums.html#get_artist_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#request_albums.get_artist_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function receives an album name as input and returns a list of the artist name(s) associated with that album from MusicBrainz.
-:param album_name: The name of the album to search for.
-:type album_name: str
-:return: List of artist names.
-:rtype: list</p>
+<dd><p>This function receives an album name as input and returns a list of the artist name(s) associated with that album from MusicBrainz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>album_name</strong> (<em>str</em>) – The name of the album to search for.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of artist names.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="request_albums.get_discographie">
 <code class="sig-prename descclassname">request_albums.</code><code class="sig-name descname">get_discographie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id_artiste</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/request_albums.html#get_discographie"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#request_albums.get_discographie" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function lists all the albums of a singer using their MusicBrainz ID.
-:param id_artiste: MusicBrainz ID of the artist
-:type id_artiste: str
-:returns: list of all singer’s albums
-:rtype: dict</p>
+<dd><p>This function lists all the albums of a singer using their MusicBrainz ID.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param id_artiste</dt>
+<dd class="field-odd"><p>MusicBrainz ID of the artist</p>
+</dd>
+<dt class="field-even">type id_artiste</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><p>list of all singer’s albums</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 </div>
@@ -508,10 +547,10 @@ if select == “Album”:</p>
 <span class="target" id="module-4"></span><dl class="py function">
 <dt id="request_artistes.get_artist_id">
 <code class="sig-prename descclassname">request_artistes.</code><code class="sig-name descname">get_artist_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artiste_recherche</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/request_artistes.html#get_artist_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#request_artistes.get_artist_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>this fonction recuvers artiste and give a ID</p>
+<dd><p>This fonction recuvers artiste and give a ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – artiste_recherche</p>
+<dd class="field-odd"><p><strong>artiste_recherche</strong> – information give by user’s</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>dictionnary</p>
@@ -531,7 +570,7 @@ if select == “Album”:</p>
 <dd><p>this fonction recuvers type of artiste and give a ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>artiste_recherche</strong> – info entrée dans la lineedith</p>
+<dd class="field-odd"><p><strong>artiste_recherche</strong> (<em>str</em>) – information give by user’s</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>dictionnary</p>
@@ -549,13 +588,10 @@ if select == “Album”:</p>
 <dt id="request_artistes.get_artist_name">
 <code class="sig-prename descclassname">request_artistes.</code><code class="sig-name descname">get_artist_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artiste_recherche</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/request_artistes.html#get_artist_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#request_artistes.get_artist_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>this fonction recuvers name of artiste and give a ID</p>
+<p>:param artiste_recherche : information give by user’s
+:type artiste_recherche: str
+:returns: dictionnary</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – artiste_recherche</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dictionnary</p>
-</dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p></p>
 </dd>
@@ -574,16 +610,13 @@ if select == “Album”:</p>
 <dd><p>This code searches album by id and returns a list of song titles using MusicBrainz web service.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>param1</strong> (<em>str</em>) – album_id</p>
+<dd class="field-odd"><p><strong>album_id</strong> (<em>str</em>) – album_id</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>liste list</p>
+<dd class="field-even"><p>list</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>TypeError</p>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>TypeError</p>
 </dd>
 </dl>
 </dd></dl>
@@ -598,8 +631,8 @@ if select == “Album”:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>param1</strong> (<em>str</em>) – artiste</p></li>
-<li><p><strong>param2</strong> (<em>str</em>) – titre</p></li>
+<li><p><strong>artiste</strong> (<em>str</em>) – artiste</p></li>
+<li><p><strong>titre</strong> (<em>str</em>) – titre</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

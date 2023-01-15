@@ -16,12 +16,12 @@ import webbrowser
 def yt_search(artiste, titre):
     """ This function buil query to lisen a tracks in Youtube (use trask title and singer name )
 
-        :param param1: artiste
-        :type param1: str
-        :param param2: titre
-        :type param2: str
+        :param artiste: artiste
+        :type artiste: str
+        :param titre: titre
+        :type titre: str
         :returns: build a html link 
-        :rtype: str
+        :rtype: str 
         :raises: TypeError
         :example:
 

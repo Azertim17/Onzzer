@@ -16,8 +16,8 @@ def get_artist_id_type(artist_name):
     """
         this fonction recuvers type of artiste and give a ID 
         
-        :param artiste_recherche: info entrée dans la lineedith
-        :type param1: str
+        :param artiste_recherche: information give by user's
+        :type artiste_recherche: str
 
         :returns: dictionnary
         
@@ -41,8 +41,8 @@ def get_artist_name(artiste_recherche):
     """
         this fonction recuvers name of artiste and give a ID 
         
-        :param param1: artiste_recherche
-        :type param1: str
+        :param artiste_recherche : information give by user's
+        :type artiste_recherche: str
         :returns: dictionnary
         
         :rtype:  
@@ -77,9 +77,9 @@ def get_artist_name(artiste_recherche):
 def get_artist_id(artiste_recherche):
 
     """
-        this fonction recuvers artiste and give a ID 
+        This fonction recuvers artiste and give a ID 
         
-        :param param1: artiste_recherche
+        :param artiste_recherche: information give by user's
         :type param1: str
         :returns: dictionnary
         

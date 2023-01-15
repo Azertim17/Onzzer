@@ -117,11 +117,13 @@ def get_album_artist_dic(album_name):
          
 def get_album_name(album_name):
     """
-    This function receives an album name as input and returns the album name from MusicBrainz.
-    :param album_name: The name of the album to search for.
-    :type album_name: str
-    :return: The album name.
-    :rtype: str
+
+     This function receives an album name as input and returns the album name from MusicBrainz.
+
+      :param album_name: The name of the album to search for.
+      :type album_name: str
+      :return: The album name.
+      :rtype: str
     """
     # Removes leading and trailing whitespace from the "album_name" variable and replaces spaces and single quotes with the appropriate encoding
     album_name = album_name.strip().replace(" ", "%20in%20").replace("'", "%27")
@@ -179,10 +181,12 @@ def get_album_name(album_name):
 def get_artist_list(album_name):
     """
     This function receives an album name as input and returns a list of the artist name(s) associated with that album from MusicBrainz.
+
     :param album_name: The name of the album to search for.
     :type album_name: str
     :return: List of artist names.
     :rtype: list
+    
     """
     # Removes leading and trailing whitespace from the "album_name" variable and replaces spaces and single quotes with the appropriate encoding
     album_name = album_name.strip().replace(" ", "%20in%20").replace("'", "%27")
@@ -201,12 +205,13 @@ def get_artist_list(album_name):
 
 def get_discographie(id_artiste):
     """
-        This function lists all the albums of a singer using their MusicBrainz ID.
-        :param id_artiste: MusicBrainz ID of the artist
-        :type id_artiste: str
-        :returns: list of all singer's albums
-        :rtype: dict
-        """
+    This function lists all the albums of a singer using their MusicBrainz ID.
+    
+     :param id_artiste: MusicBrainz ID of the artist
+     :type id_artiste: str
+     :returns: list of all singer's albums
+     :rtype: dict
+    """
     url_fin = "?inc=releases&fmt=json"
     url_complet = f"https://musicbrainz.org/ws/2/artist/{id_artiste}{url_fin}"
 

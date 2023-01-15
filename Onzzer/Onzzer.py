@@ -86,11 +86,7 @@ class Fenetre_principale(QMainWindow):
         :returns: menu and toolbar
         :rtype: app
         :raises: TypeError
-        :example:
-
-        .. code-block:: python
-
-         app = menu(self)
+               
 
         """
 
@@ -140,6 +136,12 @@ class Fenetre_principale(QMainWindow):
         :raises: TypeError
         :example:
             self.searchButton.clicked.connect(self.categorie) 
+        
+        .. figure:: _static/menu.png 
+            :alt: example illustrate
+             
+
+            The first page.
         """
         # This is the main page of our application, the one allowing to search for an album or an artist
 
@@ -218,11 +220,7 @@ class Fenetre_principale(QMainWindow):
 
 
     def recherche_album(self, recherche):
-        """
-
-        
-        :param recherche: 
-        
+        """        
         :param recherche: The user's input string
         :type recehrche: str
         :returns:  A table with the names and designations of all album with the given name
@@ -295,13 +293,15 @@ class Fenetre_principale(QMainWindow):
         :returns: A table with the names and designations of all artists with the given name
         :rtype: QTableWidget
         :raises: TypeError
+        
 
         .. code-block:: python
 
             recherche_artiste(self, "celine dion")
     
-        .. figure:: docs/source/_static/celine_dion.png
-            :scale: 200
+        .. figure:: _static/celine_dion.png 
+            :alt: example illustrate
+             
 
             The result of the search for artist "Celine Dion"
         """      
@@ -376,6 +376,7 @@ class Fenetre_principale(QMainWindow):
     def id_artiste(self, row, column, recherche):
         """
         This function retrieves the number of the row when clicked, and retrieves the artist ID from the request_artistes module using the user's input.
+
         :param recherche: The user's input string
         :type recherche: str 
         :returns: A list of all artists with the same name and their types
