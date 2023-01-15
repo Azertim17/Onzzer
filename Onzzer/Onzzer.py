@@ -529,7 +529,6 @@ class Fenetre_principale(QMainWindow):
         :returns: None
         :rtype: None
         
-        
         """
         # Create a QPixmap of the logo image and scale it to the desired size
         image1 = QPixmap(Fenetre_principale.newPath + "\logo_long_blanc.png" )
@@ -559,43 +558,63 @@ class Fenetre_principale(QMainWindow):
         self.wid_pistes = QWidget()
         self.wid_pistes.setStyleSheet("background-color: #202124")
 
+        # Create a vertical layout to hold the widgets
         vbox = QVBoxLayout()
+
+        # Create a widget to hold the buttons and set its layout
         wid_bouttons = QWidget()
         bouttonshbox = QHBoxLayout()
+
+        # Create a label to hold the album cover image
         box_image = QLabel()
+
+        # Create a table widget to display the track titles and set its properties
         self.table = QTableWidget()
         self.table.setColumnCount(2)
         self.table.setContentsMargins(100, 200, 100, 0)
         self.table.setStyleSheet("QTableWidget::item {color: white;}")
         self.setCentralWidget(self.wid_pistes)
 
+        # Set the album cover image to the label and add it to the layout
         box_image.setPixmap(image)
         vbox.addWidget(box_image, alignment= Qt.AlignRight)
 
+        # Set the layout of the main widget and add the table widget to the layout
         self.wid_pistes.setLayout(vbox)
         vbox.addWidget(self.table)
 
+        # Add the buttons to the button widget's layout
         wid_bouttons.setLayout(bouttonshbox)
         bouttonshbox.addWidget(searchButton)
         bouttonshbox.addWidget(returnButton)
         bouttonshbox.addWidget(uploadButton)
 
+        # Add the button widget to the main layout and align it to the left
         vbox.addWidget(wid_bouttons, alignment= Qt.AlignLeft)
+
+        # Set the alignment of the main layout to the top
         vbox.setAlignment(Qt.AlignTop)
 
+        # Set the horizontal headers for the table widget
         headerH = ["Titres de l'Album","Ouvrir youtube"]
         self.table.setHorizontalHeaderLabels(headerH)
 
+        # Set the table widget's horizontal header's resize mode
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
+
+        # Disable editing on the table widget
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
+        # Set the number of rows in the table widget to the number of track titles
         nb_rows = len(titres)
         self.table.setRowCount(nb_rows)
 
+        # Iterate through the track titles and add them to the table widget
         for row, i in enumerate(titres, start=1):
             self.table.setItem(row-1,0, QTableWidgetItem(i))
 
+            # Create a button for each track title and add it to the table widget
             ytButton = QPushButton(QIcon(Fenetre_principale.newPath + "\youtube.jpg"),"")
             self.table.setCellWidget(row-1, 1, ytButton)
             ytButton.clicked.connect(lambda _, r=row, c=3: self.youtube(r, c, recherche)) 

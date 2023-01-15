@@ -10,8 +10,6 @@ os.remove("Onzzer.spec")
 shutil.rmtree("build")
 shutil.rmtree("dist")
 
-# setup_command = 'compil32 /wizard "../data/"'
-# os.system(setup_command)
 
 print("")
 print("#####################################################################################################################################")
