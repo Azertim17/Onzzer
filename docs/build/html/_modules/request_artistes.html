@@ -87,6 +87,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cahier_des_charges.html">Project specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc_classe.html">Onzzer’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manuel_d_utilisation.html">Installation tutorial</a></li>
 </ul>
 
             
@@ -167,51 +168,33 @@
 
 
 
-<div class="viewcode-block" id="get_id_type"><a class="viewcode-back" href="../doc_classe.html#request_artistes.get_id_type">[docs]</a><span class="k">def</span> <span class="nf">get_id_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artiste_recherche</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_artist_id_type"><a class="viewcode-back" href="../doc_classe.html#request_artistes.get_artist_id_type">[docs]</a><span class="k">def</span> <span class="nf">get_artist_id_type</span><span class="p">(</span><span class="n">artist_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this fonction recuvers type of artiste and give a ID </span>
 <span class="sd">        </span>
-<span class="sd">        :param param1: artiste_recherche</span>
+<span class="sd">        :param artiste_recherche: info entrée dans la lineedith</span>
 <span class="sd">        :type param1: str</span>
+
 <span class="sd">        :returns: dictionnary</span>
 <span class="sd">        </span>
 <span class="sd">        :rtype:  </span>
 <span class="sd">        :raises: TypeError</span>
 <span class="sd">        </span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">)</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
-
-        
-        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/artist/?query=artist:&quot;</span>
-        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;&amp;type:artist&amp;fmt=json&quot;</span>
-        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">traitement1</span> <span class="o">+</span> <span class="n">url_fin</span>
-        
-        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
-        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        
-        <span class="n">dic_artiste_id</span> <span class="o">=</span> <span class="p">{}</span>
-        
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">]:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">type_artiste</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;disambiguation&#39;</span><span class="p">]</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                    <span class="k">pass</span>
-            <span class="k">try</span><span class="p">:</span>    
-                <span class="n">id_artiste</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
-                <span class="n">dic_artiste_id</span><span class="p">[</span><span class="n">id_artiste</span><span class="p">]</span> <span class="o">=</span> <span class="n">type_artiste</span>
-                
-            <span class="k">except</span> <span class="ne">UnboundLocalError</span><span class="p">:</span>
-                <span class="n">dic_artiste_id</span><span class="p">[</span><span class="n">id_artiste</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                
-        <span class="k">return</span> <span class="n">dic_artiste_id</span></div>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Removes leading and trailing whitespace from the &quot;artist_name&quot; variable and replaces spaces and single quotes with the appropriate encoding</span>
+    <span class="n">artist_name</span> <span class="o">=</span> <span class="n">artist_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
+    <span class="c1"># Constructs the final search URL using f-strings</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://musicbrainz.org/ws/2/artist/?query=artist:</span><span class="si">{</span><span class="n">artist_name</span><span class="si">}</span><span class="s2">&amp;type:artist&amp;fmt=json&quot;</span>
+    <span class="c1"># Make a request to the MusicBrainz server using the constructed URL</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1"># Get the response in json format</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="c1"># Extract the artist&#39;s id and artist&#39;s type using dictionary comprehension, store empty string if type is not found</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]:</span> <span class="n">i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;disambiguation&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">content</span><span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">]}</span></div>
 
 
-<div class="viewcode-block" id="get_artiste_name"><a class="viewcode-back" href="../doc_classe.html#request_artistes.get_artiste_name">[docs]</a><span class="k">def</span> <span class="nf">get_artiste_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artiste_recherche</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_artist_name"><a class="viewcode-back" href="../doc_classe.html#request_artistes.get_artist_name">[docs]</a><span class="k">def</span> <span class="nf">get_artist_name</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this fonction recuvers name of artiste and give a ID </span>
 <span class="sd">        </span>
 <span class="sd">        :param param1: artiste_recherche</span>
@@ -222,36 +205,34 @@
 <span class="sd">        :raises: TypeError</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">)</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
-
-        
-        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/artist/?query=artist:&quot;</span>
-        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;&amp;type:artist&amp;fmt=json&quot;</span>
-        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">traitement1</span> <span class="o">+</span> <span class="n">url_fin</span>
-        
-        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
-        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                
-        <span class="n">dic_artiste_name</span> <span class="o">=</span> <span class="p">{}</span>
-        
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">]:</span>
-                
-                <span class="n">nom_artiste</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-                <span class="n">id_artiste</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
-                
-                <span class="n">dic_artiste_name</span><span class="p">[</span><span class="n">id_artiste</span><span class="p">]</span> <span class="o">=</span> <span class="n">nom_artiste</span>
-            
-            
-        <span class="k">return</span> <span class="n">dic_artiste_name</span></div>
+    <span class="c1"># convert the input to a string</span>
+    <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">)</span>
+    <span class="c1"># remove any leading or trailing whitespace from the string</span>
+    <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="c1"># replace spaces with &quot;%20in%20&quot;</span>
+    <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+    <span class="c1"># replace apostrophes with &quot;%27&quot;</span>
+    <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="get_artiste_id"><a class="viewcode-back" href="../doc_classe.html#request_artistes.get_artiste_id">[docs]</a><span class="k">def</span> <span class="nf">get_artiste_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artiste_recherche</span><span class="p">):</span>
+    <span class="c1"># create the base url</span>
+    <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/artist/?query=artist:&quot;</span>
+    <span class="c1"># create the end of the url</span>
+    <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;&amp;type:artist&amp;fmt=json&quot;</span>
+    <span class="c1"># concatenate the base url, the modified search term and the end of the url</span>
+    <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">traitement1</span> <span class="o">+</span> <span class="n">url_fin</span>
 
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="c1"># make a GET request to the url</span>
+    <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+    <span class="c1"># parse the response as json</span>
+    <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]:</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">]}</span></div>
+
+
+<div class="viewcode-block" id="get_artist_id"><a class="viewcode-back" href="../doc_classe.html#request_artistes.get_artist_id">[docs]</a><span class="k">def</span> <span class="nf">get_artist_id</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this fonction recuvers artiste and give a ID </span>
 <span class="sd">        </span>
 <span class="sd">        :param param1: artiste_recherche</span>
@@ -263,50 +244,29 @@
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">)</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
-        <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
+    <span class="c1"># convert the input to a string</span>
+    <span class="n">recherche</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">artiste_recherche</span><span class="p">)</span>
+    <span class="c1"># remove any leading or trailing whitespace from the string</span>
+    <span class="n">traitement1</span> <span class="o">=</span> <span class="n">recherche</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="c1"># replace spaces with &quot;%20in%20&quot;</span>
+    <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%20i</span><span class="s2">n%20&quot;</span><span class="p">)</span>
+    <span class="c1"># replace apostrophes with &quot;%27&quot;</span>
+    <span class="n">traitement1</span> <span class="o">=</span> <span class="n">traitement1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;%27&quot;</span><span class="p">)</span>
 
-        
-        <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/artist/?query=artist:&quot;</span>
-        <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;&amp;type:artist&amp;fmt=json&quot;</span>
-        <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">traitement1</span> <span class="o">+</span> <span class="n">url_fin</span>
-        
-        <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
-        <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                
-        <span class="n">dic_artiste_id</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
-        
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contenu</span> <span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">]:</span>
-                
-                <span class="nb">id</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">id_artiste</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
-                <span class="n">dic_artiste_id</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_artiste</span>
-        
 
-        <span class="k">return</span> <span class="n">dic_artiste_id</span></div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <span class="c1"># create the base url</span>
+    <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://musicbrainz.org/ws/2/artist/?query=artist:&quot;</span>
+    <span class="c1"># create the end of the url</span>
+    <span class="n">url_fin</span> <span class="o">=</span> <span class="s2">&quot;&amp;type:artist&amp;fmt=json&quot;</span>
+    <span class="c1"># concatenate the base url, the modified search term and the end of the url</span>
+    <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">traitement1</span> <span class="o">+</span> <span class="n">url_fin</span>
+
+    <span class="c1"># make a GET request to the url</span>
+    <span class="n">reponse</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span>
+    <span class="c1"># parse the response as json</span>
+    <span class="n">contenu</span> <span class="o">=</span> <span class="n">reponse</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="nb">id</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contenu</span> <span class="p">[</span><span class="s1">&#39;artists&#39;</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)}</span></div>
 </pre></div>
 
            </div>

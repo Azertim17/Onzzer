@@ -1,4 +1,0 @@
-Tutoriel d'installation
-===================================
-
-blabla

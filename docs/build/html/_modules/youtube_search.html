@@ -87,6 +87,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cahier_des_charges.html">Project specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../doc_classe.html">Onzzer’s documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manuel_d_utilisation.html">Installation tutorial</a></li>
 </ul>
 
             
@@ -168,7 +169,7 @@
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">webbrowser</span>
 
-<div class="viewcode-block" id="yt_search"><a class="viewcode-back" href="../doc_classe.html#youtube_search.yt_search">[docs]</a><span class="k">def</span> <span class="nf">yt_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artiste</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
+<div class="viewcode-block" id="yt_search"><a class="viewcode-back" href="../doc_classe.html#youtube_search.yt_search">[docs]</a><span class="k">def</span> <span class="nf">yt_search</span><span class="p">(</span><span class="n">artiste</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This function buil query to lisen a tracks in Youtube (use trask title and singer name )</span>
 
 <span class="sd">        :param param1: artiste</span>
@@ -192,17 +193,31 @@
 <span class="sd">        </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># This function takes in two variables, &quot;artiste&quot; and &quot;titre&quot;, and uses them to search for </span>
+    <span class="c1"># a music video on YouTube by opening the constructed search URL in the default web browser </span>
+    <span class="c1"># after cleaning and formatting the input.</span>
     
+
+    <span class="c1"># Removes leading and trailing whitespace from the &quot;artiste&quot; variable</span>
     <span class="n">artiste</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Replaces spaces with + in the &quot;artiste&quot; variable</span>
     <span class="n">artiste</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">)</span>
-    
+
+    <span class="c1"># Removes leading and trailing whitespace from the &quot;titre&quot; variable</span>
     <span class="n">titre</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Replaces single quotes with escaped single quotes in the &quot;titre&quot; variable</span>
     <span class="n">titre</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
-    
-    
+
+
+    <span class="c1"># Constant string representing the base of the YouTube search URL</span>
     <span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://www.youtube.com/results?search_query=&quot;</span>
+
+    <span class="c1"># Constructs the final search URL by concatenating the &quot;url_base&quot;, &quot;artiste&quot;, and &quot;titre&quot; variables</span>
     <span class="n">url_complet</span> <span class="o">=</span> <span class="n">url_base</span> <span class="o">+</span> <span class="n">artiste</span> <span class="o">+</span> <span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="n">titre</span>
-    
+
+    <span class="c1"># Opens the constructed URL in the default web browser</span>
     <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url_complet</span><span class="p">)</span></div>
     
 </pre></div>

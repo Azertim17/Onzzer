@@ -219,14 +219,15 @@ class Fenetre_principale(QMainWindow):
 
     def recherche_album(self, recherche):
         """
+
         
-        :param param1: id_artiste
+        :param recherche: 
         
-        :param param1: recherche
-        :type param1: str
-        :returns: list all album with the same 
+        :param recherche: The user's input string
+        :type recehrche: str
+        :returns:  A table with the names and designations of all album with the given name
                 
-        :rtype: 
+        :rtype: QTableWidget
         :raises: TypeError
         
         """
@@ -290,6 +291,7 @@ class Fenetre_principale(QMainWindow):
 
         :param recherche: The name of the artist to search for
         :type recherche: str
+
         :returns: A table with the names and designations of all artists with the given name
         :rtype: QTableWidget
         :raises: TypeError
@@ -298,7 +300,7 @@ class Fenetre_principale(QMainWindow):
 
             recherche_artiste(self, "celine dion")
     
-        .. figure:: docs/source/_static/celine_dion.jpeg
+        .. figure:: docs/source/_static/celine_dion.png
             :scale: 200
 
             The result of the search for artist "Celine Dion"
@@ -518,7 +520,14 @@ class Fenetre_principale(QMainWindow):
         
     def pistes(self, titres, recherche):
         """
-
+        attribute a number at piste 
+        :param titre : title of piste 
+        :type titre: str
+        :param recherche: The user's input string
+        :type recherche: int
+        :returns: None
+        :rtype: None
+        
         
         """
         # Create a QPixmap of the logo image and scale it to the desired size
